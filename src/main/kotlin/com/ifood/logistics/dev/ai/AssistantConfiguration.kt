@@ -4,6 +4,7 @@ import com.ifood.logistics.dev.ai.logseq.LogseqAPIDocumentLoader
 import com.ifood.logistics.dev.ai.logseq.LogseqApi
 import com.ifood.logistics.dev.ai.logseq.LogseqDocumentByBlockSplitter
 import com.ifood.logistics.dev.ai.logseq.LogseqDocumentByRootBlockSplitter
+import com.ifood.logistics.dev.ai.logseq.LogseqDocumentTransformer
 import com.ifood.logistics.dev.ai.logseq.LogseqRAG
 import com.ifood.logistics.dev.ai.logseq.LogseqTextSegmentTransformer
 import com.ifood.logistics.dev.ai.pkm.Assistant
@@ -19,6 +20,7 @@ import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever
 import dev.langchain4j.rag.query.router.DefaultQueryRouter
 import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
+import dev.langchain4j.store.embedding.filter.Filter
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationRunner
@@ -34,7 +36,9 @@ class AssistantConfiguration {
     @Bean
     fun chatModel() = OllamaChatModel.builder()
         .baseUrl("http://localhost:11434")
-        .temperature(0.7)
+        .temperature(0.7)           // temperature (between 0 and 2)
+        .topP(0.95)                 // topP (between 0 and 1) — cumulative probability of the most probable tokens
+        .topK(3)
         .logRequests(true)
         .logResponses(true)
         .modelName("gemma3")
@@ -57,6 +61,7 @@ class AssistantConfiguration {
         return EmbeddingStoreIngestor.builder()
             .embeddingStore(embeddingStore())
             .embeddingModel(embeddingModel())
+            .documentTransformer(LogseqDocumentTransformer())
             .documentSplitter(LogseqDocumentByRootBlockSplitter())//LogseqDocumentByBlockSplitter())
             .textSegmentTransformer(LogseqTextSegmentTransformer(api))
             .build()
@@ -68,7 +73,7 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStore())
             .maxResults(25)
-            .minScore(0.20)
+            .minScore(0.50) // 0.70
             .build()
     }
 

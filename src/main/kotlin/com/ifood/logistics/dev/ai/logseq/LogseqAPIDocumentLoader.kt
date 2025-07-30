@@ -10,8 +10,6 @@ class LogseqAPIDocumentLoader(val logseqApi: LogseqApi) : LogseqDocumentLoader {
         val pages = logseqApi.fetchPages()
         logger.info("Logseq graph size ${pages.size}")
         val documents = pages
-            // Initial filter to remove pages without content
-            .filter { it.tags?.filter { it.isContent()  }?.isNotEmpty() ?: false }
             .map {
                 val blocks = logseqApi.fetchBlocks(it.uuid!!)
                 Pair(it, blocks)

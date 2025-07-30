@@ -37,11 +37,8 @@ class LogseqDocumentByRootBlockSplitter : DocumentSplitter{
 
             var all = listOf(TextSegment(block.content ?: "", metadata)) + childSegments
 
-            val builder = StringBuilder()
-            all.forEach {
-                builder.append(it.text())
-            }
-             listOf(TextSegment(builder.toString(), metadata))
+            val combinedText = all.joinToString(", ") { it.text() }
+             listOf(TextSegment(combinedText, metadata))
         }
     }
 }

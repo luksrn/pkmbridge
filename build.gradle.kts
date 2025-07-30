@@ -32,6 +32,8 @@ dependencies {
 	implementation("dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2:1.1.0-beta7")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 	implementation("com.squareup.okhttp3:okhttp:4.12.0")
+	implementation("com.vdurmont:emoji-java:5.1.1")
+
 }
 
 kotlin {

@@ -25,7 +25,7 @@ class EmbeddingController(
         var queryEmbedding = embeddingModel.embed(q).content()
         val embeddingSearchRequest = EmbeddingSearchRequest.builder()
             .queryEmbedding(queryEmbedding)
-            .maxResults(10)
+            .maxResults(25)
             .build()
 
         val matches = embeddingStore.search(embeddingSearchRequest).matches()
