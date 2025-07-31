@@ -13,6 +13,6 @@ class AssistantController(val assistant: Assistant) {
     @ResponseBody
     fun model(@RequestParam(value = "message", defaultValue = "Hello") message: String): String {
         var result = assistant.chat(message)
-        return result.content() + "\n\nSources = " + result.sources()
+        return result.content() //+ "\n\nSources = " + result.sources()
     }
 }

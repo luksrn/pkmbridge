@@ -1,27 +1,32 @@
 package com.ifood.logistics.dev.ai
 
-import com.ifood.logistics.dev.ai.pkm.Assistant
+import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.model.embedding.EmbeddingModel
+import dev.langchain4j.rag.AugmentationRequest
+import dev.langchain4j.rag.RetrievalAugmentor
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest
-import dev.langchain4j.store.embedding.EmbeddingSearchResult
 import dev.langchain4j.store.embedding.EmbeddingStore
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
-import java.lang.StringBuilder
-import kotlin.collections.forEach
 
 @RestController
 class EmbeddingController(
+    val retrivalAugmentor: RetrievalAugmentor,
     val embeddingStore: EmbeddingStore<TextSegment>,
     val embeddingModel: EmbeddingModel) {
 
     @GetMapping("/embedding")
     @ResponseBody
     fun model(@RequestParam(value = "query", defaultValue = "Hello") q: String) : String  {
+
+        val metadata = dev.langchain4j.rag.query.Metadata.from(UserMessage(q), null, null)
+        val augmentationRequest = AugmentationRequest(UserMessage(q), metadata)
+
+        var result = retrivalAugmentor.augment(augmentationRequest)
+
         var queryEmbedding = embeddingModel.embed(q).content()
         val embeddingSearchRequest = EmbeddingSearchRequest.builder()
             .queryEmbedding(queryEmbedding)

@@ -21,7 +21,7 @@ class LogseqDocumentSummarizedTransformer(val summarizerAssistant: SummarizerAss
             return null
         }
 
-        if(note.text()!!.count() < 1000 || note.blocks.size < 10 ) {
+        if(note.text()!!.count() < 1000 || note.blocks.size <= 1 ) {
             // Skip summarization for small notes
             return document
         }

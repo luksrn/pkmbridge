@@ -67,7 +67,7 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSegments())
             .maxResults(25)
-            .minScore(0.50) // 0.70
+            .minScore(0.60) // 0.70
             .build()
     }
 
@@ -78,7 +78,7 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSummaries())
             .maxResults(10)
-            .minScore(0.60) // 0.70
+            .minScore(0.70) // 0.70
             .build()
     }
 
