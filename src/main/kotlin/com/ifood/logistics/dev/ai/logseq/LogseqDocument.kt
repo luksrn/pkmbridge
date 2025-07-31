@@ -6,8 +6,12 @@ import dev.langchain4j.data.document.Metadata
 class LogseqDocument(
     val page: Page,
     val blocks: List<Block>,
+    var metadata: Metadata = Metadata()
 ) : Document {
 
+    init {
+        metadata = metadata.merge(Metadata.from("page", page.content))
+    }
     override fun text(): String? {
         var content = "# ${page.title}\n\n"
         content += compileContent(blocks)
@@ -21,7 +25,7 @@ class LogseqDocument(
         }
     }
 
-    override fun metadata(): Metadata? {
-        return Metadata.from("page", page.content)
+    override fun metadata(): Metadata {
+        return metadata
     }
 }

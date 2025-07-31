@@ -1,0 +1,6 @@
+- [ ] Adicionar as tags de um bloco dentro dos metadados de um embedding
+- [ ] Adicionar multiplos content retrivers para ser compatível com o obsidian e logseq md
+- [ ] achar mais conteudo relevante com base em outros algoritmos q n apenas o vector e usar rerank]
+- [ ] criar comunicacao com o claude ou vscode
+- [ ] usar uma implemntação real de um vector store (Redis ou postgres)]
+- [ ] como criar relações entre conteúdos para tentar entender como enriquecer a resposta?]
