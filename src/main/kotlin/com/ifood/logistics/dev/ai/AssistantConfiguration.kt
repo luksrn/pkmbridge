@@ -8,6 +8,7 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel
 import dev.langchain4j.model.ollama.OllamaChatModel
+import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
 import dev.langchain4j.rag.content.retriever.ContentRetriever
@@ -30,6 +31,18 @@ import java.time.Duration
 class AssistantConfiguration {
 
     private val logger = LoggerFactory.getLogger(LogseqRAG::class.java)
+
+    @Bean
+    fun streamChatModel() = OllamaStreamingChatModel.builder()
+        .baseUrl("http://localhost:11434")
+        .temperature(0.7)           // temperature (between 0 and 2)
+        .topP(0.95)                 // topP (between 0 and 1) — cumulative probability of the most probable tokens
+        .topK(3)
+        //.modelName("llama2")
+        .modelName("gemma3")
+        //.modelName("qwen3:8b")
+        .timeout(Duration.ofSeconds(60 * 5))
+        .build()
 
     @Bean
     fun chatModel() = OllamaChatModel.builder()
@@ -78,7 +91,7 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSummaries())
             .maxResults(10)
-            .minScore(0.70) // 0.70
+            .minScore(0.60) // 0.70
             .build()
     }
 
@@ -101,6 +114,7 @@ class AssistantConfiguration {
     fun assistant(): Assistant {
         return AiServices.builder<Assistant>(Assistant::class.java)
             .chatModel(chatModel())
+            .streamingChatModel(streamChatModel())
             .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
             //.contentRetriever(contentRetriever())
             .retrievalAugmentor (retrievalAugmentor())
