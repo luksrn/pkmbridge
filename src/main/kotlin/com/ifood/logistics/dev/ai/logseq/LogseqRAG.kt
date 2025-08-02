@@ -41,7 +41,7 @@ class LogseqRAG(
             .embeddingStore(embeddingStore)
             .embeddingModel(embeddingModel)
             .documentSplitter(LogseqDocumentByBlockSplitter())
-            .textSegmentTransformer(LogseqTextSegmentTransformer(api))
+            //.textSegmentTransformer(LogseqTextSegmentTransformer(api))
             .build()
             .ingest(documents);
 

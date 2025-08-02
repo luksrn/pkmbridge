@@ -2,25 +2,26 @@ package com.ifood.logistics.dev.ai.logseq
 
 import dev.langchain4j.data.document.Document
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 
-class LogseqAPIDocumentLoader(val logseqApi: LogseqApi) : LogseqDocumentLoader {
+class LogseqAPIDocumentLoader(val logseqApi: LogseqApi) : PKMDocumentLoader {
 
     override fun loadDocuments(): List<Document> {
+        logger.info("Loading documents from LogSeq API")
         val pages = logseqApi.fetchPages()
-        logger.info("Logseq graph size ${pages.size}")
+        logger.info("${pages.size} pages found in Logseq graph")
+
+        val pagesByUuid = pages.groupBy { it.uuid }
+
         val documents = pages
             .map {
-                val blocks = logseqApi.fetchBlocks(it.uuid!!)
-                Pair(it, blocks)
-            }.map  {
-                it.second.sortedBy { it.order }
-                LogseqDocument(it.first, it.second)
+                it.ident = it.inferIdentity()
+                it
             }
-        logger.info("Logseq graph converted into ${pages.size} documents")
+            .map {
+                val blocks = logseqApi.fetchBlocks(it.uuid)
+                LogseqDocument(it, blocks.sortedBy { b -> b.order })
+            }
         return documents
     }
-
     private val logger = LoggerFactory.getLogger(LogseqAPIDocumentLoader::class.java)
-
 }

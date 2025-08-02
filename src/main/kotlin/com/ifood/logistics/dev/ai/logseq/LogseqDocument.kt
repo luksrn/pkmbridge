@@ -10,22 +10,28 @@ class LogseqDocument(
 ) : Document {
 
     init {
-        metadata = metadata.merge(Metadata.from("page", page.content))
+        metadata.put(Document.FILE_NAME, page.name)
+        metadata.put("type", page.inferIdentity().name)
     }
-    override fun text(): String? {
+
+    override fun text(): String {
         var content = "# ${page.title}\n\n"
         content += compileContent(blocks)
         return content
     }
 
     private fun compileContent(blocks: List<Block>): String {
-        return blocks.joinToString("\n") { block ->
-            val childContent = block.children?.let { compileContent(it) } ?: ""
+        return blocks.joinToString("") { block ->
+            val childContent = block.children.sortedBy { it.order }?.let { compileContent(it) } ?: ""
             "${block.content ?: ""}\n$childContent"
         }
     }
 
     override fun metadata(): Metadata {
         return metadata
+    }
+
+    override fun toString(): String {
+        return page.title
     }
 }

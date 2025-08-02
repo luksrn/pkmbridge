@@ -136,9 +136,9 @@ class AssistantConfiguration {
         return EmbeddingStoreIngestor.builder()
             .embeddingStore(embeddingStoreTextSegments())
             .embeddingModel(embeddingModel())
-            .documentTransformer(LogseqDocumentTransformer())
+            .documentTransformer(LogseqDocumentTransformer(api))
             .documentSplitter(LogseqDocumentByRootBlockSplitter())//LogseqDocumentByBlockSplitter())
-            .textSegmentTransformer(LogseqTextSegmentTransformer(api))
+            //.textSegmentTransformer(LogseqTextSegmentTransformer(api))
             .build()
     }
 

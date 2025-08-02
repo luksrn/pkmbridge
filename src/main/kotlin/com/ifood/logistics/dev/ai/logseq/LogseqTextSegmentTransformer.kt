@@ -4,6 +4,7 @@ import com.vdurmont.emoji.EmojiParser
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.data.segment.TextSegmentTransformer
 
+@Deprecated("Use LogseqDocumentTransformer instead")
 class LogseqTextSegmentTransformer(val api: LogseqApi) : TextSegmentTransformer {
 
     private val linkPattern = Regex("\\[\\[([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\\]\\]")

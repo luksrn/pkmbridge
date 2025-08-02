@@ -5,21 +5,33 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Page(
-    val ident: String? = null,
+    var ident: Identity = Identity.PAGE,
     @SerialName(":logseq.property/public?")
-    val public: Boolean? = null,
+    val public: Boolean = true,
     @SerialName(":logseq.property/built-in?")
-    val builtIn: Boolean? = null,
+    val builtIn: Boolean = false,
+    @SerialName(":logseq.property/type")
+    val type: String? = null,
     val journalDay: Long? = null,
-    val updatedAt: Long? = null,
-    val createdAt: Long? = null,
+    val updatedAt: Long,
+    val createdAt: Long,
     val tags: List<Tag>? = null,
-    val id: Int? = null,
-    val name: String? = null,
-    val uuid: String? = null,
-    val content: String? = null,
-    val title: String? = null,
-)
+    val refs: List<Tag>? = null,
+    val id: Int,
+    val name: String,
+    val uuid: String,
+    var content: String? = null,
+    val title: String,)
+{
+    fun inferIdentity(): Identity {
+        return when {
+            this.journalDay != null -> Identity.JOURNAL
+            this.ident != Identity.OTHER -> this.ident
+            this.tags?.any { it.isContent() } == true -> Identity.PAGE
+            else -> Identity.PAGE
+        }
+    }
+}
 
 @Serializable
 data class Tag(
@@ -38,7 +50,7 @@ data class Block(
     val id: Int? = null,
     val name: String? = null,
     val uuid: String? = null,
-    val content: String? = null,
+    var content: String? = null,
     val title: String? = null,
     val level: Int? = null,
     val order: String? = null,
@@ -49,3 +61,28 @@ data class LogseqRequest(
     val method: String,
     val args: List<String> = emptyList()
 )
+
+@Serializable
+enum class Identity(val ident: String){
+    @SerialName(":logseq.class/Page")
+    PAGE(":logseq.class/Page"),
+    @SerialName(":logseq.class/Journal")
+    JOURNAL(":logseq.class/Journal"),
+    @SerialName(":logseq.class/Tag")
+    TAG(":logseq.class/Tag"),
+    @SerialName(":logseq.class/Property")
+    PROPERTY(":logseq.class/Property"),
+    @SerialName(":logseq.class/Query")
+    QUERY(":logseq.class/Query"),
+    @SerialName(":logseq.class/Task")
+    TASK(":logseq.class/Task"),
+    @SerialName(":logseq.class/Template")
+    TEMPLATE(":logseq.class/Template"),
+    OTHER("");
+
+    companion object {
+        fun valueOfIdent(ident: String): Identity {
+            return values().find { it.ident == ident } ?: OTHER
+        }
+    }
+}

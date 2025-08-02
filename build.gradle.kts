@@ -32,13 +32,6 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-//
-//	implementation("org.springframework.boot:spring-boot-starter")
-//	implementation("org.springframework.boot:spring-boot-starter-web")
-//	implementation("org.jetbrains.kotlin:kotlin-reflect")
-//	testImplementation("org.springframework.boot:spring-boot-starter-test")
-//	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-//	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("dev.langchain4j:langchain4j-ollama:1.1.0-rc1")
 	implementation("dev.langchain4j:langchain4j-easy-rag:1.1.0-beta7")
 	implementation("dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2:1.1.0-beta7")
@@ -47,6 +40,9 @@ dependencies {
 	implementation("com.vdurmont:emoji-java:5.1.1")
 	// https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
 	implementation("org.apache.lucene:lucene-core:10.2.2")
+
+
+	testImplementation("org.apache.lucene:lucene-core:10.2.2")
 }
 
 kotlin {
