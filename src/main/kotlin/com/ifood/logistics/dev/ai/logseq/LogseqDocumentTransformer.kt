@@ -2,7 +2,6 @@ package com.ifood.logistics.dev.ai.logseq
 
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.DocumentTransformer
-import kotlin.collections.first
 
 class LogseqDocumentTransformer(val api: LogseqApi) : DocumentTransformer {
 

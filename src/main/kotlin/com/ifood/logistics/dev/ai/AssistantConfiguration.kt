@@ -138,7 +138,6 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .documentTransformer(LogseqDocumentTransformer(api))
             .documentSplitter(LogseqDocumentByRootBlockSplitter())//LogseqDocumentByBlockSplitter())
-            //.textSegmentTransformer(LogseqTextSegmentTransformer(api))
             .build()
     }
 
@@ -162,8 +161,12 @@ class AssistantConfiguration {
 
     @Bean
     fun initializerSummaries(@Qualifier("embeddingStoreIngestorSummaries") embeddingStoreIngestor: EmbeddingStoreIngestor, api: LogseqApi) = ApplicationRunner { args ->
-        logger.info("Initializing LogSeq RAG summaries")
-        embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
-        logger.info("Loaded documents from Logseq API and synced into embedding store.")
+        try {
+            logger.info("Initializing LogSeq RAG summaries")
+            embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
+            logger.info("Loaded documents from Logseq API and synced into embedding store.")
+        } catch (ex: Exception) {
+            logger.error("Error initializing summaries", ex)
+        }
     }
 }

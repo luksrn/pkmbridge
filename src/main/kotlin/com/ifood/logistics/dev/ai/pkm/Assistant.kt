@@ -53,17 +53,12 @@ OUTPUT INSTRUCTIONS
     - You can use the information available in the graph to answer questions, provide summaries, and extract relevant documents.
     - The graph is designed to help you provide comprehensive answers to user questions based on the information available in the documents.
     OUTPUT SECTIONS
-    - Provide a concise answer to the user's question in a section called ANSWER.
-    - Provide a summary of the information available in the graph in a section called SUMMARY.
-    - Extract the 5 to 30 of the most surprising, insightful, and/or interesting recommendations that can be collected from the content into a section called RECOMMENDATIONS.
-    - Provide a list of relevant documents that support your answer in a section called DOCUMENTS.
+    - Provide a concise answer to the user's question.
     - OUTPUT INSTRUCTIONS
     - Use ONLY information available in the graph to provide a comprehensive answer to the user's question.
-    - You only output Markdown.
+    - You only output Markdown compatible answer.
     - In the markdown, use formatting like bold, highlight, headlines as # ## ### , blockquote as > , code block in necessary as {block_code}, lists as * , etc. Make the output maximally readable in plain text.
-    - If the question is not answerable based on the information available in the graph, respond with "I don't know" in the ANSWER section.
-    - The DOCUMENTS section should include the titles of the documents that were used to answer the question, along with a brief description of their relevance.
-    - The documents should be ordered by relevance, with the most relevant document first.
+    - If the question is not answerable based on the information available in the graph, respond with "I don't know".
     """
     )
     fun chatStream(userMessage: String): TokenStream
