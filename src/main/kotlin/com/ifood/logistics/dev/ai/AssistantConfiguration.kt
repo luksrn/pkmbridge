@@ -30,7 +30,7 @@ import java.time.Duration
 @Configuration
 class AssistantConfiguration {
 
-    private val logger = LoggerFactory.getLogger(LogseqRAG::class.java)
+    private val logger = LoggerFactory.getLogger(AssistantConfiguration::class.java)
 
     @Bean
     fun streamChatModel() = OllamaStreamingChatModel.builder()
