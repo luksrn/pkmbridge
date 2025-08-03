@@ -8,10 +8,14 @@ class LogseqLinkTextResolver {
     companion object {
         private val linkPattern = Regex("\\[\\[([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\\]\\]")
 
-        fun replaceLinks(block: Block,resolver: Function<String, String>): Block {
+        fun replaceLinksRecursively(block: Block,resolver: Function<String, String>): Block {
+            for( child in block.children) {
+                replaceLinksRecursively(child, resolver)
+            }
             block.content = replaceLinks(block.content, resolver)
             return block
         }
+
 
         fun replaceLinks(text: String?, resolver: Function<String, String>): String? {
             if (text.isNullOrEmpty()) {

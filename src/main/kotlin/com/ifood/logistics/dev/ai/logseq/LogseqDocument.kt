@@ -22,7 +22,7 @@ class LogseqDocument(
 
     private fun compileContent(blocks: List<Block>): String {
         return blocks.joinToString("") { block ->
-            val childContent = block.children.sortedBy { it.order }?.let { compileContent(it) } ?: ""
+            val childContent = block.children.sortedBy { it.order }.let { compileContent(it) }
             "${block.content ?: ""}\n$childContent"
         }
     }
@@ -33,5 +33,25 @@ class LogseqDocument(
 
     override fun toString(): String {
         return page.title
+    }
+
+    companion object {
+
+        fun doWithBlocksRecursive(
+            document: LogseqDocument,
+            action: (Block) -> Unit
+        ) {
+            doWithBlocksRecursive(document.blocks, action)
+        }
+
+        fun doWithBlocksRecursive(
+            blocks: List<Block>,
+            action: (Block) -> Unit
+        ) {
+            blocks.forEach { block ->
+                action(block)
+                doWithBlocksRecursive(block.children, action)
+            }
+        }
     }
 }

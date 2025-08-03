@@ -20,7 +20,7 @@ class LogseqApiDocumentLoaderTest {
         var loadDocuments = logseqAPIDocumentLoader.loadDocuments()
         Assertions.assertThat(loadDocuments).isNotEmpty
 
-        loadDocuments = LogseqDocumentTransformer(api  ).transformAll(loadDocuments)
+        loadDocuments = LogseqDocumentTransformer(api).transformAll(loadDocuments)
         loadDocuments.forEach { document ->
             println(document.text())
             println(document.text().length)
