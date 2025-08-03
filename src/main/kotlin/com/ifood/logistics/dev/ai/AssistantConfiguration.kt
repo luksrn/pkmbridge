@@ -8,6 +8,7 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel
 import dev.langchain4j.model.ollama.OllamaChatModel
+import dev.langchain4j.model.ollama.OllamaModels
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
@@ -44,6 +45,13 @@ class AssistantConfiguration {
         .timeout(Duration.ofSeconds(60 * 5))
         .build()
 
+
+    @Bean
+    fun ollamaModels(): OllamaModels {
+        return OllamaModels.builder()
+            .baseUrl("http://localhost:11434")
+            .build()
+    }
     @Bean
     fun chatModel() = OllamaChatModel.builder()
         .baseUrl("http://localhost:11434")

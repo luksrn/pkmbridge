@@ -22,7 +22,8 @@ repositories {
 
 dependencies {
 
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	//implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -39,7 +40,7 @@ dependencies {
 	implementation("com.squareup.okhttp3:okhttp:4.12.0")
 	implementation("com.vdurmont:emoji-java:5.1.1")
 	// https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
-	implementation("org.apache.lucene:lucene-core:10.2.2")
+	//implementation("org.apache.lucene:lucene-core:10.2.2")
 
 
 	testImplementation("org.apache.lucene:lucene-core:10.2.2")

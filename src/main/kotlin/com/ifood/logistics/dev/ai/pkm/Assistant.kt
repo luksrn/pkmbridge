@@ -54,10 +54,6 @@ OUTPUT INSTRUCTIONS
     - The graph is designed to help you provide comprehensive answers to user questions based on the information available in the documents.
     OUTPUT SECTIONS
     - Provide a concise answer to the user's question.
-    - OUTPUT INSTRUCTIONS
-    - Use ONLY information available in the graph to provide a comprehensive answer to the user's question.
-    - You only output Markdown compatible answer.
-    - In the markdown, use formatting like bold, highlight, headlines as # ## ### , blockquote as > , code block in necessary as {block_code}, lists as * , etc. Make the output maximally readable in plain text.
     - If the question is not answerable based on the information available in the graph, respond with "I don't know".
     """
     )
