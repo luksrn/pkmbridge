@@ -1,16 +1,11 @@
 package com.ifood.logistics.dev.ai
 
+import com.ifood.logistics.dev.ai.logseq.Block
 import com.ifood.logistics.dev.ai.pkm.Assistant
-import dev.langchain4j.data.message.ChatMessage
-import dev.langchain4j.http.client.sse.ServerSentEvent
 import dev.langchain4j.model.chat.request.ChatRequest
-import dev.langchain4j.model.chat.response.ChatResponse
-import dev.langchain4j.model.chat.response.StreamingChatResponseHandler
 import dev.langchain4j.model.ollama.OllamaModels
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
@@ -29,65 +24,80 @@ class OpenApiProxy(val ollamaModel: OllamaModels,
     @GetMapping("/api/tags")
     fun models() = mapOf("models" to ollamaModel.availableModels().content())
 
+    @GetMapping("/api/ps")
+    fun runningModels() = mapOf("models" to ollamaModel.runningModels().content())
 
     @PostMapping("/api/chat",
-        consumes = ["application/json", "application/x-www-form-urlencoded"],
+        consumes = ["application/json"],
         produces = ["application/x-ndjson"])
-    fun stream(@RequestBody s:String):  Flux<String> {
-
-        val chatMessage = Json{ignoreUnknownKeys = true}.decodeFromString<ChatRequestDto>(s)
-
-
-        val sink = Sinks.many().unicast().onBackpressureBuffer<String>()
-        assistant.chatStream(chatMessage.messages.last().content)
-            .onPartialResponse { partialResponse ->
-                sink.tryEmitNext("{\"model\":\"gemma3\",\"created_at\":\"${Instant.now()}\",\"message\":{\"role\":\"assistant\",\"content\":\"${partialResponse.replace("\n","\\n")}\"},\"done\":false}\n")
-            }
-            .onError {
-
-            }
-            .onCompleteResponse {
-                sink.tryEmitNext("""{"model":"gemma3","created_at":"2025-08-03T02:42:16.060952Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
-                sink.tryEmitComplete()
-            }.start()
-
-//
-//        model.chat(userMessage, object : StreamingChatResponseHandler {
-//            override fun onPartialResponse(partialResponse: String) {
-//                //sink.tryEmitNext(partialResponse)
-//                sink.tryEmitNext("{\"model\":\"gemma3\",\"created_at\":\"${Instant.now()}\",\"message\":{\"role\":\"assistant\",\"content\":\"${partialResponse.replace("\n","\\n")}\"},\"done\":false}\n")
-//            }
-//
-//            override fun onCompleteResponse(completeResponse: ChatResponse) {
-//                //sink.tryEmitNext(completeResponse.aiMessage().text()!!)
-////                futureResponse.complete(completeResponse)
-//                sink.tryEmitNext("""{"model":"gemma3","created_at":"2025-08-03T02:42:16.060952Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
-//                sink.tryEmitComplete()
-//            }
-//
-//            override fun onError(error: Throwable?) {
-//  //              futureResponse.completeExceptionally(error)
-//                sink.tryEmitComplete()
-//            }
-//        })
-
-    //    futureResponse.join()
-
-        return sink.asFlux();
+    fun stream(@RequestBody chatMessage: ChatRequestDto):  Flux<String> {
+        return streamResponseTo(chatMessage.messages.last().content, chatMessage.stream)
     }
 
-    @PostMapping("/api/generate")
-    fun chatCompletations() = mapOf("models" to listOf(ollamaModel.availableModels().content().first()))
+    @PostMapping("/api/generate",
+        consumes = ["application/json"],
+        produces = ["application/x-ndjson"])
+    fun generate(@RequestBody generateRequest: GenerateRequestDto) : Flux<String>{
+        return streamResponseTo(generateRequest.prompt, generateRequest.stream)
+    }
+
+    private fun streamResponseTo(ask:String, stream: Boolean) : Flux<String>{
+
+        val sink = Sinks.many().unicast().onBackpressureBuffer<String>()
+        assistant.chatStream(ask)
+            .onPartialResponse { partialResponse ->
+                if(stream) {
+                    sink.tryEmitNext("{\"model\":\"gemma3\",\"created_at\":\"${Instant.now()}\",\"message\":{\"role\":\"assistant\",\"content\":\"${partialResponse.replace("\n","\\n")}\"},\"done\":false}\n")
+                }
+            }
+            .onError {
+                if(stream)
+                    sink.tryEmitNext("""{"model":"gemma3","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.message}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
+                sink.tryEmitComplete()
+            }
+            .onCompleteResponse {
+                if(stream) {
+                    sink.tryEmitNext("""{"model":"${it.modelName()}","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.finishReason().name}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
+                } else {
+                   // sink.tryEmitNext(it.aiMessage().text())
+                }
+
+                sink.tryEmitComplete()
+            }
+            .onToolExecuted {
+                System.out.println(it)
+            }
+            .start()
+        return sink.asFlux();
+    }
 }
+
+@Serializable
+data class  GenerateRequestDto(
+    val model: String,
+    val prompt: String,
+    val stream: Boolean = false
+)
+
+@Serializable
+data class Options(
+    val temperature: Double,
+    val top_k: Int,
+    val top_p: Double,
+    val stop: List<String> = emptyList()
+)
 
 @Serializable
 data class ChatRequestDto(
     val model: String,
-    val messages: List<Message>
+    val messages: List<Message>,
+    val options: Options? = null,
+    val stream: Boolean = false,
+    //val tools: List<String> = emptyList()
 )
 
 @Serializable
 data class Message(
     val role: String,
-    val content: String
+    val content: String,
 )

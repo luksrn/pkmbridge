@@ -19,12 +19,14 @@ import dev.langchain4j.rag.query.router.QueryRouter
 import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
+import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessageConverter
 import java.time.Duration
 
 
@@ -39,6 +41,8 @@ class AssistantConfiguration {
         .temperature(0.7)           // temperature (between 0 and 2)
         .topP(0.95)                 // topP (between 0 and 1) — cumulative probability of the most probable tokens
         .topK(3)
+        .logRequests(true)
+        .logResponses(true)
         //.modelName("llama2")
         .modelName("gemma3")
         //.modelName("qwen3:8b")
@@ -176,5 +180,13 @@ class AssistantConfiguration {
         } catch (ex: Exception) {
             logger.error("Error initializing summaries", ex)
         }
+    }
+
+    @Bean
+    fun ktxMessageConverter() : KotlinSerializationJsonHttpMessageConverter {
+        // if you want to ignore unknown keys from json string,
+        // otherwise make sure your data class has all json keys.
+        val json = Json { ignoreUnknownKeys = true }
+        return KotlinSerializationJsonHttpMessageConverter(json)
     }
 }
