@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
 
 @Configuration
 class RAGInitializer {
@@ -22,6 +23,7 @@ class RAGInitializer {
 
     // TODO Optimize this to work together with the main initializer
     @Bean
+    @Order(Integer.MAX_VALUE)
     fun initializerSummaries(@Qualifier("embeddingStoreIngestorSummaries") embeddingStoreIngestor: EmbeddingStoreIngestor, api: LogseqApi) = ApplicationRunner { args ->
         try {
             logger.info("Initializing LogSeq RAG summaries")

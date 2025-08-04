@@ -10,6 +10,7 @@ class ObsidianDocumentTransformer : DocumentTransformer {
         // Additional transformations can be added here if needed.
 
         document.metadata().put("pkm", "obsidian")
+        document.metadata().put("link", "obsidian://open?vault=obsidian&file=${document.metadata().getString(Document.FILE_NAME)?.replace(" ", "%20")}")
         return document
     }
 }
