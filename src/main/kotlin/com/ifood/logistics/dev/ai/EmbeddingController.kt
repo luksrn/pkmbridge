@@ -1,12 +1,11 @@
 package com.ifood.logistics.dev.ai
 
 import dev.langchain4j.data.message.UserMessage
-import dev.langchain4j.data.segment.TextSegment
-import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.rag.AugmentationRequest
 import dev.langchain4j.rag.RetrievalAugmentor
-import dev.langchain4j.store.embedding.EmbeddingSearchRequest
-import dev.langchain4j.store.embedding.EmbeddingStore
+import dev.langchain4j.rag.content.ContentMetadata
+import dev.langchain4j.rag.query.Metadata
+import kotlinx.serialization.Serializable
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
@@ -14,32 +13,28 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class EmbeddingController(
-    val retrivalAugmentor: RetrievalAugmentor,
-    val embeddingStore: EmbeddingStore<TextSegment>,
-    val embeddingModel: EmbeddingModel) {
+    val retrivalAugmentor: RetrievalAugmentor) {
 
     @GetMapping("/embedding")
     @ResponseBody
-    fun model(@RequestParam(value = "query", defaultValue = "Hello") q: String) : String  {
+    fun embeddings(@RequestParam(value = "query") text: String) : List<EmbeddingContent> {
 
-        val metadata = dev.langchain4j.rag.query.Metadata.from(UserMessage(q), null, null)
-        val augmentationRequest = AugmentationRequest(UserMessage(q), metadata)
+        val metadata = Metadata.from(UserMessage(text), null, null)
+        val augmentationRequest = AugmentationRequest(UserMessage(text), metadata)
 
-        var result = retrivalAugmentor.augment(augmentationRequest)
+        return retrivalAugmentor.augment(augmentationRequest)
+            .contents()
+            .map { EmbeddingContent(it.textSegment().text(), it.metadata()[ContentMetadata.SCORE].toString()) }
+            .toList()
+    }
+}
 
-        var queryEmbedding = embeddingModel.embed(q).content()
-        val embeddingSearchRequest = EmbeddingSearchRequest.builder()
-            .queryEmbedding(queryEmbedding)
-            .maxResults(25)
-            .build()
-
-        val matches = embeddingStore.search(embeddingSearchRequest).matches()
-        val builder = StringBuilder()
-        matches.forEach {
-            builder.append( it.score() ).append("\n")
-            builder.append( it.embedded().text() ).append("\n")
-            builder.append( it.embedded().metadata() ).append("\n")
-        }
-        return builder.toString()
+@Serializable
+data class EmbeddingContent(
+    val text: String,
+    val score: String
+) {
+    override fun toString(): String {
+        return "EmbeddingContent(text='$text', score=$score)"
     }
 }

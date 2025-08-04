@@ -3,9 +3,6 @@ package com.ifood.logistics.dev.ai.logseq
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.JsonBuilder
-import okhttp3.RequestBody
 import org.springframework.stereotype.Component
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

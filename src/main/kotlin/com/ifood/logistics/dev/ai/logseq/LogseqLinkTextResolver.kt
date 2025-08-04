@@ -16,6 +16,11 @@ class LogseqLinkTextResolver {
             return block
         }
 
+        fun replaceLinks(block: Block, resolver: Function<String, String>) {
+            replaceLinks(block.content, resolver)?.let { newContent ->
+                block.content = newContent
+            }
+        }
 
         fun replaceLinks(text: String?, resolver: Function<String, String>): String? {
             if (text.isNullOrEmpty()) {

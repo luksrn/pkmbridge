@@ -92,7 +92,7 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSegments())
             .maxResults(25)
-            .minScore(0.60) // 0.70
+            .minScore(0.70) // 0.70
             .build()
     }
 
@@ -103,14 +103,17 @@ class AssistantConfiguration {
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSummaries())
             .maxResults(10)
-            .minScore(0.60) // 0.70
+            .minScore(0.70) // 0.70
             .build()
     }
 
 
     @Bean
     fun queryRouter() : QueryRouter  =
-        DefaultQueryRouter(contentRetrieverTextSegments(), contentRetrieverTextSummaries())
+        DefaultQueryRouter(
+            contentRetrieverTextSegments(),
+            contentRetrieverTextSummaries()
+        )
 
 
     @Bean
@@ -128,7 +131,6 @@ class AssistantConfiguration {
             .chatModel(chatModel())
             .streamingChatModel(streamChatModel())
             .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
-            //.contentRetriever(contentRetriever())
             .retrievalAugmentor (retrievalAugmentor())
             .build()
     }

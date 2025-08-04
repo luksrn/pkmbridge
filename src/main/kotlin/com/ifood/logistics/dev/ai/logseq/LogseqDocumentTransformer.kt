@@ -24,23 +24,12 @@ class LogseqDocumentTransformer(val api: LogseqApi) : DocumentTransformer {
             return null
         }
 
-        if(note.page.title.equals("How to set priorities for Individuals")){
-            println("Skipping note: ${note.page.title}")
-        }
-
-        LogseqDocument.doWithBlocksRecursive(note.blocks) { block ->
-            LogseqLinkTextResolver.replaceLinks(block.content) { pageId ->
-                api.fetchPage(pageId).title
-            }?.let { newContent ->
-                block.content = newContent
-            }
-        }
-
-        note.blocks.map { block ->
-            LogseqLinkTextResolver.replaceLinksRecursively(block) { pageId ->
+        note.doWithBlocksRecursive { block ->
+            LogseqLinkTextResolver.replaceLinks(block) { pageId ->
                 api.fetchPage(pageId).title
             }
         }
+
         return document
     }
 }
