@@ -1,8 +1,6 @@
 package com.ifood.logistics.dev.ai
 
-import com.ifood.logistics.dev.ai.logseq.Block
 import com.ifood.logistics.dev.ai.pkm.Assistant
-import dev.langchain4j.model.chat.request.ChatRequest
 import dev.langchain4j.model.ollama.OllamaModels
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import kotlinx.serialization.Serializable
@@ -36,7 +34,7 @@ class OpenApiProxy(val ollamaModel: OllamaModels,
 
     @PostMapping("/api/generate",
         consumes = ["application/json"],
-        produces = ["application/x-ndjson"])
+        produces = ["application/json","application/x-ndjson"])
     fun generate(@RequestBody generateRequest: GenerateRequestDto) : Flux<String>{
         return streamResponseTo(generateRequest.prompt, generateRequest.stream)
     }
@@ -59,7 +57,9 @@ class OpenApiProxy(val ollamaModel: OllamaModels,
                 if(stream) {
                     sink.tryEmitNext("""{"model":"${it.modelName()}","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.finishReason().name}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
                 } else {
-                   // sink.tryEmitNext(it.aiMessage().text())
+                    // TODO this is the final response, not a stream, to "generate" endpoint
+                    val response = it.aiMessage().text().replace("\n","\\n")
+                    sink.tryEmitNext("""{"model":"${it.modelName()}","created_at":"${Instant.now()}","response": "${response},"done_reason":"${it.finishReason().name}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
                 }
 
                 sink.tryEmitComplete()
@@ -76,7 +76,8 @@ class OpenApiProxy(val ollamaModel: OllamaModels,
 data class  GenerateRequestDto(
     val model: String,
     val prompt: String,
-    val stream: Boolean = false
+    val stream: Boolean = false,
+    val format: String? = null
 )
 
 @Serializable
@@ -94,6 +95,7 @@ data class ChatRequestDto(
     val options: Options? = null,
     val stream: Boolean = false,
     //val tools: List<String> = emptyList()
+    val format: String? = null
 )
 
 @Serializable
@@ -101,3 +103,5 @@ data class Message(
     val role: String,
     val content: String,
 )
+// https://ollama.com/blog/structured-outputs
+

@@ -6,6 +6,7 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -22,6 +23,7 @@ class RAGInitializer {
     }
 
     // TODO Optimize this to work together with the main initializer
+    @ConditionalOnProperty(name = ["pkm.rag.summaries.enabled"], havingValue = "true", matchIfMissing = true)
     @Bean
     @Order(Integer.MAX_VALUE)
     fun initializerSummaries(@Qualifier("embeddingStoreIngestorSummaries") embeddingStoreIngestor: EmbeddingStoreIngestor, api: LogseqApi) = ApplicationRunner { args ->

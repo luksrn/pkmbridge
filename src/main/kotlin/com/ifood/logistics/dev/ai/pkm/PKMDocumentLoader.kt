@@ -1,4 +1,4 @@
-package com.ifood.logistics.dev.ai.logseq
+package com.ifood.logistics.dev.ai.pkm
 
 import dev.langchain4j.data.document.Document
 

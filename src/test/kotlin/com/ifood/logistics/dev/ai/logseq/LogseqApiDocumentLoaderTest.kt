@@ -1,5 +1,6 @@
 package com.ifood.logistics.dev.ai.logseq
 
+import com.ifood.logistics.dev.ai.pkm.PKMDocumentLoader
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

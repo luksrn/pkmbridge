@@ -1,5 +1,6 @@
 package com.ifood.logistics.dev.ai.logseq
 
+import com.ifood.logistics.dev.ai.pkm.PKMDocumentLoader
 import dev.langchain4j.data.document.Document
 import org.slf4j.LoggerFactory
 

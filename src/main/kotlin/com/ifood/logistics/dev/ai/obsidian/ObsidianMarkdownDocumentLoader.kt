@@ -1,6 +1,6 @@
 package com.ifood.logistics.dev.ai.obsidian
 
-import com.ifood.logistics.dev.ai.logseq.PKMDocumentLoader
+import com.ifood.logistics.dev.ai.pkm.PKMDocumentLoader
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader
 import org.apache.commons.io.filefilter.RegexFileFilter
