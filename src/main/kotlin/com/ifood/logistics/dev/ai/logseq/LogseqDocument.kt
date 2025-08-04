@@ -13,6 +13,7 @@ class LogseqDocument(
         metadata.put(Document.FILE_NAME, page.name)
         metadata.put("type", page.inferIdentity().name)
         metadata.put("pkm", "logseq")
+        metadata.put("link", "logseq://graph/database-teste-03?page=${page.uuid}")
     }
 
     override fun text(): String {

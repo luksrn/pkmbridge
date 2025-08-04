@@ -3,6 +3,7 @@ package com.ifood.logistics.dev.ai
 import com.ifood.logistics.dev.ai.logseq.*
 import com.ifood.logistics.dev.ai.pkm.Assistant
 import com.ifood.logistics.dev.ai.pkm.SummarizerAssistant
+import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.memory.chat.MessageWindowChatMemory
 import dev.langchain4j.model.embedding.EmbeddingModel
@@ -15,6 +16,7 @@ import dev.langchain4j.model.scoring.onnx.OnnxScoringModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
 import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator
+import dev.langchain4j.rag.content.injector.DefaultContentInjector
 import dev.langchain4j.rag.content.retriever.ContentRetriever
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever
 import dev.langchain4j.rag.query.router.DefaultQueryRouter
@@ -45,8 +47,8 @@ class AssistantConfiguration {
         .logRequests(true)
         .logResponses(true)
         //.modelName("llama2")
-        .modelName("gemma3")
-        //.modelName("qwen3:8b")
+        //.modelName("gemma3")
+        .modelName("qwen3:8b")
         .timeout(Duration.ofSeconds(60 * 5))
         .build()
 
@@ -66,8 +68,8 @@ class AssistantConfiguration {
         .logRequests(true)
         .logResponses(true)
         //.modelName("llama2")
-        .modelName("gemma3")
-        //.modelName("qwen3:8b")
+        //.modelName("gemma3")
+        .modelName("qwen3:8b")
         .timeout(Duration.ofSeconds(60 * 5))
         .build()
 
@@ -127,6 +129,7 @@ class AssistantConfiguration {
     fun retrievalAugment() : RetrievalAugmentor {
         return DefaultRetrievalAugmentor.builder()
             .queryRouter(queryRouter())
+            .contentInjector(DefaultContentInjector(listOf<String>("link", Document.FILE_NAME)))
             .contentAggregator(ReRankingContentAggregator
                 .builder()
                 .scoringModel(scoreModel())
@@ -144,6 +147,7 @@ class AssistantConfiguration {
             .streamingChatModel(streamChatModel())
             .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
             .retrievalAugmentor (retrievalAugment())
+            .tools(LogseqApiTool())
             .build()
     }
 
