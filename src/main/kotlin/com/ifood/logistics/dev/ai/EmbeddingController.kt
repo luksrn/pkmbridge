@@ -24,7 +24,9 @@ class EmbeddingController(
 
         return retrivalAugmentor.augment(augmentationRequest)
             .contents()
-            .map { EmbeddingContent(it.textSegment().text(), it.metadata()[ContentMetadata.SCORE].toString()) }
+            .map { EmbeddingContent(it.textSegment().text(),
+                it.metadata()[ContentMetadata.SCORE].toString(),
+                it.metadata()[ContentMetadata.RERANKED_SCORE]?.toString()) }
             .toList()
     }
 }
@@ -32,7 +34,8 @@ class EmbeddingController(
 @Serializable
 data class EmbeddingContent(
     val text: String,
-    val score: String
+    val score: String,
+    val reRank: String?
 ) {
     override fun toString(): String {
         return "EmbeddingContent(text='$text', score=$score)"

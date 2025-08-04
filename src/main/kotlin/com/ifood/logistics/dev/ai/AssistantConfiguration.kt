@@ -10,8 +10,11 @@ import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2Embedding
 import dev.langchain4j.model.ollama.OllamaChatModel
 import dev.langchain4j.model.ollama.OllamaModels
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel
+import dev.langchain4j.model.scoring.ScoringModel
+import dev.langchain4j.model.scoring.onnx.OnnxScoringModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
+import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator
 import dev.langchain4j.rag.content.retriever.ContentRetriever
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever
 import dev.langchain4j.rag.query.router.DefaultQueryRouter
@@ -115,11 +118,22 @@ class AssistantConfiguration {
             contentRetrieverTextSummaries()
         )
 
+    @Bean
+    fun scoreModel() : ScoringModel {
+        val pathToModel = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"
+        val pathToTokenizer = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
+        return OnnxScoringModel(pathToModel, pathToTokenizer)
+    }
 
     @Bean
     fun retrievalAugmentor() : RetrievalAugmentor {
         return DefaultRetrievalAugmentor.builder()
             .queryRouter(queryRouter())
+            .contentAggregator(ReRankingContentAggregator
+                .builder()
+                .scoringModel(scoreModel())
+                .maxResults(3)
+                .minScore(0.25).build())
             .build();
     }
 

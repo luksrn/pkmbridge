@@ -25,7 +25,7 @@ class LogseqApi(private val properties: LogseqProperties) {
         val jsonString = json.encodeToString(LogseqRequest.serializer(), logseqRequest)
 
         val request = Request.Builder()
-            .url("${properties.serverUrl}")
+            .url(properties.serverUrl)
             .post(jsonString.toRequestBody("application/json".toMediaTypeOrNull()))
             .header("Authorization", properties.authorizationToken)
             .build()
@@ -42,7 +42,7 @@ class LogseqApi(private val properties: LogseqProperties) {
         val jsonString = json.encodeToString(LogseqRequest.serializer(), logseqRequest)
 
         val request = Request.Builder()
-            .url("${properties.serverUrl}")
+            .url(properties.serverUrl)
             .post(jsonString.toRequestBody("application/json".toMediaTypeOrNull()))
             .header("Authorization", properties.authorizationToken)
             .build()
@@ -60,7 +60,7 @@ class LogseqApi(private val properties: LogseqProperties) {
         val jsonString = json.encodeToString(LogseqRequest.serializer(), logseqRequest)
 
         val request = Request.Builder()
-            .url("${properties.serverUrl}")
+            .url(properties.serverUrl)
             .post(jsonString.toRequestBody("application/json".toMediaTypeOrNull()))
             .header("Authorization", properties.authorizationToken)
             .build()

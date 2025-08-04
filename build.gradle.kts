@@ -42,6 +42,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
 	//implementation("org.apache.lucene:lucene-core:10.2.2")
 
+	implementation("dev.langchain4j:langchain4j-onnx-scoring:1.2.0-beta8")
+
 
 	testImplementation("org.apache.lucene:lucene-core:10.2.2")
 }
