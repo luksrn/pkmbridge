@@ -21,6 +21,7 @@ class LogseqAPIDocumentLoader(val logseqApi: LogseqApi) : PKMDocumentLoader {
                 val blocks = logseqApi.fetchBlocks(it.uuid)
                 LogseqDocument(it, blocks.sortedBy { b -> b.order })
             }
+
         return documents
     }
     private val logger = LoggerFactory.getLogger(LogseqAPIDocumentLoader::class.java)

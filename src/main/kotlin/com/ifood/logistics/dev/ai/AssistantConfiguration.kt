@@ -130,7 +130,7 @@ class AssistantConfiguration {
             .contentAggregator(ReRankingContentAggregator
                 .builder()
                 .scoringModel(scoreModel())
-                .maxResults(3)
+                .maxResults(5)
                 .minScore(0.25).build())
             .build();
     }

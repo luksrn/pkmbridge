@@ -12,6 +12,7 @@ class LogseqDocument(
     init {
         metadata.put(Document.FILE_NAME, page.name)
         metadata.put("type", page.inferIdentity().name)
+        metadata.put("pkm", "logseq")
     }
 
     override fun text(): String {

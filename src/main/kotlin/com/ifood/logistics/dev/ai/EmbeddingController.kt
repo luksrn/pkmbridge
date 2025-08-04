@@ -1,5 +1,6 @@
 package com.ifood.logistics.dev.ai
 
+import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.rag.AugmentationRequest
 import dev.langchain4j.rag.RetrievalAugmentor
@@ -24,9 +25,12 @@ class EmbeddingController(
 
         return retrivalAugmentor.augment(augmentationRequest)
             .contents()
-            .map { EmbeddingContent(it.textSegment().text(),
+            .map { EmbeddingContent(
+                it.textSegment().text(),
                 it.metadata()[ContentMetadata.SCORE].toString(),
-                it.metadata()[ContentMetadata.RERANKED_SCORE]?.toString()) }
+                it.metadata()[ContentMetadata.RERANKED_SCORE]?.toString(),
+                it.textSegment().metadata().getString(Document.FILE_NAME)?: "unknown",
+                it.textSegment().metadata().getString("pkm")!!) }
             .toList()
     }
 }
@@ -35,7 +39,9 @@ class EmbeddingController(
 data class EmbeddingContent(
     val text: String,
     val score: String,
-    val reRank: String?
+    val reRank: String?,
+    val fileName: String,
+    val source: String,
 ) {
     override fun toString(): String {
         return "EmbeddingContent(text='$text', score=$score)"

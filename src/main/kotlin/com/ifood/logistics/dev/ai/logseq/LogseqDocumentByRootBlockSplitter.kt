@@ -13,6 +13,7 @@ class LogseqDocumentByRootBlockSplitter : DocumentSplitter{
             val textSegments = createTextSegments(logseqDocument.blocks, null)
             println("LogseqDocumentSplitter: Splitting document with ${textSegments.size} text segments")
             textSegments.forEach {
+                it.metadata().putAll(document.metadata.toMap())
                 it.metadata().put("source", logseqDocument.page.title)
                 logseqDocument.page.journalDay?.let { journalDay ->
                     it.metadata().put("journalDay", journalDay)

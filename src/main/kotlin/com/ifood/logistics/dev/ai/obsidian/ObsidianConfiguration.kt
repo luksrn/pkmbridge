@@ -15,7 +15,8 @@ class ObsidianConfiguration {
     @Bean
     fun obsidianEmbeddingStoreIngestor(embeddingModel: EmbeddingModel,
           embeddingStore: EmbeddingStore<TextSegment>) = EmbeddingStoreIngestor.builder()
-            .documentSplitter(DocumentSplitters.recursive(500, 50))
+            .documentTransformer(ObsidianDocumentTransformer())
+            .documentSplitter(DocumentSplitters.recursive(1000, 100))
             .embeddingModel(embeddingModel)
             .embeddingStore(embeddingStore)
             .build()

@@ -6,6 +6,7 @@ import dev.langchain4j.data.document.DocumentTransformer
 class LogseqDocumentTransformer(val api: LogseqApi) : DocumentTransformer {
 
     override fun transform(document: Document): Document? {
+
         val note = document as LogseqDocument
         val isPublic = note.page.public?: false // Ensure the page is public for indexing
         if(!isPublic){
