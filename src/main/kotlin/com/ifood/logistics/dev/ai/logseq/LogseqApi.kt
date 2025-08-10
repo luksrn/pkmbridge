@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 
-
+// TODO Refactor
 @Component
 class LogseqApi(private val properties: LogseqProperties) {
 

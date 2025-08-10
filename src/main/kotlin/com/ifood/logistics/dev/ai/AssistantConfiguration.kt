@@ -128,6 +128,7 @@ class AssistantConfiguration {
     @Bean
     fun retrievalAugment() : RetrievalAugmentor {
         return DefaultRetrievalAugmentor.builder()
+            //.queryTransformer {  }
             .queryRouter(queryRouter())
             .contentInjector(DefaultContentInjector(listOf<String>("link", Document.FILE_NAME)))
             .contentAggregator(ReRankingContentAggregator

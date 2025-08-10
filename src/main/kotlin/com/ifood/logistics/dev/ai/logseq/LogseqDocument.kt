@@ -52,24 +52,4 @@ class LogseqDocument(
             doWithBlocksRecursive(block.children, action)
         }
     }
-
-    companion object {
-//
-//        fun doWithBlocksRecursive(
-//            document: LogseqDocument,
-//            action: (Block) -> Unit
-//        ) {
-//            doWithBlocksRecursive(document.blocks, action)
-//        }
-//
-//        fun doWithBlocksRecursive(
-//            blocks: List<Block>,
-//            action: (Block) -> Unit
-//        ) {
-//            blocks.forEach { block ->
-//                action(block)
-//                doWithBlocksRecursive(block.children, action)
-//            }
-//        }
-    }
 }

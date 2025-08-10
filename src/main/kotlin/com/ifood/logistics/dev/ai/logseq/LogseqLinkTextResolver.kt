@@ -22,23 +22,23 @@ class LogseqLinkTextResolver {
             }
         }
 
-        fun replaceLinks(text: String?, resolver: Function<String, String>): String? {
-            if (text.isNullOrEmpty()) {
-                return text
+        fun replaceLinks(blockContent: String?, linkContentResolver: Function<String, String>): String? {
+            if (blockContent.isNullOrEmpty()) {
+                return blockContent
             }
-            val links = extractLinkedUUIDs(text)
+            val links = extractLinkedUUIDs(blockContent)
             // If no UUIDs found, return the original document
             if (links.isEmpty()) {
-                return text
+                return blockContent
             }
 
             val linksAndPages = links.map {
-                Pair(it,  resolver.apply(it))
+                Pair(it,  linkContentResolver.apply(it))
             }
 
-            var transformedText = text!!
-            linksAndPages.forEach { (uuid, name) ->
-                transformedText = transformedText.replace("[[$uuid]]", name ?: "")
+            var transformedText = blockContent!!
+            linksAndPages.forEach { (uuid, content) ->
+                transformedText = transformedText.replace("[[$uuid]]", content)
             }
 
             return transformedText

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class ObsidianRAGInitializer {
 
-
     @Bean
     fun obsidianRAGApplicationRunner(
         @Value("\${pkm.obsidian.file-system-path}") vaultPath: String,

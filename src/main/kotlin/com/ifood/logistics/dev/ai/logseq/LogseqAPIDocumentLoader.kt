@@ -11,8 +11,6 @@ class LogseqAPIDocumentLoader(val logseqApi: LogseqApi) : PKMDocumentLoader {
         val pages = logseqApi.fetchPages()
         logger.info("${pages.size} pages found in Logseq graph")
 
-        val pagesByUuid = pages.groupBy { it.uuid }
-
         val documents = pages
             .map {
                 it.ident = it.inferIdentity()
