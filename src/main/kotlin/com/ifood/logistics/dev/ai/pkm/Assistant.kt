@@ -1,7 +1,9 @@
 package com.ifood.logistics.dev.ai.pkm
 
+import dev.langchain4j.service.MemoryId
 import dev.langchain4j.service.SystemMessage
 import dev.langchain4j.service.TokenStream
+import dev.langchain4j.service.UserMessage
 
 interface Assistant {
 
@@ -24,5 +26,5 @@ interface Assistant {
     - You use bulleted lists for output, not numbered lists.
     """
     )
-    fun chatStream(userMessage: String): TokenStream
+    fun chatStream(@MemoryId memoryId: String, @UserMessage userMessage: String): TokenStream
 }

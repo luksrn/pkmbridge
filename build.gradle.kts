@@ -46,6 +46,9 @@ dependencies {
 
 
 	testImplementation("org.apache.lucene:lucene-core:10.2.2")
+
+	// https://mvnrepository.com/artifact/org.bsc.langgraph4j/langgraph4j-core
+	implementation("org.bsc.langgraph4j:langgraph4j-core:1.6.0-rc4")
 }
 
 kotlin {

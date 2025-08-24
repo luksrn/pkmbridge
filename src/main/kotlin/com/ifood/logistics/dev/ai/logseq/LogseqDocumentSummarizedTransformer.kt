@@ -21,12 +21,12 @@ class LogseqDocumentSummarizedTransformer(val summarizerAssistant: SummarizerAss
             return null
         }
 
-        if(note.text()!!.count() < 1000 ) {
+        if(note.text().count() < 1000 ) {
             // Skip summarization for small notes
             return null
         }
-        val summary = summarizerAssistant.summarize(note.text()!!).content()
-        document.metadata()!!.put("summary", summary)
+        val summary = summarizerAssistant.summarize(note.text()).content()
+        document.metadata().put("summary", summary)
         return document
     }
 }

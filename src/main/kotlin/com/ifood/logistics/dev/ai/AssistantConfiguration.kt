@@ -5,6 +5,7 @@ import com.ifood.logistics.dev.ai.pkm.Assistant
 import com.ifood.logistics.dev.ai.pkm.SummarizerAssistant
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
+import dev.langchain4j.memory.chat.ChatMemoryProvider
 import dev.langchain4j.memory.chat.MessageWindowChatMemory
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel
@@ -24,6 +25,7 @@ import dev.langchain4j.rag.query.router.QueryRouter
 import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
+import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -46,8 +48,6 @@ class AssistantConfiguration {
         .topK(3)
         .logRequests(true)
         .logResponses(true)
-        //.modelName("llama2")
-        //.modelName("gemma3")
         .modelName("qwen3:8b")
         .timeout(Duration.ofSeconds(60 * 5))
         .build()
@@ -67,8 +67,6 @@ class AssistantConfiguration {
         .topK(3)
         .logRequests(true)
         .logResponses(true)
-        //.modelName("llama2")
-        //.modelName("gemma3")
         .modelName("qwen3:8b")
         .timeout(Duration.ofSeconds(60 * 5))
         .build()
@@ -139,6 +137,27 @@ class AssistantConfiguration {
             .build();
     }
 
+    @Bean
+    fun chatMemory(): MessageWindowChatMemory {
+        return MessageWindowChatMemory
+            .builder()
+            .maxMessages(10)
+            .chatMemoryStore(InMemoryChatMemoryStore())
+            .build()
+    }
+
+    @Bean
+    fun chatMemoryProvider(): ChatMemoryProvider {
+        return ChatMemoryProvider {
+            memoryId ->
+            MessageWindowChatMemory
+                .builder()
+                .id(memoryId)
+                .maxMessages(10)
+                .chatMemoryStore(InMemoryChatMemoryStore())
+                .build()
+        }
+    }
 
     @Bean
     @Primary
@@ -146,7 +165,7 @@ class AssistantConfiguration {
         return AiServices.builder<Assistant>(Assistant::class.java)
             .chatModel(chatModel())
             .streamingChatModel(streamChatModel())
-            .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+            .chatMemoryProvider(chatMemoryProvider())
             .retrievalAugmentor (retrievalAugment())
             .tools(LogseqApiTool())
             .build()

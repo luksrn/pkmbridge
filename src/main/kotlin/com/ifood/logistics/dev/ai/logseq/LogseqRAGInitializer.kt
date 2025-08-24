@@ -13,6 +13,7 @@ import org.springframework.core.annotation.Order
 class LogseqRAGInitializer {
 
     @Bean
+    @ConditionalOnProperty(name = ["pkm.logseq.rag.enabled"], havingValue = "true", matchIfMissing = true)
     fun initializer(embeddingStoreIngestor: EmbeddingStoreIngestor, api: LogseqApi) = ApplicationRunner { args ->
         logger.info("Initializing LogSeq RAG")
         embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())

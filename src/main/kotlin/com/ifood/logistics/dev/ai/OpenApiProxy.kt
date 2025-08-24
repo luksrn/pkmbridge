@@ -2,23 +2,24 @@ package com.ifood.logistics.dev.ai
 
 import com.ifood.logistics.dev.ai.pkm.Assistant
 import dev.langchain4j.model.ollama.OllamaModels
-import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import kotlinx.serialization.Serializable
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
 import java.time.Instant
+import java.util.UUID
 
 
 @RestController
 @CrossOrigin(origins = ["*"])
-class OpenApiProxy(val ollamaModel: OllamaModels,
-    val model: OllamaStreamingChatModel,
+class OpenApiProxy(
+    val ollamaModel: OllamaModels,
     val assistant: Assistant){
 
     @GetMapping("/api/version")
-    fun version() = mapOf( "version" to "0.5.1")
-
+fun version(): Map<String, String> {
+        return mapOf("version" to "0.5.1")
+    }
     @GetMapping("/api/tags")
     fun models() = mapOf("models" to ollamaModel.availableModels().content())
 
@@ -40,12 +41,15 @@ class OpenApiProxy(val ollamaModel: OllamaModels,
     }
 
     private fun streamResponseTo(ask:String, stream: Boolean) : Flux<String>{
-
         val sink = Sinks.many().unicast().onBackpressureBuffer<String>()
-        assistant.chatStream(ask)
+        assistant.chatStream(UUID.randomUUID().toString(), ask)
             .onPartialResponse { partialResponse ->
                 if(stream) {
-                    sink.tryEmitNext("{\"model\":\"gemma3\",\"created_at\":\"${Instant.now()}\",\"message\":{\"role\":\"assistant\",\"content\":\"${partialResponse.replace("\n","\\n")}\"},\"done\":false}\n")
+                    val parsedMessage = partialResponse
+                        .replace("\n","\\n")
+                        .replace("\"", "\\\"")
+                    val msg = "{\"model\":\"gemma3\",\"created_at\":\"${Instant.now()}\",\"message\":{\"role\":\"assistant\",\"content\":\"${parsedMessage}\"},\"done\":false}\n"
+                    sink.tryEmitNext(msg)
                 }
             }
             .onError {
@@ -58,7 +62,7 @@ class OpenApiProxy(val ollamaModel: OllamaModels,
                     sink.tryEmitNext("""{"model":"${it.modelName()}","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.finishReason().name}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
                 } else {
                     // TODO this is the final response, not a stream, to "generate" endpoint
-                    val response = it.aiMessage().text().replace("\n","\\n")
+                    val response = it.aiMessage().text().replace("\n","\\n").replace("\"", "\\\"")
                     sink.tryEmitNext("""{"model":"${it.modelName()}","created_at":"${Instant.now()}","response": "${response},"done_reason":"${it.finishReason().name}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
                 }
 
