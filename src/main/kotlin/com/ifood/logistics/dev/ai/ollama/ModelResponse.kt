@@ -1,5 +1,6 @@
 package com.ifood.logistics.dev.ai.ollama
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.ifood.logistics.dev.ai.GenerateRequestDto
 import dev.langchain4j.model.chat.response.ChatResponse
@@ -13,26 +14,27 @@ data class StreamMessageDto(
     val done: Boolean
 )
 
-data class CompleteStreamMessageDto (
+@JsonInclude(JsonInclude.Include.NON_NULL)
+data class AssistantResponseDto (
     val model: String,
     @field:JsonProperty("created_at")
     val createdAt: Instant,
     val message: ModelResponseDto,
-    @field:JsonProperty("done_reason")
-    val doneReason: String,
     val done: Boolean,
+    @field:JsonProperty("done_reason")
+    val doneReason: String? = null,
     @field:JsonProperty("total_duration")
-    val totalDuration: Long,
+    val totalDuration: Long? = null,
     @field:JsonProperty("load_duration")
-    val loadDuration: Long,
+    val loadDuration: Long? = null,
     @field:JsonProperty("prompt_eval_count")
-    val promptEvalCount: Int,
+    val promptEvalCount: Int? = null,
     @field:JsonProperty("prompt_eval_duration")
-    val promptEvalDuration: Long,
+    val promptEvalDuration: Long? = null,
     @field:JsonProperty("eval_count")
-    val evalCount: Int,
+    val evalCount: Int? = null,
     @field:JsonProperty("eval_duration")
-    val evalDuration: Long
+    val evalDuration: Long? = null,
 )
 
 data class ModelResponseDto(
@@ -44,8 +46,8 @@ data class ModelResponseDto(
 object StreamMessageFactory {
 
     fun createPartialResponse(generateRequestDto: GenerateRequestDto,
-                              partialContent: String): StreamMessageDto {
-        return StreamMessageDto(
+                              partialContent: String): AssistantResponseDto {
+        return AssistantResponseDto(
             model = generateRequestDto.model,
             createdAt = Instant.now(),
             message = ModelResponseDto(
@@ -57,9 +59,9 @@ object StreamMessageFactory {
     }
 
     fun createCompleteResponse(generateRequestDto: GenerateRequestDto,
-                              chatResponse: ChatResponse): CompleteStreamMessageDto {
+                              chatResponse: ChatResponse): AssistantResponseDto {
 
-        return CompleteStreamMessageDto(
+        return AssistantResponseDto(
             model = generateRequestDto.model,
             createdAt = Instant.now(),
             message = ModelResponseDto(

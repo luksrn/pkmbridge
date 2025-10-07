@@ -18,11 +18,12 @@ import java.util.UUID
 @CrossOrigin(origins = ["*"])
 class OpenApiProxy(
     val ollamaModel: OllamaModels,
-    val assistant: Assistant){
+    val assistant: Assistant,
+    val objectMapper: ObjectMapper){
 
-    val objectMapper = ObjectMapper()
-        .registerModule(JavaTimeModule())
-        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+//    val objectMapper = ObjectMapper()
+//        .registerModule(JavaTimeModule())
+//        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
 
     @GetMapping("/api/version")
 fun version(): Map<String, String> {
