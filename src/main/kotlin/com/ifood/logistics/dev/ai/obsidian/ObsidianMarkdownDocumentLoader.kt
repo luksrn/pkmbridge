@@ -8,9 +8,6 @@ import org.apache.commons.io.filefilter.RegexFileFilter
 class ObsidianMarkdownDocumentLoader(
     val directory: String,
 ) : PKMDocumentLoader {
-    override fun loadDocuments(): List<Document> {
-        val markdownOnly = RegexFileFilter("^.*\\.md$") // Regex to match .md files
-        val documents = FileSystemDocumentLoader.loadDocumentsRecursively(directory, markdownOnly)
-        return documents
-    }
+    override fun loadDocuments(): List<Document> =
+        FileSystemDocumentLoader.loadDocumentsRecursively(directory, RegexFileFilter("^.*\\.md$"))
 }
