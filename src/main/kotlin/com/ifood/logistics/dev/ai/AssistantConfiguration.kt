@@ -27,17 +27,15 @@ import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
-import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
-import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessageConverter
 import java.time.Duration
 
 @Configuration
 class AssistantConfiguration(
-    val ollamaProperties: OllamaProperties
+    val ollamaProperties: OllamaProperties,
 ) {
     private val logger = LoggerFactory.getLogger(AssistantConfiguration::class.java)
 
@@ -197,12 +195,4 @@ class AssistantConfiguration(
             .documentTransformer(LogseqDocumentSummarizedTransformer(summarizerAssistant))
             .documentSplitter(LogseqDocumentBySummarySplitter())
             .build()
-
-    @Bean
-    fun ktxMessageConverter(): KotlinSerializationJsonHttpMessageConverter {
-        // if you want to ignore unknown keys from json string,
-        // otherwise make sure your data class has all json keys.
-        val json = Json { ignoreUnknownKeys = true }
-        return KotlinSerializationJsonHttpMessageConverter(json)
-    }
 }
