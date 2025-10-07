@@ -2,7 +2,6 @@ package com.ifood.logistics.dev.ai.ollama
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.ifood.logistics.dev.ai.GenerateRequestDto
 import dev.langchain4j.model.chat.response.ChatResponse
 import java.time.Instant
 
