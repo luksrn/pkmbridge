@@ -1,4 +1,4 @@
-package com.ifood.logistics.dev.ai.pkm
+package com.ifood.logistics.dev.ai
 
 import dev.langchain4j.service.Result
 import dev.langchain4j.service.SystemMessage

@@ -4,7 +4,6 @@ import com.ifood.logistics.dev.ai.ollama.AssistantResponseDto
 import com.ifood.logistics.dev.ai.ollama.ChatRequestDto
 import com.ifood.logistics.dev.ai.ollama.GenerateRequestDto
 import com.ifood.logistics.dev.ai.ollama.StreamMessageFactory
-import com.ifood.logistics.dev.ai.pkm.Assistant
 import dev.langchain4j.model.ollama.OllamaModels
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
@@ -13,7 +12,7 @@ import java.util.UUID
 
 @RestController
 @CrossOrigin(origins = ["*"])
-class OpenApiProxy(
+class AssistantController(
     val ollamaModel: OllamaModels,
     val assistant: Assistant,
 ) {

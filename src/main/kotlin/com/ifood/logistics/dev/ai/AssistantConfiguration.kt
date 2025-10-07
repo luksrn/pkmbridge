@@ -1,9 +1,10 @@
 package com.ifood.logistics.dev.ai
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.ifood.logistics.dev.ai.logseq.*
 import com.ifood.logistics.dev.ai.ollama.OllamaProperties
-import com.ifood.logistics.dev.ai.pkm.Assistant
-import com.ifood.logistics.dev.ai.pkm.SummarizerAssistant
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.memory.chat.ChatMemoryProvider
@@ -26,12 +27,14 @@ import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
+import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessageConverter
 import org.springframework.stereotype.Component
 
 @Configuration
@@ -159,6 +162,22 @@ class AssistantConfiguration(
             .documentTransformer(LogseqDocumentSummarizedTransformer(summarizerAssistant))
             .documentSplitter(LogseqDocumentBySummarySplitter())
             .build()
+
+    @Bean
+    fun objectMapper() =
+        ObjectMapper()
+            .registerModule(
+                JavaTimeModule(),
+            ).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+
+    // TODO: use only one Json configuration
+    @Bean
+    fun ktxMessageConverter(): KotlinSerializationJsonHttpMessageConverter {
+        // if you want to ignore unknown keys from json string,
+        // otherwise make sure your data class has all json keys.
+        val json = Json { ignoreUnknownKeys = true }
+        return KotlinSerializationJsonHttpMessageConverter(json)
+    }
 }
 
 @Component
