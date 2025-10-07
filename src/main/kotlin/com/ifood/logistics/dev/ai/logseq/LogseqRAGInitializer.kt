@@ -18,15 +18,9 @@ class LogseqRAGInitializer {
         embeddingStoreIngestor: EmbeddingStoreIngestor,
         api: LogseqApi,
     ) = ApplicationRunner { args ->
-
-        try {
-            logger.info("Initializing LogSeq RAG")
-            embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
-            logger.info("Loaded documents from Logseq API and synced into embedding store.")
-        } catch (ex: ConnectException) {
-            logger.error("Can't connect to Logseq server. Ensure your server is up and running")
-            throw ex
-        }
+        logger.info("Initializing LogSeq RAG")
+        embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
+        logger.info("Loaded documents from Logseq API and synced into embedding store.")
     }
 
     @Bean
