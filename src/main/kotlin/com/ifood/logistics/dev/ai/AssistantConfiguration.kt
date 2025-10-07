@@ -19,6 +19,7 @@ import dev.langchain4j.model.scoring.ScoringModel
 import dev.langchain4j.model.scoring.onnx.OnnxScoringModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
+import dev.langchain4j.rag.content.aggregator.ContentAggregator
 import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator
 import dev.langchain4j.rag.content.injector.DefaultContentInjector
 import dev.langchain4j.rag.content.retriever.ContentRetriever
@@ -29,6 +30,7 @@ import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
+import org.springframework.beans.factory.ObjectProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -82,20 +84,23 @@ class AssistantConfiguration(
     }
 
     @Bean
-    fun retrievalAugment(): RetrievalAugmentor =
+    fun contentAggregator() : ContentAggregator =
+        ReRankingContentAggregator
+            .builder()
+            .scoringModel(scoreModel())
+            .maxResults(5)
+            .minScore(0.25)
+            .build()
+
+    @Bean
+    fun retrievalAugment(contentAggregatorProvider: ObjectProvider<ContentAggregator>): RetrievalAugmentor =
         DefaultRetrievalAugmentor
             .builder()
-            // .queryTransformer {  }
             .queryRouter(queryRouter())
             .contentInjector(DefaultContentInjector(listOf<String>("link", Document.FILE_NAME)))
-            .contentAggregator(
-                ReRankingContentAggregator
-                    .builder()
-                    .scoringModel(scoreModel())
-                    .maxResults(5)
-                    .minScore(0.25)
-                    .build(),
-            ).build()
+            .contentAggregator(contentAggregatorProvider.ifAvailable)
+            .build()
+
 
     @Bean
     fun chatMemory(): MessageWindowChatMemory =
@@ -121,13 +126,14 @@ class AssistantConfiguration(
     fun assistant(
         chatModel: ChatModel,
         streamChatModel: StreamingChatModel,
+        retrievalAugmentor: RetrievalAugmentor
     ): Assistant =
         AiServices
             .builder<Assistant>(Assistant::class.java)
             .chatModel(chatModel)
             .streamingChatModel(streamChatModel)
             .chatMemoryProvider(chatMemoryProvider())
-            .retrievalAugmentor(retrievalAugment())
+            .retrievalAugmentor(retrievalAugmentor)
             .tools(LogseqApiTool())
             .build()
 
