@@ -37,10 +37,10 @@ class EmbeddingTest {
         val pathToTokenizer = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
         val scoringModel = OnnxScoringModel(pathToModel, pathToTokenizer)
 
-        val response: Response<Double?> = scoringModel.score(query, textSegment)
+        val response: Response<Double> = scoringModel.score(query, textSegment)
         println(response)
 
-        val response2: Response<Double?> = scoringModel.score(query, "## Best Fit For Junior Developer (Learning & Execution) Best Fit: Ivy Lee Method Why? Junior developers focus on learning, completing assigned tasks, and improving their technical skills. The Ivy Lee Method helps them prioritize a manageable number of tasks (≤6 per day) and focus on one thing at a time. It avoids overwhelming them with too many priorities while ensuring they stay productive.")
+        val response2: Response<Double> = scoringModel.score(query, "## Best Fit For Junior Developer (Learning & Execution) Best Fit: Ivy Lee Method Why? Junior developers focus on learning, completing assigned tasks, and improving their technical skills. The Ivy Lee Method helps them prioritize a manageable number of tasks (≤6 per day) and focus on one thing at a time. It avoids overwhelming them with too many priorities while ensuring they stay productive.")
         println(response2)
 
 

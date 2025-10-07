@@ -17,7 +17,7 @@ class ObsidianRAGInitializer {
         @Qualifier("obsidianEmbeddingStoreIngestor") embeddingStoreIngestor: EmbeddingStoreIngestor) = ApplicationRunner { args ->
         logger.info("Initializing Obsidian RAG on path: $vaultPath")
         embeddingStoreIngestor.ingest(ObsidianMarkdownDocumentLoader(vaultPath).loadDocuments())
-        logger.info("Loaded documents from Logseq API and synced into embedding store.")
+        logger.info("Loaded documents from Obsidian API and synced into embedding store.")
     }
 
     private val logger = LoggerFactory.getLogger(ObsidianRAGInitializer::class.java)
