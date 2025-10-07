@@ -2,13 +2,12 @@ package com.ifood.logistics.dev.ai.ollama
 
 import kotlinx.serialization.Serializable
 
-
 @Serializable
-data class  GenerateRequestDto(
+data class GenerateRequestDto(
     val model: String,
     val prompt: String,
     val stream: Boolean = false,
-    val format: String? = null
+    val format: String? = null,
 )
 
 @Serializable
@@ -16,7 +15,7 @@ data class Options(
     val temperature: Double,
     val top_k: Int,
     val top_p: Double,
-    val stop: List<String> = emptyList()
+    val stop: List<String> = emptyList(),
 )
 
 @Serializable
@@ -25,8 +24,8 @@ data class ChatRequestDto(
     val messages: List<Message>,
     val options: Options? = null,
     val stream: Boolean = false,
-    //val tools: List<String> = emptyList()
-    val format: String? = null
+    // val tools: List<String> = emptyList()
+    val format: String? = null,
 )
 
 @Serializable

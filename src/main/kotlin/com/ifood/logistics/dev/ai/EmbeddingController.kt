@@ -14,24 +14,28 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class EmbeddingController(
-    val retrievalAugmentor: RetrievalAugmentor) {
-
+    val retrievalAugmentor: RetrievalAugmentor,
+) {
     @GetMapping("/embedding")
     @ResponseBody
-    fun embeddings(@RequestParam(value = "query") text: String) : List<EmbeddingContent> {
-
+    fun embeddings(
+        @RequestParam(value = "query") text: String,
+    ): List<EmbeddingContent> {
         val metadata = Metadata.from(UserMessage(text), null, null)
         val augmentationRequest = AugmentationRequest(UserMessage(text), metadata)
 
-        return retrievalAugmentor.augment(augmentationRequest)
+        return retrievalAugmentor
+            .augment(augmentationRequest)
             .contents()
-            .map { EmbeddingContent(
-                it.textSegment().text(),
-                it.metadata()[ContentMetadata.SCORE].toString(),
-                it.metadata()[ContentMetadata.RERANKED_SCORE]?.toString(),
-                it.textSegment().metadata().getString(Document.FILE_NAME)?: "unknown",
-                it.textSegment().metadata().getString("pkm")!!) }
-            .toList()
+            .map {
+                EmbeddingContent(
+                    it.textSegment().text(),
+                    it.metadata()[ContentMetadata.SCORE].toString(),
+                    it.metadata()[ContentMetadata.RERANKED_SCORE]?.toString(),
+                    it.textSegment().metadata().getString(Document.FILE_NAME) ?: "unknown",
+                    it.textSegment().metadata().getString("pkm")!!,
+                )
+            }.toList()
     }
 }
 
@@ -43,7 +47,5 @@ data class EmbeddingContent(
     val fileName: String,
     val source: String,
 ) {
-    override fun toString(): String {
-        return "EmbeddingContent(text='$text', score=$score)"
-    }
+    override fun toString(): String = "EmbeddingContent(text='$text', score=$score)"
 }

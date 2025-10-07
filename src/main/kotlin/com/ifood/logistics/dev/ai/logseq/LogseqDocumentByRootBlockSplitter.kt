@@ -6,7 +6,6 @@ import dev.langchain4j.data.document.Metadata
 import dev.langchain4j.data.segment.TextSegment
 
 class LogseqDocumentByRootBlockSplitter : DocumentSplitter {
-
     override fun split(document: Document?): List<TextSegment?>? {
         val logseqDocument = document as LogseqDocument
         val textSegments = createTextSegments(logseqDocument.blocks, null)
@@ -18,10 +17,14 @@ class LogseqDocumentByRootBlockSplitter : DocumentSplitter {
         }
         return textSegments
     }
+
     // This function creates text segments from the blocks in a LogseqDocument.
     // Each block's (and its children)  is wrapped in a TextSegment, and metadata is created from the block's UUID.
-    private fun createTextSegments(blocks: List<Block>, parent: Block?): List<TextSegment> {
-        return blocks
+    private fun createTextSegments(
+        blocks: List<Block>,
+        parent: Block?,
+    ): List<TextSegment> =
+        blocks
             .filter { !it.content.isNullOrBlank() } // Filter out blocks with empty content
             .flatMap { block ->
                 val childSegments = block.children.let { createTextSegments(it, block) }
@@ -35,5 +38,4 @@ class LogseqDocumentByRootBlockSplitter : DocumentSplitter {
                 val combinedText = all.joinToString(" ") { it.text() }
                 listOf(TextSegment(combinedText, metadata))
             }
-    }
 }

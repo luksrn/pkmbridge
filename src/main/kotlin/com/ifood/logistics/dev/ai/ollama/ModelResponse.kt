@@ -11,11 +11,11 @@ data class StreamMessageDto(
     @field:JsonProperty("created_at")
     val createdAt: Instant,
     val message: ModelResponseDto,
-    val done: Boolean
+    val done: Boolean,
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-data class AssistantResponseDto (
+data class AssistantResponseDto(
     val model: String,
     @field:JsonProperty("created_at")
     val createdAt: Instant,
@@ -41,36 +41,39 @@ data class AssistantResponseDto (
 
 data class ModelResponseDto(
     val role: String,
-    val content: String
+    val content: String,
 )
 
 // create a static factory class for the StreamMessageDto
 object StreamMessageFactory {
-
-    fun createPartialResponse(generateRequestDto: GenerateRequestDto,
-                              partialContent: String): AssistantResponseDto {
-        return AssistantResponseDto(
+    fun createPartialResponse(
+        generateRequestDto: GenerateRequestDto,
+        partialContent: String,
+    ): AssistantResponseDto =
+        AssistantResponseDto(
             model = generateRequestDto.model,
             createdAt = Instant.now(),
-            message = ModelResponseDto(
-                role = "assistant",
-                content = partialContent
-            ),
-            done = false
+            message =
+                ModelResponseDto(
+                    role = "assistant",
+                    content = partialContent,
+                ),
+            done = false,
         )
-    }
 
-    fun createCompleteResponse(generateRequestDto: GenerateRequestDto,
-                              chatResponse: ChatResponse): AssistantResponseDto {
-
-        return AssistantResponseDto(
+    fun createCompleteResponse(
+        generateRequestDto: GenerateRequestDto,
+        chatResponse: ChatResponse,
+    ): AssistantResponseDto =
+        AssistantResponseDto(
             model = generateRequestDto.model,
             createdAt = Instant.now(),
-            message = ModelResponseDto(
-                role = "assistant",
-                content =  ""
-            ),
-            response = if(generateRequestDto.stream) null else chatResponse.aiMessage().text(),
+            message =
+                ModelResponseDto(
+                    role = "assistant",
+                    content = "",
+                ),
+            response = if (generateRequestDto.stream) null else chatResponse.aiMessage().text(),
             done = true,
             doneReason = chatResponse.finishReason().name,
             totalDuration = 0L,
@@ -78,7 +81,6 @@ object StreamMessageFactory {
             promptEvalCount = 0,
             promptEvalDuration = 0L,
             evalCount = 0,
-            evalDuration = 0L
+            evalDuration = 0L,
         )
-    }
 }

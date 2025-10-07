@@ -34,122 +34,116 @@ import org.springframework.context.annotation.Primary
 import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessageConverter
 import java.time.Duration
 
-
 @Configuration
 class AssistantConfiguration {
-
     private val logger = LoggerFactory.getLogger(AssistantConfiguration::class.java)
 
     @Bean
-    fun streamChatModel() = OllamaStreamingChatModel.builder()
-        .baseUrl("http://localhost:11434")
-        .temperature(0.7)           // temperature (between 0 and 2)
-        .topP(0.95)                 // topP (between 0 and 1) — cumulative probability of the most probable tokens
-        .topK(3)
-        .logRequests(true)
-        .logResponses(true)
-        .modelName("qwen3:8b")
-        .timeout(Duration.ofSeconds(60 * 5))
-        .build()
-
+    fun streamChatModel() =
+        OllamaStreamingChatModel
+            .builder()
+            .baseUrl("http://localhost:11434")
+            .temperature(0.7) // temperature (between 0 and 2)
+            .topP(0.95) // topP (between 0 and 1) — cumulative probability of the most probable tokens
+            .topK(3)
+            .logRequests(true)
+            .logResponses(true)
+            .modelName("qwen3:8b")
+            .timeout(Duration.ofSeconds(60 * 5))
+            .build()
 
     @Bean
-    fun ollamaModels(): OllamaModels {
-        return OllamaModels.builder()
+    fun ollamaModels(): OllamaModels =
+        OllamaModels
+            .builder()
             .baseUrl("http://localhost:11434")
             .build()
-    }
+
     @Bean
-    fun chatModel() = OllamaChatModel.builder()
-        .baseUrl("http://localhost:11434")
-        .temperature(0.7)           // temperature (between 0 and 2)
-        .topP(0.95)                 // topP (between 0 and 1) — cumulative probability of the most probable tokens
-        .topK(3)
-        .logRequests(true)
-        .logResponses(true)
-        .modelName("qwen3:8b")
-        .timeout(Duration.ofSeconds(60 * 5))
-        .build()
+    fun chatModel() =
+        OllamaChatModel
+            .builder()
+            .baseUrl("http://localhost:11434")
+            .temperature(0.7) // temperature (between 0 and 2)
+            .topP(0.95) // topP (between 0 and 1) — cumulative probability of the most probable tokens
+            .topK(3)
+            .logRequests(true)
+            .logResponses(true)
+            .modelName("qwen3:8b")
+            .timeout(Duration.ofSeconds(60 * 5))
+            .build()
 
     @Bean
     @Primary
-    fun embeddingStoreTextSegments(): InMemoryEmbeddingStore<TextSegment?> {
-        return InMemoryEmbeddingStore<TextSegment?>()
-    }
+    fun embeddingStoreTextSegments(): InMemoryEmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
 
     @Bean
-    fun embeddingStoreTextSummaries(): InMemoryEmbeddingStore<TextSegment?> {
-        return InMemoryEmbeddingStore<TextSegment?>()
-    }
+    fun embeddingStoreTextSummaries(): InMemoryEmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
 
     @Bean
-    fun embeddingModel(): EmbeddingModel {
-        return AllMiniLmL6V2EmbeddingModel()
-    }
+    fun embeddingModel(): EmbeddingModel = AllMiniLmL6V2EmbeddingModel()
 
     @Bean
-    fun contentRetrieverTextSegments(): ContentRetriever {
-        return EmbeddingStoreContentRetriever.builder()
+    fun contentRetrieverTextSegments(): ContentRetriever =
+        EmbeddingStoreContentRetriever
+            .builder()
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSegments())
             .maxResults(25)
             .minScore(0.70) // 0.70
             .build()
-    }
-
 
     @Bean
-    fun contentRetrieverTextSummaries(): ContentRetriever {
-        return EmbeddingStoreContentRetriever.builder()
+    fun contentRetrieverTextSummaries(): ContentRetriever =
+        EmbeddingStoreContentRetriever
+            .builder()
             .embeddingModel(embeddingModel())
             .embeddingStore(embeddingStoreTextSummaries())
             .maxResults(10)
             .minScore(0.70) // 0.70
             .build()
-    }
-
 
     @Bean
-    fun queryRouter() : QueryRouter  =
+    fun queryRouter(): QueryRouter =
         DefaultQueryRouter(
             contentRetrieverTextSegments(),
-            contentRetrieverTextSummaries()
+            contentRetrieverTextSummaries(),
         )
 
     @Bean
-    fun scoreModel() : ScoringModel {
+    fun scoreModel(): ScoringModel {
         val pathToModel = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"
         val pathToTokenizer = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
         return OnnxScoringModel(pathToModel, pathToTokenizer)
     }
 
     @Bean
-    fun retrievalAugment() : RetrievalAugmentor {
-        return DefaultRetrievalAugmentor.builder()
-            //.queryTransformer {  }
+    fun retrievalAugment(): RetrievalAugmentor =
+        DefaultRetrievalAugmentor
+            .builder()
+            // .queryTransformer {  }
             .queryRouter(queryRouter())
             .contentInjector(DefaultContentInjector(listOf<String>("link", Document.FILE_NAME)))
-            .contentAggregator(ReRankingContentAggregator
-                .builder()
-                .scoringModel(scoreModel())
-                .maxResults(5)
-                .minScore(0.25).build())
-            .build();
-    }
+            .contentAggregator(
+                ReRankingContentAggregator
+                    .builder()
+                    .scoringModel(scoreModel())
+                    .maxResults(5)
+                    .minScore(0.25)
+                    .build(),
+            ).build()
 
     @Bean
-    fun chatMemory(): MessageWindowChatMemory {
-        return MessageWindowChatMemory
+    fun chatMemory(): MessageWindowChatMemory =
+        MessageWindowChatMemory
             .builder()
             .maxMessages(10)
             .chatMemoryStore(InMemoryChatMemoryStore())
             .build()
-    }
 
     @Bean
-    fun chatMemoryProvider(): ChatMemoryProvider {
-        return ChatMemoryProvider {
-            memoryId ->
+    fun chatMemoryProvider(): ChatMemoryProvider =
+        ChatMemoryProvider { memoryId ->
             MessageWindowChatMemory
                 .builder()
                 .id(memoryId)
@@ -157,54 +151,52 @@ class AssistantConfiguration {
                 .chatMemoryStore(InMemoryChatMemoryStore())
                 .build()
         }
-    }
 
     @Bean
     @Primary
-    fun assistant(): Assistant {
-        return AiServices.builder<Assistant>(Assistant::class.java)
+    fun assistant(): Assistant =
+        AiServices
+            .builder<Assistant>(Assistant::class.java)
             .chatModel(chatModel())
             .streamingChatModel(streamChatModel())
             .chatMemoryProvider(chatMemoryProvider())
-            .retrievalAugmentor (retrievalAugment())
+            .retrievalAugmentor(retrievalAugment())
             .tools(LogseqApiTool())
             .build()
-    }
-
 
     @Bean
-    fun summarizer(): SummarizerAssistant {
-        return AiServices.builder<SummarizerAssistant>(SummarizerAssistant::class.java)
+    fun summarizer(): SummarizerAssistant =
+        AiServices
+            .builder<SummarizerAssistant>(SummarizerAssistant::class.java)
             .chatModel(chatModel())
             .build()
-    }
-
 
     @Bean
     @Primary
-    fun embeddingStoreIngestorSegments(api: LogseqApi): EmbeddingStoreIngestor {
-        return EmbeddingStoreIngestor.builder()
+    fun embeddingStoreIngestorSegments(api: LogseqApi): EmbeddingStoreIngestor =
+        EmbeddingStoreIngestor
+            .builder()
             .embeddingStore(embeddingStoreTextSegments())
             .embeddingModel(embeddingModel())
             .documentTransformer(LogseqDocumentTransformer(api))
-            .documentSplitter(LogseqDocumentByRootBlockSplitter())//LogseqDocumentByBlockSplitter())
+            .documentSplitter(LogseqDocumentByRootBlockSplitter()) // LogseqDocumentByBlockSplitter())
             .build()
-    }
-
 
     @Bean
-    fun embeddingStoreIngestorSummaries(summarizerAssistant: SummarizerAssistant, api: LogseqApi): EmbeddingStoreIngestor {
-        return EmbeddingStoreIngestor.builder()
+    fun embeddingStoreIngestorSummaries(
+        summarizerAssistant: SummarizerAssistant,
+        api: LogseqApi,
+    ): EmbeddingStoreIngestor =
+        EmbeddingStoreIngestor
+            .builder()
             .embeddingStore(embeddingStoreTextSummaries())
             .embeddingModel(embeddingModel())
             .documentTransformer(LogseqDocumentSummarizedTransformer(summarizerAssistant))
             .documentSplitter(LogseqDocumentBySummarySplitter())
             .build()
-    }
-
 
     @Bean
-    fun ktxMessageConverter() : KotlinSerializationJsonHttpMessageConverter {
+    fun ktxMessageConverter(): KotlinSerializationJsonHttpMessageConverter {
         // if you want to ignore unknown keys from json string,
         // otherwise make sure your data class has all json keys.
         val json = Json { ignoreUnknownKeys = true }

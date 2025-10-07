@@ -6,7 +6,6 @@ import dev.langchain4j.service.TokenStream
 import dev.langchain4j.service.UserMessage
 
 interface Assistant {
-
     @SystemMessage(
         """
     IDENTITY and PURPOSE    
@@ -24,7 +23,10 @@ interface Assistant {
     - Provide a list of UNIQUE markdown links provided as references in a section called "References" without duplicate references.
     - Links provided by the user should be included in the references in two sections, PKM links are links that starts with obsidian:// or logseq://. External links are links that starts with http:// or https://.
     - You use bulleted lists for output, not numbered lists.
-    """
+    """,
     )
-    fun chatStream(@MemoryId memoryId: String, @UserMessage userMessage: String): TokenStream
+    fun chatStream(
+        @MemoryId memoryId: String,
+        @UserMessage userMessage: String,
+    ): TokenStream
 }

@@ -8,17 +8,17 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
 @Configuration
 class ObsidianConfiguration {
-
     @Bean
-    fun obsidianEmbeddingStoreIngestor(embeddingModel: EmbeddingModel,
-          embeddingStore: EmbeddingStore<TextSegment>) = EmbeddingStoreIngestor.builder()
-            .documentTransformer(ObsidianDocumentTransformer())
-            .documentSplitter(DocumentSplitters.recursive(1000, 100))
-            .embeddingModel(embeddingModel)
-            .embeddingStore(embeddingStore)
-            .build()
-
+    fun obsidianEmbeddingStoreIngestor(
+        embeddingModel: EmbeddingModel,
+        embeddingStore: EmbeddingStore<TextSegment>,
+    ) = EmbeddingStoreIngestor
+        .builder()
+        .documentTransformer(ObsidianDocumentTransformer())
+        .documentSplitter(DocumentSplitters.recursive(1000, 100))
+        .embeddingModel(embeddingModel)
+        .embeddingStore(embeddingStore)
+        .build()
 }

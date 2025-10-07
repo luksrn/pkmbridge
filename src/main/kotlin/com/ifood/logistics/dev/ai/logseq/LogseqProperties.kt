@@ -7,5 +7,5 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "pkm.logseq")
 data class LogseqProperties(
     var serverUrl: String = "",
-    var authorizationToken: String = ""
+    var authorizationToken: String = "",
 )

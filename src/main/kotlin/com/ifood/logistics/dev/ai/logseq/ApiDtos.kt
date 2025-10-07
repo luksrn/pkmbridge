@@ -21,21 +21,20 @@ data class Page(
     val name: String,
     val uuid: String,
     var content: String? = null,
-    val title: String,)
-{
-    fun inferIdentity(): Identity {
-        return when {
+    val title: String,
+) {
+    fun inferIdentity(): Identity =
+        when {
             this.journalDay != null -> Identity.JOURNAL
             this.ident != Identity.OTHER -> this.ident
             this.tags?.any { it.isContent() } == true -> Identity.PAGE
             else -> Identity.PAGE
         }
-    }
 }
 
 @Serializable
 data class Tag(
-    val id: Int
+    val id: Int,
 ) {
     fun isContent(): Boolean {
         // pages and journal
@@ -59,30 +58,37 @@ data class Block(
 @Serializable
 data class LogseqRequest(
     val method: String,
-    val args: List<String> = emptyList()
+    val args: List<String> = emptyList(),
 )
 
 @Serializable
-enum class Identity(val ident: String){
+enum class Identity(
+    val ident: String,
+) {
     @SerialName(":logseq.class/Page")
     PAGE(":logseq.class/Page"),
+
     @SerialName(":logseq.class/Journal")
     JOURNAL(":logseq.class/Journal"),
+
     @SerialName(":logseq.class/Tag")
     TAG(":logseq.class/Tag"),
+
     @SerialName(":logseq.class/Property")
     PROPERTY(":logseq.class/Property"),
+
     @SerialName(":logseq.class/Query")
     QUERY(":logseq.class/Query"),
+
     @SerialName(":logseq.class/Task")
     TASK(":logseq.class/Task"),
+
     @SerialName(":logseq.class/Template")
     TEMPLATE(":logseq.class/Template"),
-    OTHER("");
+    OTHER(""),
+    ;
 
     companion object {
-        fun valueOfIdent(ident: String): Identity {
-            return values().find { it.ident == ident } ?: OTHER
-        }
+        fun valueOfIdent(ident: String): Identity = values().find { it.ident == ident } ?: OTHER
     }
 }

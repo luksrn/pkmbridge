@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class ObsidianRAGInitializer {
-
     @Bean
     fun obsidianRAGApplicationRunner(
         @Value("\${pkm.obsidian.file-system-path}") vaultPath: String,
-        @Qualifier("obsidianEmbeddingStoreIngestor") embeddingStoreIngestor: EmbeddingStoreIngestor) = ApplicationRunner { args ->
+        @Qualifier("obsidianEmbeddingStoreIngestor") embeddingStoreIngestor: EmbeddingStoreIngestor,
+    ) = ApplicationRunner { args ->
         logger.info("Initializing Obsidian RAG on path: $vaultPath")
         embeddingStoreIngestor.ingest(ObsidianMarkdownDocumentLoader(vaultPath).loadDocuments())
         logger.info("Loaded documents from Obsidian API and synced into embedding store.")

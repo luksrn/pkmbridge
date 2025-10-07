@@ -11,69 +11,68 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
 import java.util.UUID
 
-
 @RestController
 @CrossOrigin(origins = ["*"])
 class OpenApiProxy(
     val ollamaModel: OllamaModels,
-    val assistant: Assistant){
-
-
+    val assistant: Assistant,
+) {
     @GetMapping("/api/version")
-fun version(): Map<String, String> {
-        return mapOf("version" to "0.5.1")
-    }
+    fun version(): Map<String, String> = mapOf("version" to "0.5.1")
+
     @GetMapping("/api/tags")
     fun models() = mapOf("models" to ollamaModel.availableModels().content())
 
     @GetMapping("/api/ps")
     fun runningModels() = mapOf("models" to ollamaModel.runningModels().content())
 
-    @PostMapping("/api/chat",
+    @PostMapping(
+        "/api/chat",
         consumes = ["application/json"],
-        produces = ["application/x-ndjson"])
-    fun stream(@RequestBody chatMessage: ChatRequestDto):  Flux<AssistantResponseDto> {
-        return streamResponseTo(GenerateRequestDto(
-            model = chatMessage.model,
-            prompt = chatMessage.messages.last().content,
-            stream = chatMessage.stream,
-            format = chatMessage.format
-        ))
-    }
+        produces = ["application/x-ndjson"],
+    )
+    fun stream(
+        @RequestBody chatMessage: ChatRequestDto,
+    ): Flux<AssistantResponseDto> =
+        streamResponseTo(
+            GenerateRequestDto(
+                model = chatMessage.model,
+                prompt = chatMessage.messages.last().content,
+                stream = chatMessage.stream,
+                format = chatMessage.format,
+            ),
+        )
 
-    @PostMapping("/api/generate",
+    @PostMapping(
+        "/api/generate",
         consumes = ["application/json"],
-        produces = ["application/json","application/x-ndjson"])
-    fun generate(@RequestBody generateRequest: GenerateRequestDto) : Flux<AssistantResponseDto>{
-        return streamResponseTo(generateRequest)
-    }
+        produces = ["application/json", "application/x-ndjson"],
+    )
+    fun generate(
+        @RequestBody generateRequest: GenerateRequestDto,
+    ): Flux<AssistantResponseDto> = streamResponseTo(generateRequest)
 
-    private fun streamResponseTo(generateRequest: GenerateRequestDto) : Flux<AssistantResponseDto>{
+    private fun streamResponseTo(generateRequest: GenerateRequestDto): Flux<AssistantResponseDto> {
         val sink = Sinks.many().unicast().onBackpressureBuffer<AssistantResponseDto>()
-        assistant.chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
+        assistant
+            .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
             .onPartialResponse { partialResponse ->
-                if(generateRequest.stream) {
+                if (generateRequest.stream) {
                     val chatResponse = StreamMessageFactory.createPartialResponse(generateRequest, partialResponse)
                     sink.tryEmitNext(chatResponse)
                 }
-            }
-            .onError {
-                if(generateRequest.stream){
-                    //sink.tryEmitNext("""{"model":"gemma3","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.message}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
+            }.onError {
+                if (generateRequest.stream) {
+                    // sink.tryEmitNext("""{"model":"gemma3","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.message}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
                 }
                 sink.tryEmitComplete()
-            }
-            .onCompleteResponse {
+            }.onCompleteResponse {
                 val chatResponse = StreamMessageFactory.createCompleteResponse(generateRequest, it)
                 sink.tryEmitNext(chatResponse)
                 sink.tryEmitComplete()
-            }
-            .onToolExecuted {
+            }.onToolExecuted {
                 System.out.println(it)
-            }
-            .start()
-        return sink.asFlux();
+            }.start()
+        return sink.asFlux()
     }
 }
-
-
