@@ -5,14 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import dev.langchain4j.model.chat.response.ChatResponse
 import java.time.Instant
 
-data class StreamMessageDto(
-    val model: String,
-    @field:JsonProperty("created_at")
-    val createdAt: Instant,
-    val message: ModelResponseDto,
-    val done: Boolean,
-)
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class AssistantResponseDto(
     val model: String,

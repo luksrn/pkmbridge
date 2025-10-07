@@ -1,6 +1,7 @@
 package com.ifood.logistics.dev.ai
 
 import com.ifood.logistics.dev.ai.logseq.*
+import com.ifood.logistics.dev.ai.ollama.OllamaProperties
 import com.ifood.logistics.dev.ai.pkm.Assistant
 import com.ifood.logistics.dev.ai.pkm.SummarizerAssistant
 import dev.langchain4j.data.document.Document
@@ -35,42 +36,44 @@ import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessag
 import java.time.Duration
 
 @Configuration
-class AssistantConfiguration {
+class AssistantConfiguration(
+    val ollamaProperties: OllamaProperties
+) {
     private val logger = LoggerFactory.getLogger(AssistantConfiguration::class.java)
 
     @Bean
     fun streamChatModel() =
         OllamaStreamingChatModel
             .builder()
-            .baseUrl("http://localhost:11434")
-            .temperature(0.7) // temperature (between 0 and 2)
-            .topP(0.95) // topP (between 0 and 1) — cumulative probability of the most probable tokens
-            .topK(3)
-            .logRequests(true)
-            .logResponses(true)
-            .modelName("qwen3:8b")
-            .timeout(Duration.ofSeconds(60 * 5))
+            .baseUrl(ollamaProperties.baseUrl)
+            .temperature(ollamaProperties.temperature) // temperature (between 0 and 2)
+            .topP(ollamaProperties.topP) // topP (between 0 and 1) — cumulative probability of the most probable tokens
+            .topK(ollamaProperties.topK)
+            .logRequests(ollamaProperties.logRequests)
+            .logResponses(ollamaProperties.logResponses)
+            .modelName(ollamaProperties.modelName)
+            .timeout(Duration.ofSeconds(ollamaProperties.timeout))
             .build()
 
     @Bean
     fun ollamaModels(): OllamaModels =
         OllamaModels
             .builder()
-            .baseUrl("http://localhost:11434")
+            .baseUrl(ollamaProperties.baseUrl)
             .build()
 
     @Bean
     fun chatModel() =
         OllamaChatModel
             .builder()
-            .baseUrl("http://localhost:11434")
-            .temperature(0.7) // temperature (between 0 and 2)
-            .topP(0.95) // topP (between 0 and 1) — cumulative probability of the most probable tokens
-            .topK(3)
-            .logRequests(true)
-            .logResponses(true)
-            .modelName("qwen3:8b")
-            .timeout(Duration.ofSeconds(60 * 5))
+            .baseUrl(ollamaProperties.baseUrl)
+            .temperature(ollamaProperties.temperature) // temperature (between 0 and 2)
+            .topP(ollamaProperties.topP) // topP (between 0 and 1) — cumulative probability of the most probable tokens
+            .topK(ollamaProperties.topK)
+            .logRequests(ollamaProperties.logRequests)
+            .logResponses(ollamaProperties.logResponses)
+            .modelName(ollamaProperties.modelName)
+            .timeout(Duration.ofSeconds(ollamaProperties.timeout))
             .build()
 
     @Bean
