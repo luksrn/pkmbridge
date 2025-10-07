@@ -71,7 +71,7 @@ class OpenApiProxy(
                 sink.tryEmitNext(chatResponse)
                 sink.tryEmitComplete()
             }.onToolExecuted {
-                //println(it)
+                // println(it)
             }.start()
         return sink.asFlux()
     }

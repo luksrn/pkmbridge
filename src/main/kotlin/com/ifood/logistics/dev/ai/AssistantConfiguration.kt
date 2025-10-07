@@ -29,18 +29,14 @@ import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
-import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
-import java.time.Duration
 
 @Configuration
 class AssistantConfiguration(
     val ollamaProperties: OllamaProperties,
 ) {
-
-
     @Bean
     @Primary
     fun embeddingStoreTextSegments(): InMemoryEmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
@@ -122,7 +118,10 @@ class AssistantConfiguration(
 
     @Bean
     @Primary
-    fun assistant(chatModel : ChatModel, streamChatModel: StreamingChatModel): Assistant =
+    fun assistant(
+        chatModel: ChatModel,
+        streamChatModel: StreamingChatModel,
+    ): Assistant =
         AiServices
             .builder<Assistant>(Assistant::class.java)
             .chatModel(chatModel)
@@ -133,7 +132,7 @@ class AssistantConfiguration(
             .build()
 
     @Bean
-    fun summarizer(chatModel : ChatModel): SummarizerAssistant =
+    fun summarizer(chatModel: ChatModel): SummarizerAssistant =
         AiServices
             .builder<SummarizerAssistant>(SummarizerAssistant::class.java)
             .chatModel(chatModel)

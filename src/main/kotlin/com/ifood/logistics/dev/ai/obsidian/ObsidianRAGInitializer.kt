@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class ObsidianRAGInitializer {
-
     @Bean
     @ConditionalOnProperty(name = ["pkm.obsidian.enabled"], havingValue = "true", matchIfMissing = true)
     fun obsidianRAGApplicationRunner(

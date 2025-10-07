@@ -13,9 +13,8 @@ import java.time.Duration
 class OllamaConfiguration(
     val ollamaProperties: OllamaProperties,
 ) {
-
     @Bean
-    fun streamChatModel() : StreamingChatModel =
+    fun streamChatModel(): StreamingChatModel =
         OllamaStreamingChatModel
             .builder()
             .baseUrl(ollamaProperties.baseUrl)
@@ -36,7 +35,7 @@ class OllamaConfiguration(
             .build()
 
     @Bean
-    fun chatModel() : ChatModel =
+    fun chatModel(): ChatModel =
         OllamaChatModel
             .builder()
             .baseUrl(ollamaProperties.baseUrl)
