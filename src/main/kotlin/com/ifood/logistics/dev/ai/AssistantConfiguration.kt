@@ -12,10 +12,6 @@ import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.chat.StreamingChatModel
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel
-import dev.langchain4j.model.ollama.OllamaChatModel
-import dev.langchain4j.model.ollama.OllamaModels
-import dev.langchain4j.model.ollama.OllamaStreamingChatModel
-import dev.langchain4j.model.scoring.ScoringModel
 import dev.langchain4j.model.scoring.onnx.OnnxScoringModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
@@ -31,9 +27,12 @@ import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
 import org.springframework.beans.factory.ObjectProvider
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import org.springframework.stereotype.Component
 
 @Configuration
 class AssistantConfiguration(
@@ -77,19 +76,13 @@ class AssistantConfiguration(
         )
 
     @Bean
-    fun scoreModel(): ScoringModel {
-        val pathToModel = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"
-        val pathToTokenizer = "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
-        return OnnxScoringModel(pathToModel, pathToTokenizer)
-    }
-
-    @Bean
-    fun contentAggregator() : ContentAggregator =
+    @ConditionalOnProperty(prefix = "re-rank", name = ["path-to-model", "path-to-tokenizer"])
+    fun contentAggregator(reRankProperties: ReRankProperties): ContentAggregator =
         ReRankingContentAggregator
             .builder()
-            .scoringModel(scoreModel())
-            .maxResults(5)
-            .minScore(0.25)
+            .scoringModel(OnnxScoringModel(reRankProperties.pathToModel, reRankProperties.pathToTokenizer))
+            .maxResults(reRankProperties.maxResult)
+            .minScore(reRankProperties.minScore)
             .build()
 
     @Bean
@@ -100,7 +93,6 @@ class AssistantConfiguration(
             .contentInjector(DefaultContentInjector(listOf<String>("link", Document.FILE_NAME)))
             .contentAggregator(contentAggregatorProvider.ifAvailable)
             .build()
-
 
     @Bean
     fun chatMemory(): MessageWindowChatMemory =
@@ -126,7 +118,7 @@ class AssistantConfiguration(
     fun assistant(
         chatModel: ChatModel,
         streamChatModel: StreamingChatModel,
-        retrievalAugmentor: RetrievalAugmentor
+        retrievalAugmentor: RetrievalAugmentor,
     ): Assistant =
         AiServices
             .builder<Assistant>(Assistant::class.java)
@@ -168,3 +160,13 @@ class AssistantConfiguration(
             .documentSplitter(LogseqDocumentBySummarySplitter())
             .build()
 }
+
+@Component
+@ConfigurationProperties(prefix = "re-rank")
+data class ReRankProperties(
+    var enabled: Boolean = false,
+    var pathToModel: String? = null,
+    var pathToTokenizer: String? = null,
+    var maxResult: Int = 10,
+    var minScore: Double = 0.25,
+)
