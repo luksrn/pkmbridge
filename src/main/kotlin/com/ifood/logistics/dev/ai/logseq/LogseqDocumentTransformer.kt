@@ -12,7 +12,8 @@ class LogseqDocumentTransformer(val api: LogseqApi) : DocumentTransformer {
         if(!note.page.public){
             return null
         }
-        val shouldBeIndexed = note.page.tags?.any { it.isContent() } ?: false
+
+        val shouldBeIndexed = setOf(Identity.PAGE.name, Identity.JOURNAL.name).contains(note.metadata.getString(LogseqDocument.DOCUMENT_TYPE))
         if (!shouldBeIndexed) {
             return null
         }

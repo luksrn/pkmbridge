@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class EmbeddingController(
-    val retrivalAugmentor: RetrievalAugmentor) {
+    val retrievalAugmentor: RetrievalAugmentor) {
 
     @GetMapping("/embedding")
     @ResponseBody
@@ -23,7 +23,7 @@ class EmbeddingController(
         val metadata = Metadata.from(UserMessage(text), null, null)
         val augmentationRequest = AugmentationRequest(UserMessage(text), metadata)
 
-        return retrivalAugmentor.augment(augmentationRequest)
+        return retrievalAugmentor.augment(augmentationRequest)
             .contents()
             .map { EmbeddingContent(
                 it.textSegment().text(),

@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
+import java.net.ConnectException
 
 @Configuration
 class LogseqRAGInitializer {
@@ -15,9 +16,16 @@ class LogseqRAGInitializer {
     @Bean
     @ConditionalOnProperty(name = ["pkm.logseq.rag.enabled"], havingValue = "true", matchIfMissing = true)
     fun initializer(embeddingStoreIngestor: EmbeddingStoreIngestor, api: LogseqApi) = ApplicationRunner { args ->
-        logger.info("Initializing LogSeq RAG")
-        embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
-        logger.info("Loaded documents from Logseq API and synced into embedding store.")
+
+        try {
+            logger.info("Initializing LogSeq RAG")
+            embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
+            logger.info("Loaded documents from Logseq API and synced into embedding store.")
+        } catch (ex: ConnectException) {
+            logger.error("Can't connect to Logseq server. Ensure your server is up and running")
+            throw ex
+        }
+
     }
 
     @Bean
@@ -28,7 +36,7 @@ class LogseqRAGInitializer {
             try {
                 logger.info("Initializing LogSeq RAG summaries")
                 embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
-                logger.info("Loaded documents from Logseq API and synced into embedding store.")
+                logger.info("Summaries synced into embedding store.")
             } catch (ex: Exception) {
                 logger.error("Error initializing summaries", ex)
             }
