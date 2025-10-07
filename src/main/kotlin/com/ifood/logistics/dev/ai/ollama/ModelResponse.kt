@@ -21,6 +21,8 @@ data class AssistantResponseDto (
     val createdAt: Instant,
     val message: ModelResponseDto,
     val done: Boolean,
+    @field:JsonProperty("response")
+    val response: String? = null,
     @field:JsonProperty("done_reason")
     val doneReason: String? = null,
     @field:JsonProperty("total_duration")
@@ -66,8 +68,9 @@ object StreamMessageFactory {
             createdAt = Instant.now(),
             message = ModelResponseDto(
                 role = "assistant",
-                content = chatResponse.aiMessage().text()
+                content =  ""
             ),
+            response = if(generateRequestDto.stream) null else chatResponse.aiMessage().text(),
             done = true,
             doneReason = chatResponse.finishReason().name,
             totalDuration = 0L,

@@ -22,6 +22,10 @@ You can also use the streaming response by setting the stream as true
 curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/generate -d '{"model": "qwen3:8b","prompt": "what is the slow productivity about?", "stream": true}' 
 ```
 
+```shell
+curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/generate -d '{"model": "qwen3:8b","prompt": "what is the slow productivity about?", "stream": false}' 
+```
+
 
 ```shell
 curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/chat -d '{"model": "qwen3:8b","messages": [{  "role": "user",  "content": "what is the slow productivity about?"}], "stream": false}'
