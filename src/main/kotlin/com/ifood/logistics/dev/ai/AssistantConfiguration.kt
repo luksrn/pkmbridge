@@ -8,6 +8,8 @@ import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.memory.chat.ChatMemoryProvider
 import dev.langchain4j.memory.chat.MessageWindowChatMemory
+import dev.langchain4j.model.chat.ChatModel
+import dev.langchain4j.model.chat.StreamingChatModel
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel
 import dev.langchain4j.model.ollama.OllamaChatModel
@@ -37,42 +39,7 @@ import java.time.Duration
 class AssistantConfiguration(
     val ollamaProperties: OllamaProperties,
 ) {
-    private val logger = LoggerFactory.getLogger(AssistantConfiguration::class.java)
 
-    @Bean
-    fun streamChatModel() =
-        OllamaStreamingChatModel
-            .builder()
-            .baseUrl(ollamaProperties.baseUrl)
-            .temperature(ollamaProperties.temperature) // temperature (between 0 and 2)
-            .topP(ollamaProperties.topP) // topP (between 0 and 1) — cumulative probability of the most probable tokens
-            .topK(ollamaProperties.topK)
-            .logRequests(ollamaProperties.logRequests)
-            .logResponses(ollamaProperties.logResponses)
-            .modelName(ollamaProperties.modelName)
-            .timeout(Duration.ofSeconds(ollamaProperties.timeout))
-            .build()
-
-    @Bean
-    fun ollamaModels(): OllamaModels =
-        OllamaModels
-            .builder()
-            .baseUrl(ollamaProperties.baseUrl)
-            .build()
-
-    @Bean
-    fun chatModel() =
-        OllamaChatModel
-            .builder()
-            .baseUrl(ollamaProperties.baseUrl)
-            .temperature(ollamaProperties.temperature) // temperature (between 0 and 2)
-            .topP(ollamaProperties.topP) // topP (between 0 and 1) — cumulative probability of the most probable tokens
-            .topK(ollamaProperties.topK)
-            .logRequests(ollamaProperties.logRequests)
-            .logResponses(ollamaProperties.logResponses)
-            .modelName(ollamaProperties.modelName)
-            .timeout(Duration.ofSeconds(ollamaProperties.timeout))
-            .build()
 
     @Bean
     @Primary
@@ -155,21 +122,21 @@ class AssistantConfiguration(
 
     @Bean
     @Primary
-    fun assistant(): Assistant =
+    fun assistant(chatModel : ChatModel, streamChatModel: StreamingChatModel): Assistant =
         AiServices
             .builder<Assistant>(Assistant::class.java)
-            .chatModel(chatModel())
-            .streamingChatModel(streamChatModel())
+            .chatModel(chatModel)
+            .streamingChatModel(streamChatModel)
             .chatMemoryProvider(chatMemoryProvider())
             .retrievalAugmentor(retrievalAugment())
             .tools(LogseqApiTool())
             .build()
 
     @Bean
-    fun summarizer(): SummarizerAssistant =
+    fun summarizer(chatModel : ChatModel): SummarizerAssistant =
         AiServices
             .builder<SummarizerAssistant>(SummarizerAssistant::class.java)
-            .chatModel(chatModel())
+            .chatModel(chatModel)
             .build()
 
     @Bean

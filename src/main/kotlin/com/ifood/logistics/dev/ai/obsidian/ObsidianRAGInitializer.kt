@@ -5,12 +5,15 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class ObsidianRAGInitializer {
+
     @Bean
+    @ConditionalOnProperty(name = ["pkm.obsidian.enabled"], havingValue = "true", matchIfMissing = true)
     fun obsidianRAGApplicationRunner(
         @Value("\${pkm.obsidian.file-system-path}") vaultPath: String,
         @Qualifier("obsidianEmbeddingStoreIngestor") embeddingStoreIngestor: EmbeddingStoreIngestor,

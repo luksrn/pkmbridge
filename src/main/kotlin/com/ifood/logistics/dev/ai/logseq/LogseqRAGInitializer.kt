@@ -13,7 +13,7 @@ import java.net.ConnectException
 @Configuration
 class LogseqRAGInitializer {
     @Bean
-    @ConditionalOnProperty(name = ["pkm.logseq.rag.enabled"], havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true", matchIfMissing = true)
     fun initializer(
         embeddingStoreIngestor: EmbeddingStoreIngestor,
         api: LogseqApi,

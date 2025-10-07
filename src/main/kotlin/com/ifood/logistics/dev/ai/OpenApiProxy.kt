@@ -21,7 +21,7 @@ class OpenApiProxy(
     fun version(): Map<String, String> = mapOf("version" to "0.5.1")
 
     @GetMapping("/api/tags")
-    fun models() = mapOf("models" to ollamaModel.availableModels().content())
+    fun availableModels() = mapOf("models" to ollamaModel.availableModels().content())
 
     @GetMapping("/api/ps")
     fun runningModels() = mapOf("models" to ollamaModel.runningModels().content())
@@ -31,10 +31,10 @@ class OpenApiProxy(
         consumes = ["application/json"],
         produces = ["application/x-ndjson"],
     )
-    fun stream(
+    fun chat(
         @RequestBody chatMessage: ChatRequestDto,
     ): Flux<AssistantResponseDto> =
-        streamResponseTo(
+        chatStream(
             GenerateRequestDto(
                 model = chatMessage.model,
                 prompt = chatMessage.messages.last().content,
@@ -50,9 +50,9 @@ class OpenApiProxy(
     )
     fun generate(
         @RequestBody generateRequest: GenerateRequestDto,
-    ): Flux<AssistantResponseDto> = streamResponseTo(generateRequest)
+    ): Flux<AssistantResponseDto> = chatStream(generateRequest)
 
-    private fun streamResponseTo(generateRequest: GenerateRequestDto): Flux<AssistantResponseDto> {
+    private fun chatStream(generateRequest: GenerateRequestDto): Flux<AssistantResponseDto> {
         val sink = Sinks.many().unicast().onBackpressureBuffer<AssistantResponseDto>()
         assistant
             .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
@@ -71,7 +71,7 @@ class OpenApiProxy(
                 sink.tryEmitNext(chatResponse)
                 sink.tryEmitComplete()
             }.onToolExecuted {
-                System.out.println(it)
+                //println(it)
             }.start()
         return sink.asFlux()
     }
