@@ -39,11 +39,10 @@ dependencies {
     implementation("dev.langchain4j:langchain4j-onnx-scoring:1.7.1-beta14")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.vdurmont:emoji-java:5.1.1")
+    //implementation("com.vdurmont:emoji-java:5.1.1")
     // https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
     // implementation("org.apache.lucene:lucene-core:10.2.2")
-
-    testImplementation("org.apache.lucene:lucene-core:10.2.2")
+    // testImplementation("org.apache.lucene:lucene-core:10.2.2")
 
     // https://mvnrepository.com/artifact/org.bsc.langgraph4j/langgraph4j-core
     // implementation("org.bsc.langgraph4j:langgraph4j-core:1.6.0-rc4")
