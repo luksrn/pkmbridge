@@ -1,4 +1,4 @@
-package com.ifood.logistics.dev.ai
+package com.ifood.logistics.dev.ai.logseq
 
 import dev.langchain4j.service.Result
 import dev.langchain4j.service.SystemMessage

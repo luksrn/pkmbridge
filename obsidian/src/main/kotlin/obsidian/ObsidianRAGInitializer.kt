@@ -14,7 +14,7 @@ class ObsidianRAGInitializer {
     @Bean
     @ConditionalOnProperty(name = ["pkm.obsidian.enabled"], havingValue = "true", matchIfMissing = true)
     fun obsidianRAGApplicationRunner(
-        @Value("\${pkm.obsidian.file-system-path}") vaultPath: String,
+        @Value($$"${pkm.obsidian.file-system-path}") vaultPath: String,
         @Qualifier("obsidianEmbeddingStoreIngestor") embeddingStoreIngestor: EmbeddingStoreIngestor,
     ) = ApplicationRunner { args ->
         logger.info("Initializing Obsidian RAG on path: $vaultPath")

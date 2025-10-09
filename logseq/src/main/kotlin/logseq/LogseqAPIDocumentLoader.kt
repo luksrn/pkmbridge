@@ -1,13 +1,12 @@
 package com.ifood.logistics.dev.ai.logseq
 
-import com.ifood.logistics.dev.ai.PKMDocumentLoader
 import dev.langchain4j.data.document.Document
 import org.slf4j.LoggerFactory
 
 class LogseqAPIDocumentLoader(
     val logseqApi: LogseqApi,
-) : PKMDocumentLoader {
-    override fun loadDocuments(): List<Document> {
+) {
+    fun loadDocuments(): List<Document> {
         logger.info("Loading documents from LogSeq API")
         val pages = logseqApi.fetchPages()
         logger.info("${pages.size} pages found in Logseq graph")

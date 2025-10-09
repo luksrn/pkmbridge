@@ -1,6 +1,5 @@
 package com.ifood.logistics.dev.ai.logseq
 
-import com.ifood.logistics.dev.ai.SummarizerAssistant
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.DocumentTransformer
 
