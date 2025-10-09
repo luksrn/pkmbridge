@@ -44,9 +44,7 @@ import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessag
 import org.springframework.stereotype.Component
 
 @Configuration
-class AssistantConfiguration(
-    val ollamaProperties: OllamaProperties,
-) {
+class AssistantConfiguration {
     @Bean
     @Primary
     fun embeddingStoreTextSegments(): InMemoryEmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
