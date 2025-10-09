@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-    kotlin("plugin.serialization") version "2.2.0"
-    id("org.springframework.boot") version "3.5.6"
-    id("io.spring.dependency-management") version "1.1.7"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 group = "com.ifood.logistics"
@@ -22,23 +22,15 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.bundles.spring.boot)
+    implementation(libs.bundles.kotlin.core)
+    implementation(libs.bundles.langchain4j)
+    implementation(libs.okhttp)
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    implementation("dev.langchain4j:langchain4j-ollama:1.7.1")
-    implementation("dev.langchain4j:langchain4j-easy-rag:1.7.1-beta14")
-    implementation("dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2:1.7.1-beta14")
-    implementation("dev.langchain4j:langchain4j-onnx-scoring:1.7.1-beta14")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // Testing
+    testImplementation(libs.bundles.testing)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
     //implementation("com.vdurmont:emoji-java:5.1.1")
     // https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
     // implementation("org.apache.lucene:lucene-core:10.2.2")
