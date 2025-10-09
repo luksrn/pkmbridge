@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.spring.dependency.management)
 }
 
-group = "com.ifood.logistics"
+group = "com.github.luksrn"
 version = "0.0.1-SNAPSHOT"
 
 java {

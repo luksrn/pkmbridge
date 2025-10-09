@@ -1,7 +1,9 @@
 spring:
   application:
     name: dev.ai
-
+  output:
+    ansi:
+      enabled: always
 server:
   port: 11435
 

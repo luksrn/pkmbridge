@@ -1,5 +1,6 @@
-rootProject.name = "dev.ai"
+rootProject.name = "PKMBridge"
 
+include("pkm-rag-api")
 include("logseq")
 include("obsidian")
-include("pkm-rag-api")
+
