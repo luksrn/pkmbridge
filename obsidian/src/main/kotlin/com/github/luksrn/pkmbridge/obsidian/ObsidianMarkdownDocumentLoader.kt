@@ -6,7 +6,6 @@ import org.apache.commons.io.filefilter.RegexFileFilter
 
 class ObsidianMarkdownDocumentLoader(
     val directory: String,
-)  {
-    fun loadDocuments(): List<Document> =
-        FileSystemDocumentLoader.loadDocumentsRecursively(directory, RegexFileFilter("^.*\\.md$"))
+) {
+    fun loadDocuments(): List<Document> = FileSystemDocumentLoader.loadDocumentsRecursively(directory, RegexFileFilter("^.*\\.md$"))
 }

@@ -3,7 +3,6 @@ package com.github.luksrn.pkmbridge
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.github.luksrn.pkmbridge.ollama.OllamaProperties
 import com.github.luksrn.pkmbridge.logseq.LogseqApi
 import com.github.luksrn.pkmbridge.logseq.LogseqApiTool
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentByRootBlockSplitter
@@ -11,6 +10,7 @@ import com.github.luksrn.pkmbridge.logseq.LogseqDocumentBySummarySplitter
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentSummarizedTransformer
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentTransformer
 import com.github.luksrn.pkmbridge.logseq.SummarizerAssistant
+import com.github.luksrn.pkmbridge.ollama.OllamaProperties
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.memory.chat.ChatMemoryProvider
