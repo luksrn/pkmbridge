@@ -5,6 +5,7 @@ import com.github.luksrn.pkmbridge.ollama.ChatRequestDto
 import com.github.luksrn.pkmbridge.ollama.GenerateRequestDto
 import com.github.luksrn.pkmbridge.ollama.StreamMessageFactory
 import dev.langchain4j.model.ollama.OllamaModels
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
@@ -27,8 +28,8 @@ class AssistantController(
 
     @PostMapping(
         "/api/chat",
-        consumes = ["application/json"],
-        produces = ["application/x-ndjson"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_NDJSON_VALUE],
     )
     fun chat(
         @RequestBody chatMessage: ChatRequestDto,
