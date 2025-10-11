@@ -24,6 +24,8 @@ class OllamaConfiguration(
             .logRequests(ollamaProperties.logRequests)
             .logResponses(ollamaProperties.logResponses)
             .modelName(ollamaProperties.modelName)
+            .think(true)
+            .returnThinking(true)
             .timeout(Duration.ofSeconds(ollamaProperties.timeout))
             .build()
 
@@ -38,6 +40,8 @@ class OllamaConfiguration(
             .logRequests(ollamaProperties.logRequests)
             .logResponses(ollamaProperties.logResponses)
             .modelName(ollamaProperties.modelName)
+            .think(true)
+            .returnThinking(true)
             .timeout(Duration.ofSeconds(ollamaProperties.timeout))
             .build()
 
@@ -47,6 +51,4 @@ class OllamaConfiguration(
             .builder()
             .baseUrl(ollamaProperties.baseUrl)
             .build()
-
-
 }
