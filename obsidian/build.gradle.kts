@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.bundles.spring.boot)
+    implementation(libs.bundles.spring.boot.core)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.langchain4j)
     implementation(libs.okhttp)

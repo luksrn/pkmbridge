@@ -25,7 +25,8 @@ dependencies {
     implementation(project(":obsidian"))
     implementation(project(":pkmbridge-rag"))
 
-    implementation(libs.bundles.spring.boot)
+    implementation(libs.bundles.spring.boot.core)
+    implementation(libs.bundles.spring.boot.web)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.langchain4j)
     implementation(libs.okhttp)
