@@ -8,7 +8,7 @@ plugins {
 
 group = "com.github.luksrn"
 version = "0.0.1-SNAPSHOT"
-
+description = "LogseqDB Rag Pipeline"
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(24)
@@ -20,16 +20,11 @@ repositories {
 }
 
 dependencies {
-    // Submodule dependencies
-    implementation(project(":logseq"))
-    implementation(project(":obsidian"))
-
     implementation(libs.bundles.spring.boot.core)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.langchain4j)
     implementation(libs.okhttp)
 
-    // Testing
     testImplementation(libs.bundles.testing)
     testRuntimeOnly(libs.junit.platform.launcher)
 }

@@ -8,6 +8,7 @@ plugins {
 
 group = "com.github.luksrn"
 version = "0.0.1-SNAPSHOT"
+description = "Rest APIs for the PKM Bridge RAG"
 
 java {
     toolchain {
@@ -21,9 +22,9 @@ repositories {
 
 dependencies {
     // Submodule dependencies
-    implementation(project(":logseq"))
+    implementation(project(":logseqdb"))
     implementation(project(":obsidian"))
-    implementation(project(":pkmbridge-rag"))
+    implementation(project(":pkm-bridge-rag"))
 
     implementation(libs.bundles.spring.boot.core)
     implementation(libs.bundles.spring.boot.web)

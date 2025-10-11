@@ -1,6 +1,6 @@
 rootProject.name = "PKMBridge"
 
-include("pkmbridge-rag")
-include("pkm-rag-api")
-include("logseq")
+include("pkm-bridge-rag")
+include("pkm-bridge-api")
+include("logseqdb")
 include("obsidian")

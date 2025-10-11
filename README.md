@@ -24,7 +24,7 @@ To run the application, ensure you have Java 21+ installed.
 
 Then, execute the following command in your terminal:
 ```
-./gradlew clean pkm-rag-api:bootRun
+./gradlew pkm-bridge-api:bootRun
 ```
 
 This will start the application on `http://localhost:11435`.

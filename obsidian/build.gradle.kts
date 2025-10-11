@@ -8,6 +8,7 @@ plugins {
 
 group = "com.github.luksrn.pkmbridge"
 version = "0.0.1-SNAPSHOT"
+description = "Obsidian Rag Pipeline"
 
 java {
     toolchain {
