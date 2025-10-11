@@ -1,6 +1,5 @@
 package com.github.luksrn.pkmbridge.logseq
 
-import okhttp3.internal.toImmutableList
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -21,13 +20,11 @@ class LogseqRestClient(
         post(LogseqRequest("logseq.Editor.getAllPages"))
             .toEntity(object : ParameterizedTypeReference<MutableList<Page>>() {})
             .body!!
-            .toImmutableList()
 
     fun fetchBlocks(pageUuid: String): List<Block> =
         post(LogseqRequest("logseq.Editor.getPageBlocksTree", listOf(pageUuid)))
             .toEntity(object : ParameterizedTypeReference<MutableList<Block>>() {})
             .body!!
-            .toImmutableList()
 
     fun fetchPage(pageUuid: String): Page =
         post(LogseqRequest("logseq.Editor.getPage", listOf(pageUuid)))
