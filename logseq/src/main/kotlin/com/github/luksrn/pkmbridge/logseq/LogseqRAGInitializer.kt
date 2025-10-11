@@ -15,10 +15,10 @@ class LogseqRAGInitializer {
     @ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true", matchIfMissing = true)
     fun initializer(
         embeddingStoreIngestor: EmbeddingStoreIngestor,
-        api: LogseqApi,
+        client: LogseqRestClient,
     ) = ApplicationRunner { args ->
         logger.info("Initializing LogSeq RAG")
-        embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
+        embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(client).loadDocuments())
         logger.info("Loaded documents from Logseq API and synced into embedding store.")
     }
 
@@ -27,11 +27,11 @@ class LogseqRAGInitializer {
     @ConditionalOnProperty(name = ["pkm.rag.summaries.enabled"], havingValue = "true", matchIfMissing = true)
     fun initializerSummaries(
         @Qualifier("embeddingStoreIngestorSummaries") embeddingStoreIngestor: EmbeddingStoreIngestor,
-        api: LogseqApi,
+        client: LogseqRestClient,
     ) = ApplicationRunner { args ->
         try {
             logger.info("Initializing LogSeq RAG summaries")
-            embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(api).loadDocuments())
+            embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(client).loadDocuments())
             logger.info("Summaries synced into embedding store.")
         } catch (ex: Exception) {
             logger.error("Error initializing summaries", ex)

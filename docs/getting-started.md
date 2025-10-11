@@ -38,4 +38,6 @@ http --stream  POST "http://localhost:11435/api/chat" model="qwen3:8b" messages:
 
 # Open Web UI
 
+```shell
 DATA_DIR=~/.open-webui uvx --python 3.11 open-webui@latest serve
+```

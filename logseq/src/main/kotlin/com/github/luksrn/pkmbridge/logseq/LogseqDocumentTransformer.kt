@@ -4,7 +4,7 @@ import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.DocumentTransformer
 
 class LogseqDocumentTransformer(
-    val api: LogseqApi,
+    val client: LogseqRestClient,
 ) : DocumentTransformer {
     override fun transform(document: Document): Document? {
         val note = document as LogseqDocument
@@ -32,7 +32,7 @@ class LogseqDocumentTransformer(
 
         note.doWithBlocksRecursive { block ->
             LogseqLinkTextResolver.replaceLinks(block) { pageId ->
-                api.fetchPage(pageId).title
+                client.fetchPage(pageId).title
             }
         }
 

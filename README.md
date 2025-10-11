@@ -1,6 +1,6 @@
 # 🦙 PKMBridge
 
-A RAG (Retrieval-Augmented Generation) app powered by Ollama and LangChain4j, designed to enrich AI responses with insights from your personal knowledge base — seamlessly integrating with tools like Obsidian or Logseq.
+A RAG (Retrieval-Augmented Generation) app powered by Ollama and LangChain4j, designed to enrich AI responses with insights from your personal knowledge base — seamlessly integrating with tools like Obsidian or LogseqDB.
 
 ## Features
 - **RAG with Ollama**: Leverage the power of Ollama for advanced language model capabilities and utilize LangChain4j for building robust language model applications.

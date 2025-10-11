@@ -1,6 +1,6 @@
 package com.github.luksrn.pkmbridge
 
-import com.github.luksrn.pkmbridge.logseq.LogseqApi
+import com.github.luksrn.pkmbridge.logseq.LogseqRestClient
 import com.github.luksrn.pkmbridge.logseq.LogseqApiTool
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentByRootBlockSplitter
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentBySummarySplitter
@@ -139,7 +139,7 @@ class AssistantConfiguration {
 
     @Bean
     @Primary
-    fun embeddingStoreIngestorSegments(api: LogseqApi): EmbeddingStoreIngestor =
+    fun embeddingStoreIngestorSegments(api: LogseqRestClient): EmbeddingStoreIngestor =
         EmbeddingStoreIngestor
             .builder()
             .embeddingStore(embeddingStoreTextSegments())
@@ -151,7 +151,7 @@ class AssistantConfiguration {
     @Bean
     fun embeddingStoreIngestorSummaries(
         summarizerAssistant: SummarizerAssistant,
-        api: LogseqApi,
+        api: LogseqRestClient,
     ): EmbeddingStoreIngestor =
         EmbeddingStoreIngestor
             .builder()

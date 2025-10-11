@@ -4,11 +4,11 @@ import dev.langchain4j.data.document.Document
 import org.slf4j.LoggerFactory
 
 class LogseqAPIDocumentLoader(
-    val logseqApi: LogseqApi,
+    val logseqRestClient: LogseqRestClient,
 ) {
     fun loadDocuments(): List<Document> {
         logger.info("Loading documents from LogSeq API")
-        val pages = logseqApi.fetchPages()
+        val pages = logseqRestClient.fetchPages()
         logger.info("${pages.size} pages found in Logseq graph")
 
         val documents =
@@ -17,7 +17,7 @@ class LogseqAPIDocumentLoader(
                     it.ident = it.inferIdentity()
                     it
                 }.map {
-                    val blocks = logseqApi.fetchBlocks(it.uuid)
+                    val blocks = logseqRestClient.fetchBlocks(it.uuid)
                     LogseqDocument(it, blocks.sortedBy { b -> b.order })
                 }
 

@@ -1,0 +1,29 @@
+{
+  "properties": {
+    "tags": [
+      136
+    ]
+  },
+  "updatedAt": 1760197751845,
+  "createdAt": 1760197751845,
+  "txId": 536871068,
+  "tags": [
+    {
+      "id": 136
+    }
+  ],
+  "id": 176,
+  "name": "best practices for dependencies",
+  "uuid": "68ea7c77-7e14-489f-88ae-8ea9a40b0a77",
+  "fullTitle": "Best Practices for Dependencies",
+  "content": "Best Practices for Dependencies",
+  "title": "Best Practices for Dependencies",
+  "refs": [
+    {
+      "id": 21
+    },
+    {
+      "id": 136
+    }
+  ]
+}

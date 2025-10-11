@@ -1,27 +1,78 @@
 package com.github.luksrn.pkmbridge.logseq
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.client.RestClientTest
+import org.springframework.core.io.ClassPathResource
+import org.springframework.http.MediaType
+import org.springframework.test.web.client.MockRestServiceServer
+import org.springframework.test.web.client.match.MockRestRequestMatchers.header
+import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
+import org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess
 
-class LogseqApiTest {
-    val api =
-        LogseqApi(
-            LogseqProperties(
-                "http://127.0.0.1:12315/api",
-                "0432483b-469a-4ca6-b16d-35106294b36e",
-            ),
-        )
+@RestClientTest(LogseqRestClient::class, LogseqProperties::class, JsonConfig::class)
+class LogseqApiTest(
+    @Autowired val server: MockRestServiceServer,
+    @Autowired val client: LogseqRestClient,
+    @Autowired val properties: LogseqProperties,
+) {
+    @Test
+    fun `When call the method fetch pages the Logseq Clint must return all Pages`() {
+        server
+            .expect(requestTo(properties.serverUrl))
+            .andExpect(header("Authorization", properties.authorizationToken))
+            .andRespond(
+                withSuccess(
+                    ClassPathResource("mock-responses-http/getAllPages.json"),
+                    MediaType.APPLICATION_JSON,
+                ),
+            )
+
+        val pages = client.fetchPages()
+
+        assertThat(pages).hasSize(44)
+        // TODO improve
+        server.verify()
+    }
 
     @Test
-    fun `Fetch All Pages`() {
-        val pages = api.fetchPages()
-        pages.forEach {
-            println(it)
-            api.fetchPage(it.uuid).let { page ->
-                println("  $page")
-            }
-            api.fetchBlocks(it.uuid).forEach {
-                println("    $it")
-            }
-        }
+    fun `When call the method fetch pages blocks the Logseq Clint must return the block tree`() {
+        server
+            .expect(requestTo(properties.serverUrl))
+            .andExpect(header("Authorization", properties.authorizationToken))
+            .andRespond(
+                withSuccess(
+                    ClassPathResource("mock-responses-http/getPageBlocksTree.json"),
+                    MediaType.APPLICATION_JSON,
+                ),
+            )
+
+        val pages = client.fetchBlocks("68ea7c77-7e14-489f-88ae-8ea9a40b0a77")
+
+        assertThat(pages)
+            .hasSize(2)
+        // TODO improve
+        server.verify()
+    }
+
+    @Test
+    fun `When call the method fetch page must return the block tree`() {
+        server
+            .expect(requestTo(properties.serverUrl))
+            .andExpect(header("Authorization", properties.authorizationToken))
+            .andRespond(
+                withSuccess(
+                    ClassPathResource("mock-responses-http/getPage.json"),
+                    MediaType.APPLICATION_JSON,
+                ),
+            )
+
+        val page = client.fetchPage("68ea7c77-7e14-489f-88ae-8ea9a40b0a77")
+
+        assertThat(page.title).isEqualTo("Best Practices for Dependencies")
+        assertThat(page.content).isEqualTo("Best Practices for Dependencies")
+        // TODO improve
+        server.verify()
     }
 }
