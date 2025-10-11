@@ -42,6 +42,7 @@ data class Tag(
         return this.id == 134 || this.id == 135
     }
 }
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Block(
     val children: List<Block> = emptyList(),
@@ -60,7 +61,9 @@ data class LogseqRequest(
     val args: List<String> = emptyList(),
 )
 
-enum class Identity(val ident: String) {
+enum class Identity(
+    val ident: String,
+) {
     PAGE(":logseq.class/Page"),
     JOURNAL(":logseq.class/Journal"),
     TAG(":logseq.class/Tag"),
@@ -68,12 +71,14 @@ enum class Identity(val ident: String) {
     QUERY(":logseq.class/Query"),
     TASK(":logseq.class/Task"),
     TEMPLATE(":logseq.class/Template"),
-    OTHER("");
+    OTHER(""),
+    ;
 
     companion object {
         @JvmStatic
         @JsonCreator
-        fun fromIdent(@JsonProperty("ident") ident: String): Identity =
-            Identity.entries.find { it.ident == ident } ?: OTHER
+        fun fromIdent(
+            @JsonProperty("ident") ident: String,
+        ): Identity = Identity.entries.find { it.ident == ident } ?: OTHER
     }
 }

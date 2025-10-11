@@ -1,8 +1,5 @@
 package com.github.luksrn.pkmbridge
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.luksrn.pkmbridge.logseq.LogseqApi
 import com.github.luksrn.pkmbridge.logseq.LogseqApiTool
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentByRootBlockSplitter
@@ -164,12 +161,11 @@ class AssistantConfiguration {
             .documentSplitter(LogseqDocumentBySummarySplitter())
             .build()
 
-    @Bean
-    fun objectMapper() =
-        ObjectMapper()
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-            .registerKotlinModule()
-
+//    @Bean
+//    fun objectMapper() =
+//        ObjectMapper()
+//            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+//            .registerKotlinModule()
 }
 
 @Component

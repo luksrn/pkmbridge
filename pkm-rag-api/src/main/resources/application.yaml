@@ -7,6 +7,13 @@ spring:
 server:
   port: 11435
 
+management:
+  endpoints:
+    web:
+      base-path: /
+  server:
+    port: 53411
+
 ollama:
   modelName: qwen3:8b
   baseUrl: http://localhost:11434

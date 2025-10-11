@@ -1,77 +1,41 @@
 package com.github.luksrn.pkmbridge.logseq
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
+import org.springframework.core.ParameterizedTypeReference
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
+import org.springframework.web.client.RestClient
 
-// TODO Refactor
 @Component
 class LogseqApi(
-    private val properties: LogseqProperties,
-    private val objectMapper: ObjectMapper
+    properties: LogseqProperties,
 ) {
-    private val client = OkHttpClient()
+    val restClient =
+        RestClient
+            .builder()
+            .baseUrl(properties.serverUrl)
+            .defaultHeader("Authorization", properties.authorizationToken)
+            .build()
 
+    fun fetchPages(): List<Page> =
+        post(LogseqRequest("logseq.Editor.getAllPages"))
+            .toEntity(object : ParameterizedTypeReference<MutableList<Page>>() {})
+            .body!!
 
+    fun fetchBlocks(pageUuid: String): List<Block> =
+        post(LogseqRequest("logseq.Editor.getPageBlocksTree", listOf(pageUuid)))
+            .toEntity(object : ParameterizedTypeReference<MutableList<Block>>() {})
+            .body!!
 
-    fun fetchPages(): List<Page> {
-        val logseqRequest = LogseqRequest("logseq.Editor.getAllPages")
-        val jsonString = objectMapper.writeValueAsString(logseqRequest)
+    fun fetchPage(pageUuid: String): Page =
+        post(LogseqRequest("logseq.Editor.getPage", listOf(pageUuid)))
+            .toEntity(Page::class.java)
+            .body!!
 
-        val request =
-            Request
-                .Builder()
-                .url(properties.serverUrl)
-                .post(jsonString.toRequestBody("application/json".toMediaTypeOrNull()))
-                .header("Authorization", properties.authorizationToken)
-                .build()
-
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw Exception("Failed to fetch pages: ${response.code}")
-            val responseBody = response.body?.string() ?: throw Exception("Empty response body")
-            return objectMapper.readValue(responseBody, object : TypeReference<MutableList<Page>>() {})
-        }
-    }
-
-    fun fetchBlocks(pageUuid: String): List<Block> {
-        val logseqRequest = LogseqRequest("logseq.Editor.getPageBlocksTree", listOf(pageUuid))
-        val jsonString = objectMapper.writeValueAsString(logseqRequest)
-
-        val request =
-            Request
-                .Builder()
-                .url(properties.serverUrl)
-                .post(jsonString.toRequestBody("application/json".toMediaTypeOrNull()))
-                .header("Authorization", properties.authorizationToken)
-                .build()
-
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw Exception("Failed to fetch blocks: ${response.code}")
-            val responseBody = response.body?.string() ?: throw Exception("Empty response body")
-            return objectMapper.readValue(responseBody, object : TypeReference<MutableList<Block>>() {})
-        }
-    }
-
-    fun fetchPage(pageUuid: String): Page {
-        val logseqRequest = LogseqRequest("logseq.Editor.getPage", listOf(pageUuid))
-        val jsonString = objectMapper.writeValueAsString(logseqRequest)
-
-        val request =
-            Request
-                .Builder()
-                .url(properties.serverUrl)
-                .post(jsonString.toRequestBody("application/json".toMediaTypeOrNull()))
-                .header("Authorization", properties.authorizationToken)
-                .build()
-
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw Exception("Failed to fetch blocks: ${response.code}")
-            val responseBody = response.body?.string() ?: throw Exception("Empty response body")
-            return objectMapper.readValue(responseBody, Page::class.java)
-        }
-    }
+    private fun post(request: Any): RestClient.ResponseSpec =
+        restClient
+            .post()
+            .body(request)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .retrieve()
 }
