@@ -1,4 +1,5 @@
 
+## Getting Started
 
 ```shell
 http GET "http://localhost:11435/api/tags"
@@ -19,21 +20,20 @@ http GET "http://localhost:11435/embedding?query=what is the slow productivity a
 
 You can also use the streaming response by setting the stream as true
 ```shell
-curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/generate -d '{"model": "qwen3:8b","prompt": "what is the slow productivity about?", "stream": true}' 
+http --stream POST "http://localhost:11435/api/generate" model="qwen3:8b" prompt="what is the slow productivity about?" stream:=true 
 ```
 
 ```shell
-curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/generate -d '{"model": "qwen3:8b","prompt": "what is the slow productivity about?", "stream": false}' 
+http POST "http://localhost:11435/api/generate" model="qwen3:8b" prompt="what is the slow productivity about?" stream:=false
 ```
 
-
 ```shell
-curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/chat -d '{"model": "qwen3:8b","messages": [{  "role": "user",  "content": "what is the slow productivity about?"}], "stream": false}'
+http POST "http://localhost:11435/api/chat" model="qwen3:8b" messages:='[{"role": "user", "content": "what is the slow productivity about?"}]' stream:=false
 ```
 
 You can also use the streaming response by setting the stream as true
 ```shell
-curl -v -i -H 'Content-Type: application/json'  http://localhost:11435/api/chat -d '{"model": "qwen3:8b","messages": [{  "role": "user",  "content": "what is the slow productivity about?"}], "stream": true}' 
+http POST "http://localhost:11435/api/chat" model="qwen3:8b" messages:='[{"role": "user", "content": "what is the slow productivity about?"}]' stream:=true 
 ```
 
 # Open Web UI
