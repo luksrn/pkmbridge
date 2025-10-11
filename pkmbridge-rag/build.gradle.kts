@@ -23,7 +23,6 @@ dependencies {
     // Submodule dependencies
     implementation(project(":logseq"))
     implementation(project(":obsidian"))
-    implementation(project(":pkmbridge-rag"))
 
     implementation(libs.bundles.spring.boot)
     implementation(libs.bundles.kotlin.core)
