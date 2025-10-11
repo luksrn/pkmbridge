@@ -20,12 +20,14 @@ class LogseqRestClient(
     fun fetchPages(): List<Page> =
         post(LogseqRequest("logseq.Editor.getAllPages"))
             .toEntity(object : ParameterizedTypeReference<MutableList<Page>>() {})
-            .body!!.toImmutableList()
+            .body!!
+            .toImmutableList()
 
     fun fetchBlocks(pageUuid: String): List<Block> =
         post(LogseqRequest("logseq.Editor.getPageBlocksTree", listOf(pageUuid)))
             .toEntity(object : ParameterizedTypeReference<MutableList<Block>>() {})
-            .body!!.toImmutableList()
+            .body!!
+            .toImmutableList()
 
     fun fetchPage(pageUuid: String): Page =
         post(LogseqRequest("logseq.Editor.getPage", listOf(pageUuid)))

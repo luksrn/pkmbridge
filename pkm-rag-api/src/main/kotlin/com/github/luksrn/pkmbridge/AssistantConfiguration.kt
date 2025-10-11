@@ -1,11 +1,11 @@
 package com.github.luksrn.pkmbridge
 
-import com.github.luksrn.pkmbridge.logseq.LogseqRestClient
 import com.github.luksrn.pkmbridge.logseq.LogseqApiTool
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentByRootBlockSplitter
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentBySummarySplitter
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentSummarizedTransformer
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentTransformer
+import com.github.luksrn.pkmbridge.logseq.LogseqRestClient
 import com.github.luksrn.pkmbridge.logseq.SummarizerAssistant
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
