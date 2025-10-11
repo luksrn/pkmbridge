@@ -14,6 +14,20 @@ class OllamaConfiguration(
     val ollamaProperties: OllamaProperties,
 ) {
     @Bean
+    fun chatModel(): ChatModel =
+        OllamaChatModel
+            .builder()
+            .baseUrl(ollamaProperties.baseUrl)
+            .temperature(ollamaProperties.temperature) // temperature (between 0 and 2)
+            .topP(ollamaProperties.topP) // topP (between 0 and 1) — cumulative probability of the most probable tokens
+            .topK(ollamaProperties.topK)
+            .logRequests(ollamaProperties.logRequests)
+            .logResponses(ollamaProperties.logResponses)
+            .modelName(ollamaProperties.modelName)
+            .timeout(Duration.ofSeconds(ollamaProperties.timeout))
+            .build()
+
+    @Bean
     fun streamChatModel(): StreamingChatModel =
         OllamaStreamingChatModel
             .builder()
@@ -34,17 +48,5 @@ class OllamaConfiguration(
             .baseUrl(ollamaProperties.baseUrl)
             .build()
 
-    @Bean
-    fun chatModel(): ChatModel =
-        OllamaChatModel
-            .builder()
-            .baseUrl(ollamaProperties.baseUrl)
-            .temperature(ollamaProperties.temperature) // temperature (between 0 and 2)
-            .topP(ollamaProperties.topP) // topP (between 0 and 1) — cumulative probability of the most probable tokens
-            .topK(ollamaProperties.topK)
-            .logRequests(ollamaProperties.logRequests)
-            .logResponses(ollamaProperties.logResponses)
-            .modelName(ollamaProperties.modelName)
-            .timeout(Duration.ofSeconds(ollamaProperties.timeout))
-            .build()
+
 }

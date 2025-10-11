@@ -1,9 +1,5 @@
 package com.github.luksrn.pkmbridge
 
-import com.github.luksrn.pkmbridge.ollama.AssistantResponseDto
-import com.github.luksrn.pkmbridge.ollama.ChatRequestDto
-import com.github.luksrn.pkmbridge.ollama.GenerateRequestDto
-import com.github.luksrn.pkmbridge.ollama.StreamMessageFactory
 import dev.langchain4j.model.ollama.OllamaModels
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*

@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.ollama
+package com.github.luksrn.pkmbridge
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty

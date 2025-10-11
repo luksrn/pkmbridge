@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.ollama
+package com.github.luksrn.pkmbridge
 
 data class GenerateRequestDto(
     val model: String,
