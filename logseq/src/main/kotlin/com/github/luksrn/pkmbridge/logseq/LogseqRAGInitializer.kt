@@ -14,18 +14,16 @@ import org.springframework.core.annotation.Order
 @Configuration
 @ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true", matchIfMissing = true)
 class LogseqRAGInitializer {
-
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    fun logseqAvailabilityCheck(
-        logRestClient: LogseqRestClient,
-    ) = ApplicationRunner { args ->
+    fun logseqAvailabilityCheck(logRestClient: LogseqRestClient) =
+        ApplicationRunner { args ->
             try {
                 logRestClient.getCurrentGraph()
             } catch (ex: java.lang.Exception) {
                 throw LogseqAvailabilityCheckException(ex)
             }
-    }
+        }
 
     @Bean
     fun initializer(
