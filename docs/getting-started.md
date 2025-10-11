@@ -33,7 +33,7 @@ http POST "http://localhost:11435/api/chat" model="qwen3:8b" messages:='[{"role"
 
 You can also use the streaming response by setting the stream as true
 ```shell
-http POST "http://localhost:11435/api/chat" model="qwen3:8b" messages:='[{"role": "user", "content": "what is the slow productivity about?"}]' stream:=true 
+http --stream  POST "http://localhost:11435/api/chat" model="qwen3:8b" messages:='[{"role": "user", "content": "what is the slow productivity about?"}]' stream:=true 
 ```
 
 # Open Web UI
