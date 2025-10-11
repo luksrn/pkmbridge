@@ -3,6 +3,7 @@ package com.github.luksrn.pkmbridge
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.luksrn.pkmbridge.logseq.LogseqApi
 import com.github.luksrn.pkmbridge.logseq.LogseqApiTool
 import com.github.luksrn.pkmbridge.logseq.LogseqDocumentByRootBlockSplitter
@@ -33,14 +34,12 @@ import dev.langchain4j.service.AiServices
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore
-import kotlinx.serialization.json.Json
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
-import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessageConverter
 import org.springframework.stereotype.Component
 
 @Configuration
@@ -173,15 +172,8 @@ class AssistantConfiguration {
             .registerModule(
                 JavaTimeModule(),
             ).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            .registerKotlinModule()
 
-    // TODO: use only one Json configuration
-    @Bean
-    fun ktxMessageConverter(): KotlinSerializationJsonHttpMessageConverter {
-        // if you want to ignore unknown keys from json string,
-        // otherwise make sure your data class has all json keys.
-        val json = Json { ignoreUnknownKeys = true }
-        return KotlinSerializationJsonHttpMessageConverter(json)
-    }
 }
 
 @Component

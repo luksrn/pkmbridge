@@ -1,6 +1,7 @@
 package com.github.luksrn.pkmbridge.logseq
 
-import kotlinx.serialization.json.Json
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -11,19 +12,15 @@ import org.springframework.stereotype.Component
 @Component
 class LogseqApi(
     private val properties: LogseqProperties,
+    private val objectMapper: ObjectMapper
 ) {
     private val client = OkHttpClient()
 
-    private val json =
-        Json {
-            encodeDefaults = true
-            ignoreUnknownKeys = true
-            coerceInputValues = true
-        }
+
 
     fun fetchPages(): List<Page> {
         val logseqRequest = LogseqRequest("logseq.Editor.getAllPages")
-        val jsonString = json.encodeToString(LogseqRequest.serializer(), logseqRequest)
+        val jsonString = objectMapper.writeValueAsString(logseqRequest)
 
         val request =
             Request
@@ -36,13 +33,13 @@ class LogseqApi(
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw Exception("Failed to fetch pages: ${response.code}")
             val responseBody = response.body?.string() ?: throw Exception("Empty response body")
-            return json.decodeFromString(responseBody)
+            return objectMapper.readValue(responseBody, object : TypeReference<MutableList<Page>>() {})
         }
     }
 
     fun fetchBlocks(pageUuid: String): List<Block> {
         val logseqRequest = LogseqRequest("logseq.Editor.getPageBlocksTree", listOf(pageUuid))
-        val jsonString = json.encodeToString(LogseqRequest.serializer(), logseqRequest)
+        val jsonString = objectMapper.writeValueAsString(logseqRequest)
 
         val request =
             Request
@@ -55,13 +52,13 @@ class LogseqApi(
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw Exception("Failed to fetch blocks: ${response.code}")
             val responseBody = response.body?.string() ?: throw Exception("Empty response body")
-            return json.decodeFromString(responseBody)
+            return objectMapper.readValue(responseBody, object : TypeReference<MutableList<Block>>() {})
         }
     }
 
     fun fetchPage(pageUuid: String): Page {
         val logseqRequest = LogseqRequest("logseq.Editor.getPage", listOf(pageUuid))
-        val jsonString = json.encodeToString(LogseqRequest.serializer(), logseqRequest)
+        val jsonString = objectMapper.writeValueAsString(logseqRequest)
 
         val request =
             Request
@@ -74,7 +71,7 @@ class LogseqApi(
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw Exception("Failed to fetch blocks: ${response.code}")
             val responseBody = response.body?.string() ?: throw Exception("Empty response body")
-            return json.decodeFromString(responseBody)
+            return objectMapper.readValue(responseBody, Page::class.java)
         }
     }
 }

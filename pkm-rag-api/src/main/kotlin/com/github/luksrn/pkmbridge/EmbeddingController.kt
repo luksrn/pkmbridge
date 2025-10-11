@@ -6,7 +6,6 @@ import dev.langchain4j.rag.AugmentationRequest
 import dev.langchain4j.rag.RetrievalAugmentor
 import dev.langchain4j.rag.content.ContentMetadata
 import dev.langchain4j.rag.query.Metadata
-import kotlinx.serialization.Serializable
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
@@ -39,7 +38,6 @@ class EmbeddingController(
     }
 }
 
-@Serializable
 data class EmbeddingContent(
     val text: String,
     val score: String,

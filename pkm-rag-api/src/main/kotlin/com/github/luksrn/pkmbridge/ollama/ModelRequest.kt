@@ -1,8 +1,5 @@
 package com.github.luksrn.pkmbridge.ollama
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class GenerateRequestDto(
     val model: String,
     val prompt: String,
@@ -10,7 +7,6 @@ data class GenerateRequestDto(
     val format: String? = null,
 )
 
-@Serializable
 data class Options(
     val temperature: Double,
     val top_k: Int,
@@ -18,7 +14,6 @@ data class Options(
     val stop: List<String> = emptyList(),
 )
 
-@Serializable
 data class ChatRequestDto(
     val model: String,
     val messages: List<Message>,
@@ -28,7 +23,6 @@ data class ChatRequestDto(
     val format: String? = null,
 )
 
-@Serializable
 data class Message(
     val role: String,
     val content: String,

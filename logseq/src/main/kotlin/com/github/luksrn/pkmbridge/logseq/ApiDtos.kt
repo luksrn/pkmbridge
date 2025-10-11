@@ -1,16 +1,17 @@
 package com.github.luksrn.pkmbridge.logseq
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Page(
     var ident: Identity = Identity.PAGE,
-    @SerialName(":logseq.property/public?")
+    @field:JsonProperty(":logseq.property/public?")
     val public: Boolean = true,
-    @SerialName(":logseq.property/built-in?")
+    @field:JsonProperty(":logseq.property/built-in?")
     val builtIn: Boolean = false,
-    @SerialName(":logseq.property/type")
+    @field:JsonProperty(":logseq.property/type")
     val type: String? = null,
     val journalDay: Long? = null,
     val updatedAt: Long,
@@ -32,7 +33,7 @@ data class Page(
         }
 }
 
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Tag(
     val id: Int,
 ) {
@@ -41,8 +42,7 @@ data class Tag(
         return this.id == 134 || this.id == 135
     }
 }
-
-@Serializable
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Block(
     val children: List<Block> = emptyList(),
     val tags: List<Tag>? = null,
@@ -55,40 +55,25 @@ data class Block(
     val order: String? = null,
 )
 
-@Serializable
 data class LogseqRequest(
     val method: String,
     val args: List<String> = emptyList(),
 )
 
-@Serializable
-enum class Identity(
-    val ident: String,
-) {
-    @SerialName(":logseq.class/Page")
+enum class Identity(val ident: String) {
     PAGE(":logseq.class/Page"),
-
-    @SerialName(":logseq.class/Journal")
     JOURNAL(":logseq.class/Journal"),
-
-    @SerialName(":logseq.class/Tag")
     TAG(":logseq.class/Tag"),
-
-    @SerialName(":logseq.class/Property")
     PROPERTY(":logseq.class/Property"),
-
-    @SerialName(":logseq.class/Query")
     QUERY(":logseq.class/Query"),
-
-    @SerialName(":logseq.class/Task")
     TASK(":logseq.class/Task"),
-
-    @SerialName(":logseq.class/Template")
     TEMPLATE(":logseq.class/Template"),
-    OTHER(""),
-    ;
+    OTHER("");
 
     companion object {
-        fun valueOfIdent(ident: String): Identity = values().find { it.ident == ident } ?: OTHER
+        @JvmStatic
+        @JsonCreator
+        fun fromIdent(@JsonProperty("ident") ident: String): Identity =
+            Identity.entries.find { it.ident == ident } ?: OTHER
     }
 }
