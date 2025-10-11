@@ -56,6 +56,12 @@ data class Block(
     val order: String? = null,
 )
 
+data class CurrentGraph(
+    val url: String,
+    val name: String,
+    val path: String,
+)
+
 data class LogseqRequest(
     val method: String,
     val args: List<String> = emptyList(),

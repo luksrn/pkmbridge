@@ -34,6 +34,11 @@ class LogseqRestClient(
             .toEntity(Page::class.java)
             .body!!
 
+    fun getCurrentGraph(): CurrentGraph =
+        post(LogseqRequest("logseq.App.getCurrentGraph"))
+            .toEntity(CurrentGraph::class.java)
+            .body!!
+
     private fun post(request: Any): RestClient.ResponseSpec =
         restClient
             .post()

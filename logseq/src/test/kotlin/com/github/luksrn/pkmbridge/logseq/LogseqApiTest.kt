@@ -1,6 +1,7 @@
 package com.github.luksrn.pkmbridge.logseq
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.SoftAssertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest
@@ -17,6 +18,29 @@ class LogseqApiTest(
     @Autowired val client: LogseqRestClient,
     @Autowired val properties: LogseqProperties,
 ) {
+    @Test
+    fun `When call the method get current graph the Logseq Client must return Graph info`() {
+        server
+            .expect(requestTo(properties.serverUrl))
+            .andExpect(header("Authorization", properties.authorizationToken))
+            .andRespond(
+                withSuccess(
+                    ClassPathResource("mock-responses-http/getCurrentGraph.json"),
+                    MediaType.APPLICATION_JSON,
+                ),
+            )
+
+        val graph = client.getCurrentGraph()
+
+        val softly = SoftAssertions()
+        softly.assertThat(graph.name).isEqualTo("logseq_db_database-teste-04")
+        softly.assertThat(graph.url).isEqualTo("logseq_db_database-teste-04")
+        softly.assertThat(graph.path).isEqualTo("/Users/luksrn/logseq/graphs/database-teste-04")
+
+        softly.assertAll()
+        server.verify()
+    }
+
     @Test
     fun `When call the method fetch pages the Logseq Clint must return all Pages`() {
         server
