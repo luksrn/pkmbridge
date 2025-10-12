@@ -32,6 +32,4 @@ class LogseqRAGInitializer {
     ) = ApplicationRunner { args ->
         embeddingStoreIngestor.ingest(LogseqAPIDocumentLoader(client).loadDocuments())
     }
-
-    private val logger = LoggerFactory.getLogger(LogseqRAGInitializer::class.java)
 }

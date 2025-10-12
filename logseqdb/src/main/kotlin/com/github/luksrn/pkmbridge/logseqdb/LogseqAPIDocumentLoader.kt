@@ -20,10 +20,7 @@ class LogseqAPIDocumentLoader(
                     it
                 }.map {
                     val blocks = logseqRestClient.fetchBlocks(it.uuid)
-                    val metadata = Metadata()
-                    metadata.put("graph-name", graph.name)
-                    metadata.put("graph-path", graph.path)
-                    LogseqDocument(it, blocks.sortedBy { b -> b.order }, metadata)
+                    LogseqDocument(graph,it, blocks.sortedBy { b -> b.order })
                 }
 
         return documents

@@ -4,6 +4,7 @@ import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.Metadata
 
 class LogseqDocument(
+    val graph: CurrentGraph,
     val page: Page,
     val blocks: List<Block>,
     var metadata: Metadata = Metadata(),
@@ -16,7 +17,7 @@ class LogseqDocument(
         metadata.put(Document.FILE_NAME, page.name)
         metadata.put(DOCUMENT_TYPE, page.inferIdentity().name)
         metadata.put("pkm", "logseq")
-        metadata.put("link", "logseq://graph/database-teste-03?page=${page.uuid}&file_name=${page.title.replace(" ", "%20")}")
+        metadata.put("link", graph.linkForPage(page))
     }
 
     override fun text(): String {
