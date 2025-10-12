@@ -12,7 +12,6 @@ import org.springframework.core.annotation.Order
 @Configuration
 @ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true", matchIfMissing = true)
 class LogseqRAGInitializer {
-
     @Deprecated("Use initializer instead")
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)

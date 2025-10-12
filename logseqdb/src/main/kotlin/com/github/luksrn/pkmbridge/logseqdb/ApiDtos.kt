@@ -61,7 +61,8 @@ data class CurrentGraph(
     val name: String,
     val path: String,
 ) {
-    fun linkForPage(page: Page) = "logseq://graph/${url.replaceFirst("logseq_db_", "")}?page=${page.uuid}&file_name=${page.title.replace(" ", "%20")}"
+    fun linkForPage(page: Page) =
+        "logseq://graph/${url.replaceFirst("logseq_db_", "")}?page=${page.uuid}&file_name=${page.title.replace(" ", "%20")}"
 }
 
 data class LogseqRequest(
