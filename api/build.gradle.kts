@@ -24,8 +24,8 @@ dependencies {
     // Submodule dependencies
     implementation(project(":logseqdb"))
     implementation(project(":obsidian"))
-    implementation(project(":pkm-bridge-rag"))
-    implementation(project(":pkm-bridge-ollama"))
+    implementation(project(":rag"))
+    implementation(project(":ollama"))
 
     implementation(libs.bundles.spring.boot.core)
     implementation(libs.bundles.spring.boot.web)

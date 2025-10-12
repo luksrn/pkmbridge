@@ -1,7 +1,7 @@
 rootProject.name = "PKMBridge"
 
-include("pkm-bridge-rag")
-include("pkm-bridge-api")
-include("pkm-bridge-ollama")
+include("api")
+include("rag")
+include("ollama")
 include("logseqdb")
 include("obsidian")
