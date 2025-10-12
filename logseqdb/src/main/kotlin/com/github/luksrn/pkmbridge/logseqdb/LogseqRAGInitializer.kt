@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.logseq
+package com.github.luksrn.pkmbridge.logseqdb
 
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import org.slf4j.LoggerFactory

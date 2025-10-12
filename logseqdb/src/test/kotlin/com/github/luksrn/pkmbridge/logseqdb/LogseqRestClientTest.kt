@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.logseq
+package com.github.luksrn.pkmbridge.logseqdb
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.SoftAssertions

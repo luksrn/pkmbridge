@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.logseq
+package com.github.luksrn.pkmbridge.logseqdb
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

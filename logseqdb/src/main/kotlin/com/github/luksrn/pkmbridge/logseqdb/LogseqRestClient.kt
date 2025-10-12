@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.logseq
+package com.github.luksrn.pkmbridge.logseqdb
 
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType

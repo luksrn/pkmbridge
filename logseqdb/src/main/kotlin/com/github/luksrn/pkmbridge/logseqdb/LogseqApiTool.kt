@@ -1,4 +1,4 @@
-package com.github.luksrn.pkmbridge.logseq
+package com.github.luksrn.pkmbridge.logseqdb
 
 import dev.langchain4j.agent.tool.P
 import dev.langchain4j.agent.tool.Tool
