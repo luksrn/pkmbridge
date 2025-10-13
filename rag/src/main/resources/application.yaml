@@ -1,16 +1,10 @@
-ollama:
-  modelName: qwen3:8b
-  baseUrl: http://localhost:11434
-  timeout: 120000
-  temperature: 0.7
-  topP: 0.95
-  topK: 25
-  logRequests: true
-  logResponses: true
-
-re-rank:
-  enabled: true
-  path-to-model: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"
-  path-to-tokenizer: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
-  max-result: 5
-  min-score: 0.25
+#ollama:
+#  modelName: qwen3:8b
+#  baseUrl: http://localhost:11434
+#  timeout: 120000
+#  temperature: 0.7
+#  topP: 0.95
+#  topK: 25
+#  logRequests: true
+#  logResponses: true
+#

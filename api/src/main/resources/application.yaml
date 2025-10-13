@@ -28,7 +28,7 @@ re-rank:
   enabled: true
   path-to-model: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"
   path-to-tokenizer: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
-  max-result: 5
+  max-result: 25
   min-score: 0.25
 
 pkm:
