@@ -1,2 +1,2 @@
 org.springframework.boot.diagnostics.FailureAnalyzer=\
-com.github.luksrn.pkmbridge.logseq.LogseqAvailabilityFailureAnalyzer
+com.github.luksrn.pkmbridge.logseqdb.LogseqAvailabilityFailureAnalyzer
