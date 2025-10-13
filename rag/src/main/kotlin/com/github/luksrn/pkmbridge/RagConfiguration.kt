@@ -55,7 +55,7 @@ class RagConfiguration {
     fun retrievalAugment(
         queryRouter: QueryRouter,
         contentAggregatorProvider: ObjectProvider<ContentAggregator>,
-        chatModel: ChatModel
+        chatModel: ChatModel,
     ): RetrievalAugmentor =
         DefaultRetrievalAugmentor
             .builder()
@@ -72,17 +72,18 @@ class RagConfiguration {
     fun contentAggregator(reRankProperties: ReRankProperties): ContentAggregator =
         ReRankingContentAggregator
             .builder()
-            .querySelector(Function { queryToContents: MutableMap<Query, MutableCollection<MutableList<Content>>> ->
-                // select the query that retrieved the largest number of contents
-                var selected = queryToContents.keys.first()
-                for( query in queryToContents) {
-                    if( query.value.first().size > queryToContents[selected]!!.first().size ) {
-                        selected = query.key
+            .querySelector(
+                Function { queryToContents: MutableMap<Query, MutableCollection<MutableList<Content>>> ->
+                    // select the query that retrieved the largest number of contents
+                    var selected = queryToContents.keys.first()
+                    for (query in queryToContents) {
+                        if (query.value.first().size > queryToContents[selected]!!.first().size) {
+                            selected = query.key
+                        }
                     }
-                }
-                selected
-            })
-            .scoringModel(OnnxScoringModel(reRankProperties.pathToModel, reRankProperties.pathToTokenizer))
+                    selected
+                },
+            ).scoringModel(OnnxScoringModel(reRankProperties.pathToModel, reRankProperties.pathToTokenizer))
             .maxResults(reRankProperties.maxResult)
             .minScore(reRankProperties.minScore)
             .build()
