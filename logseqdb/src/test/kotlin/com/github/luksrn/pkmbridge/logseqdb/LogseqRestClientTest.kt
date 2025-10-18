@@ -12,7 +12,7 @@ import org.springframework.test.web.client.match.MockRestRequestMatchers.header
 import org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
 import org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess
 
-@RestClientTest(LogseqRestClient::class, LogseqProperties::class, JsonConfig::class)
+@RestClientTest(LogseqRestClient::class, LogseqProperties::class, LogseqRestClientConfig::class)
 class LogseqRestClientTest(
     @Autowired val server: MockRestServiceServer,
     @Autowired val client: LogseqRestClient,

@@ -8,7 +8,7 @@ import tools.jackson.module.kotlin.KotlinFeature
 import tools.jackson.module.kotlin.KotlinModule
 
 @Configuration
-class JsonConfig {
+class LogseqRestClientConfig {
     @Bean
     fun objectMapper(): JsonMapper {
         val kotlinModule =

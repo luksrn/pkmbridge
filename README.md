@@ -3,8 +3,6 @@
 A RAG (Retrieval-Augmented Generation) app powered by Ollama and LangChain4j, designed to enrich AI responses with insights from your personal knowledge base — seamlessly integrating with tools like Obsidian or LogseqDB.
 
 ## Features
-- **RAG with Ollama**: Leverage the power of Ollama for advanced language model capabilities and utilize LangChain4j for building robust language model applications.
-- **Personal Knowledge Base**: Integrate with your personal knowledge base from Obsidian or Logseq.
 - **RESTful API**: Interact with the application through a well-defined RESTful API compatible with [OpenWeb Ui](https://github.com/open-webui/open-webui)
 - **Streaming Support**: Supports streaming responses for real-time interactions.
 - **Multiple Models**: Compatible with various models like Qwen, Llama2, etc.
@@ -24,7 +22,7 @@ To run the application, ensure you have Java 21+ installed.
 
 Then, execute the following command in your terminal:
 ```
-./gradlew pkm-bridge-api:bootRun
+./gradlew api:bootRun
 ```
 
 This will start the application on `http://localhost:11435`.

@@ -2,7 +2,6 @@ package com.github.luksrn.pkmbridge
 
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.segment.TextSegment
-import dev.langchain4j.internal.Exceptions
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel
@@ -14,7 +13,6 @@ import dev.langchain4j.rag.content.aggregator.ContentAggregator
 import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator
 import dev.langchain4j.rag.content.injector.DefaultContentInjector
 import dev.langchain4j.rag.content.retriever.ContentRetriever
-import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever
 import dev.langchain4j.rag.query.Query
 import dev.langchain4j.rag.query.router.DefaultQueryRouter
 import dev.langchain4j.rag.query.router.QueryRouter
@@ -37,16 +35,6 @@ class RagConfiguration {
     @Bean
     @Primary
     fun embeddingStore(): InMemoryEmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
-
-    @Bean
-    fun contentRetrievers(): ContentRetriever =
-        EmbeddingStoreContentRetriever
-            .builder()
-            .embeddingModel(embeddingModel())
-            .embeddingStore(embeddingStore())
-            .maxResults(50)
-            .minScore(0.70) // 0.70
-            .build()
 
     @Bean
     fun queryRouter(contentRetrievers: List<ContentRetriever>): QueryRouter = DefaultQueryRouter(contentRetrievers)
