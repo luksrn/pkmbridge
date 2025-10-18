@@ -22,6 +22,8 @@ repositories {
 
 dependencies {
     // Submodule dependencies
+    implementation(project(":logseqdb"))
+    implementation(project(":obsidian"))
     implementation(libs.bundles.spring.boot.core)
     implementation(libs.bundles.kotlin.core)
     implementation(libs.bundles.langchain4j)

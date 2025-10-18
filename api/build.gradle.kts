@@ -22,8 +22,6 @@ repositories {
 
 dependencies {
     // Submodule dependencies
-    implementation(project(":logseqdb"))
-    implementation(project(":obsidian"))
     implementation(project(":rag"))
     implementation(project(":ollama"))
 
