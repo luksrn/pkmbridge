@@ -41,8 +41,8 @@ class AssistantController(
 
     @PostMapping(
         "/api/generate",
-        consumes = ["application/json"],
-        produces = ["application/json", "application/x-ndjson"],
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_NDJSON_VALUE],
     )
     fun generate(
         @RequestBody generateRequest: GenerateRequestDto,
