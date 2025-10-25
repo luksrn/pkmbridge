@@ -8,7 +8,7 @@ plugins {
 
 group = "com.github.luksrn.pkmbridge"
 version = "0.0.1-SNAPSHOT"
-description = "Obsidian Rag Pipeline"
+description = "Obsidian Document Loader for PKM Bridge RAG"
 
 java {
     toolchain {

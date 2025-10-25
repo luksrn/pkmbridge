@@ -13,15 +13,6 @@ class AssistantController(
     val ollamaModel: OllamaModels,
     val assistant: Assistant,
 ) {
-    @GetMapping("/api/version")
-    fun version(): Map<String, String> = mapOf("version" to "0.5.1")
-
-    @GetMapping("/api/tags")
-    fun availableModels() = mapOf("models" to ollamaModel.availableModels().content())
-
-    @GetMapping("/api/ps")
-    fun runningModels() = mapOf("models" to ollamaModel.runningModels().content())
-
     @PostMapping(
         "/api/chat",
         consumes = [MediaType.APPLICATION_JSON_VALUE],
@@ -71,4 +62,13 @@ class AssistantController(
             }.start()
         return sink.asFlux()
     }
+
+    @GetMapping("/api/version")
+    fun version(): Map<String, String> = mapOf("version" to "0.5.1")
+
+    @GetMapping("/api/tags")
+    fun availableModels() = mapOf("models" to ollamaModel.availableModels().content())
+
+    @GetMapping("/api/ps")
+    fun runningModels() = mapOf("models" to ollamaModel.runningModels().content())
 }

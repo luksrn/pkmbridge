@@ -1,16 +1,17 @@
 [versions]
 kotlin = "2.2.10"
 kotlin-serialization = "2.2.0"
-spring-boot = "4.0.0-M3"
+spring-boot = "4.0.0-RC1"
 spring-dependency-management = "1.1.7"
-langchain4j = "1.7.1"
-langchain4j-beta = "1.7.1-beta14"
+langchain4j = "1.8.0"
+langchain4j-beta = "1.8.0-beta15"
 kotlinx-serialization-json = "1.6.0"
-okhttp = "4.12.0"
+okhttp = "5.2.1"
+testcontainers-ollama = "1.20.4"
 
 [libraries]
 # Spring Boot
-spring-boot-starter-autoconfigure = { module = "org.springframework.boot:spring-boot-starter-autoconfigure" }
+testcontainers-ollama = { module = "org.testcontainers:ollama", version.ref = "testcontainers-ollama" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-jackson = { module = "org.springframework.boot:spring-boot-starter-jackson" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }

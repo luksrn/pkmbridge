@@ -84,5 +84,5 @@ data class ReRankProperties(
     var pathToModel: String? = null,
     var pathToTokenizer: String? = null,
     var maxResult: Int = 20,
-    var minScore: Double = 0.25,
+    var minScore: Double = 0.0,
 )

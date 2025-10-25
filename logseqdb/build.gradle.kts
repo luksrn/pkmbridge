@@ -8,7 +8,8 @@ plugins {
 
 group = "com.github.luksrn"
 version = "0.0.1-SNAPSHOT"
-description = "LogseqDB Rag Pipeline"
+description = "LogseqDB Document Loader for PKM Bridge RAG"
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(24)

@@ -34,6 +34,7 @@ dependencies {
     // Testing
     testImplementation(libs.bundles.testing)
     testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.testcontainers.ollama)
 }
 
 kotlin {
