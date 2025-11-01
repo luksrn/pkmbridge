@@ -41,6 +41,7 @@ class AssistantController(
 
     private fun chatStream(generateRequest: GenerateRequestDto): Flux<AssistantResponseDto> {
         val sink = Sinks.many().unicast().onBackpressureBuffer<AssistantResponseDto>()
+        val start = System.nanoTime()
         assistant
             .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
             .onPartialResponse { partialResponse ->
@@ -55,6 +56,8 @@ class AssistantController(
                 sink.tryEmitComplete()
             }.onCompleteResponse {
                 val chatResponse = StreamMessageFactory.createCompleteResponse(generateRequest, it)
+                chatResponse.totalDuration = System.nanoTime() - start
+                chatResponse.evalDuration = chatResponse.totalDuration
                 sink.tryEmitNext(chatResponse)
                 sink.tryEmitComplete()
             }.onToolExecuted {

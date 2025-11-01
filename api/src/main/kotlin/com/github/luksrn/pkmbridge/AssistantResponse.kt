@@ -16,23 +16,35 @@ data class AssistantResponseDto(
     val response: String? = null,
     @field:JsonProperty("done_reason")
     val doneReason: String? = null,
+    // total_duration: How long the response took to generate
     @field:JsonProperty("total_duration")
-    val totalDuration: Long? = null,
+    var totalDuration: Long? = null,
+    // load_duration: How long the model took to load
     @field:JsonProperty("load_duration")
     val loadDuration: Long? = null,
+    // prompt_eval_count: How many input tokens were processed
     @field:JsonProperty("prompt_eval_count")
     val promptEvalCount: Int? = null,
+    // prompt_eval_duration: How long it took to evaluate the prompt
     @field:JsonProperty("prompt_eval_duration")
     val promptEvalDuration: Long? = null,
+    // eval_count: How many output tokens were processes
     @field:JsonProperty("eval_count")
     val evalCount: Int? = null,
+    // eval_duration: How long it took to generate the output tokens
     @field:JsonProperty("eval_duration")
-    val evalDuration: Long? = null,
+    var evalDuration: Long? = null,
 )
 
 data class ModelResponseDto(
     val role: String,
     val content: String,
+)
+
+data class ChatContext(
+    val generateRequestDto: GenerateRequestDto,
+    val assistantResponseDto: AssistantResponseDto,
+    val start: Instant = Instant.now(),
 )
 
 // create a static factory class for the StreamMessageDto
@@ -57,7 +69,7 @@ object StreamMessageFactory {
         chatResponse: ChatResponse,
     ): AssistantResponseDto =
         AssistantResponseDto(
-            model = generateRequestDto.model,
+            model = chatResponse.modelName(),
             createdAt = Instant.now(),
             message =
                 ModelResponseDto(
@@ -69,9 +81,9 @@ object StreamMessageFactory {
             doneReason = chatResponse.finishReason().name,
             totalDuration = 0L,
             loadDuration = 0L,
-            promptEvalCount = 0,
+            promptEvalCount = chatResponse.tokenUsage().inputTokenCount(),
             promptEvalDuration = 0L,
-            evalCount = 0,
+            evalCount = chatResponse.tokenUsage().totalTokenCount(),
             evalDuration = 0L,
         )
 }

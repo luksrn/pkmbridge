@@ -17,6 +17,7 @@ spring-boot-starter-jackson = { module = "org.springframework.boot:spring-boot-s
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
 spring-boot-starter-restclient = { module = "org.springframework.boot:spring-boot-starter-restclient" }
 spring-boot-starter-restclient-test = { module = "org.springframework.boot:spring-boot-restclient-test" }
+spring-boot-resttestclient = { module = "org.springframework.boot:spring-boot-resttestclient" }
 jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin" }
 reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions" }
 
@@ -47,7 +48,7 @@ langchain4j = ["langchain4j-ollama", "langchain4j-easy-rag", "langchain4j-embedd
 spring-boot-core = [ "jackson-module-kotlin", "reactor-kotlin-extensions", "spring-boot-starter-validation", "spring-boot-starter-jackson" , "spring-boot-starter-restclient"]
 spring-boot-web = ["spring-boot-starter-web", "spring-boot-starter-actuator"]
 kotlin-core = ["kotlin-reflect", "kotlinx-coroutines-reactor", "kotlinx-serialization-json"]
-testing = ["spring-boot-starter-test", "reactor-test", "kotlin-test-junit5", "kotlinx-coroutines-test", "spring-boot-starter-restclient-test"]
+testing = ["spring-boot-starter-test", "reactor-test", "kotlin-test-junit5", "kotlinx-coroutines-test", "spring-boot-starter-restclient-test" , "spring-boot-resttestclient"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
