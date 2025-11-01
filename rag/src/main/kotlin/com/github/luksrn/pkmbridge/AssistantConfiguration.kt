@@ -27,6 +27,7 @@ class AssistantConfiguration {
             .chatMemoryProvider(chatMemoryProvider())
             .retrievalAugmentor(retrievalAugmentor)
             .inputGuardrails(RagOnlyInputGuardrail(), SelfCheckInputGuardrail(chatModel))
+            .outputGuardrails(SelfCheckFactsOutputGuardrail())
             // .tools(LogseqApiTool())
             .build()
 
