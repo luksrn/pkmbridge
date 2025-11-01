@@ -2,6 +2,7 @@ package com.github.luksrn.pkmbridge
 
 import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.guardrail.InputGuardrail
+import dev.langchain4j.guardrail.InputGuardrailRequest
 import dev.langchain4j.guardrail.InputGuardrailResult
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.input.PromptTemplate
@@ -41,10 +42,10 @@ class SelfCheckInputGuardrail(
             """.trimIndent(),
         )
 
-    override fun validate(userMessage: UserMessage): InputGuardrailResult {
+    override fun validate(request: InputGuardrailRequest): InputGuardrailResult {
         val prompt =
             defaultTemplate.apply(
-                mapOf("user_input" to userMessage.contents().first().toString()),
+                mapOf("user_input" to request.requestParams().userMessageTemplate()),
             )
         val response = chatModel.chat(prompt.text())
         return parseResponse(response)
