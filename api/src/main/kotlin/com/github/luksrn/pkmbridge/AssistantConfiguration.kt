@@ -1,5 +1,6 @@
 package com.github.luksrn.pkmbridge
 
+import dev.langchain4j.guardrail.InputGuardrail
 import dev.langchain4j.memory.chat.ChatMemoryProvider
 import dev.langchain4j.memory.chat.MessageWindowChatMemory
 import dev.langchain4j.model.chat.ChatModel
@@ -26,6 +27,7 @@ class AssistantConfiguration {
             .streamingChatModel(streamChatModel)
             .chatMemoryProvider(chatMemoryProvider())
             .retrievalAugmentor(retrievalAugmentor)
+            .inputGuardrails<InputGuardrail>(SelfCheckInputGuardrail(chatModel))
             // .tools(LogseqApiTool())
             .build()
 
