@@ -2,7 +2,7 @@ package com.github.luksrn.pkmbridge
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
-import dev.langchain4j.guardrail.InputGuardrailException
+import dev.langchain4j.guardrail.GuardrailException
 import dev.langchain4j.model.chat.response.ChatResponse
 import dev.langchain4j.model.output.FinishReason
 import java.time.Instant
@@ -91,7 +91,7 @@ object StreamMessageFactory {
 
     fun createGuardrailResponse(
         generateRequestDto: GenerateRequestDto,
-        inputGuardrailException: InputGuardrailException,
+        guardrailException: GuardrailException,
     ): AssistantResponseDto =
         AssistantResponseDto(
             model = generateRequestDto.model,
@@ -101,7 +101,7 @@ object StreamMessageFactory {
                     role = "assistant",
                     content = "",
                 ),
-            response = inputGuardrailException.message,
+            response = guardrailException.message,
             done = true,
             doneReason = FinishReason.CONTENT_FILTER.name,
             totalDuration = 0L,

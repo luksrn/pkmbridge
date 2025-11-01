@@ -1,7 +1,11 @@
 package com.github.luksrn.pkmbridge
 
+import dev.langchain4j.guardrail.GuardrailException
 import dev.langchain4j.guardrail.InputGuardrailException
+import dev.langchain4j.guardrail.OutputGuardrail
+import dev.langchain4j.guardrail.OutputGuardrailException
 import dev.langchain4j.model.ollama.OllamaModels
+import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -55,9 +59,10 @@ class AssistantController(
                         val chatResponse = StreamMessageFactory.createPartialResponse(generateRequest, partialResponse)
                         sink.tryEmitNext(chatResponse)
                     }
-                }.onError {
-                    if (generateRequest.stream) {
-                        // sink.tryEmitNext("""{"model":"gemma3","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.message}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
+                }.onError { e ->
+                    if (e is InputGuardrailException || e is OutputGuardrailException) {
+                        logger.warn(e.message)
+                        sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
                     }
                     sink.tryEmitComplete()
                 }.onCompleteResponse {
@@ -71,7 +76,8 @@ class AssistantController(
                 }.start()
 
             return sink.asFlux()
-        } catch (e: InputGuardrailException) {
+        } catch (e: GuardrailException) {
+            logger.warn(e.message)
             sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
             sink.tryEmitComplete()
 
@@ -87,4 +93,6 @@ class AssistantController(
 
     @GetMapping("/api/ps")
     fun runningModels() = mapOf("models" to ollamaModel.runningModels().content())
+
+    private val logger = LoggerFactory.getLogger(AssistantController::class.java)
 }
