@@ -12,7 +12,7 @@ class RagOnlyInputGuardrail : InputGuardrail {
                 .contents()
                 .isEmpty()
         ) {
-            return failure("The response does not contain any retrieved documents from RAG.")
+            return fatal("The response does not contain any retrieved documents from RAG.")
         }
 
         return success()

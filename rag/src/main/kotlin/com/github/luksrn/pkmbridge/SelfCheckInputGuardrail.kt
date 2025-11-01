@@ -1,6 +1,5 @@
 package com.github.luksrn.pkmbridge
 
-import dev.langchain4j.data.message.UserMessage
 import dev.langchain4j.guardrail.InputGuardrail
 import dev.langchain4j.guardrail.InputGuardrailRequest
 import dev.langchain4j.guardrail.InputGuardrailResult
@@ -56,6 +55,6 @@ class SelfCheckInputGuardrail(
         if (normalizedResponse.contains("yes")) {
             return failure("Failed to pass self-check input that checks user input against harmful or inappropriate content.")
         }
-        return InputGuardrailResult.success()
+        return success()
     }
 }
