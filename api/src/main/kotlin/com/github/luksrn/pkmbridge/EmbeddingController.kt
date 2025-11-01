@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 class EmbeddingController(
     val retrievalAugmentor: RetrievalAugmentor,
 ) {
-    @GetMapping("/embedding")
+    @GetMapping("/api/embedding")
     @ResponseBody
     fun embeddings(
         @RequestParam(value = "query") text: String,

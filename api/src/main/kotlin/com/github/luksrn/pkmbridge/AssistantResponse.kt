@@ -60,7 +60,7 @@ object StreamMessageFactory {
             createdAt = Instant.now(),
             message =
                 ModelResponseDto(
-                    role = "PersonalKnowledgeAssistant",
+                    role = "assistant",
                     content = partialContent,
                 ),
             done = false,
@@ -75,7 +75,7 @@ object StreamMessageFactory {
             createdAt = Instant.now(),
             message =
                 ModelResponseDto(
-                    role = "PersonalKnowledgeAssistant",
+                    role = "assistant",
                     content = "",
                 ),
             response = if (generateRequestDto.stream) null else chatResponse.aiMessage().text(),
@@ -98,10 +98,10 @@ object StreamMessageFactory {
             createdAt = Instant.now(),
             message =
                 ModelResponseDto(
-                    role = "PersonalKnowledgeAssistant",
+                    role = "assistant",
                     content = "",
                 ),
-            response = guardrailException.message,
+            response = "I'm sorry, I can't respond to that. Reason: ${guardrailException.message}",
             done = true,
             doneReason = FinishReason.CONTENT_FILTER.name,
             totalDuration = 0L,

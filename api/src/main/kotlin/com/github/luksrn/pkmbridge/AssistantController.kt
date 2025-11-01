@@ -19,7 +19,7 @@ import java.util.UUID
 @CrossOrigin(origins = ["*"])
 class AssistantController(
     val ollamaModel: OllamaModels,
-    val PersonalKnowledgeAssistant: PersonalKnowledgeAssistant,
+    val personalKnowledgeAssistant: PersonalKnowledgeAssistant,
 ) {
     @PostMapping(
         "/api/chat",
@@ -51,7 +51,7 @@ class AssistantController(
         val sink = Sinks.many().unicast().onBackpressureBuffer<AssistantResponseDto>()
         val start = System.nanoTime()
         try {
-            PersonalKnowledgeAssistant
+            personalKnowledgeAssistant
                 .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
                 .onPartialResponse { partialResponse ->
                     if (generateRequest.stream) {

@@ -28,7 +28,7 @@ This will start the application on `http://localhost:11435`.
 
 #### Query Embedding
 ```shell
-http GET "http://localhost:11435/embedding?query=how fix PSQLException query_wait_timeout?"
+http GET "http://localhost:11435/api/embedding?query=how fix PSQLException query_wait_timeout?"
 ```
 
 #### Generate Text and chat
