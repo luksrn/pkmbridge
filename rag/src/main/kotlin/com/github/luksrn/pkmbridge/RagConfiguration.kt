@@ -8,15 +8,12 @@ import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2Embedding
 import dev.langchain4j.model.scoring.onnx.OnnxScoringModel
 import dev.langchain4j.rag.DefaultRetrievalAugmentor
 import dev.langchain4j.rag.RetrievalAugmentor
-import dev.langchain4j.rag.content.Content
 import dev.langchain4j.rag.content.aggregator.ContentAggregator
 import dev.langchain4j.rag.content.aggregator.ReRankingContentAggregator
 import dev.langchain4j.rag.content.injector.DefaultContentInjector
 import dev.langchain4j.rag.content.retriever.ContentRetriever
-import dev.langchain4j.rag.query.Query
 import dev.langchain4j.rag.query.router.DefaultQueryRouter
 import dev.langchain4j.rag.query.router.QueryRouter
-import dev.langchain4j.rag.query.transformer.ExpandingQueryTransformer
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -25,7 +22,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
-import java.util.function.Function
 
 @Configuration
 class RagConfiguration {
@@ -47,7 +43,7 @@ class RagConfiguration {
     ): RetrievalAugmentor =
         DefaultRetrievalAugmentor
             .builder()
-            .queryTransformer(ExpandingQueryTransformer(chatModel))
+            .queryTransformer(OriginalAndExpandingQueryTransform(chatModel))
             .queryRouter(queryRouter)
             // when re-rank is enabled, the contentAggregatorProvider will provide the ReRankingContentAggregator bean
             .contentAggregator(contentAggregatorProvider.ifAvailable)
@@ -60,18 +56,8 @@ class RagConfiguration {
     fun contentAggregator(reRankProperties: ReRankProperties): ContentAggregator =
         ReRankingContentAggregator
             .builder()
-            .querySelector(
-                Function { queryToContents: MutableMap<Query, MutableCollection<MutableList<Content>>> ->
-                    // select the query that retrieved the largest number of contents
-                    var selected = queryToContents.keys.first()
-                    for (query in queryToContents) {
-                        if (query.value.first().size > queryToContents[selected]!!.first().size) {
-                            selected = query.key
-                        }
-                    }
-                    selected
-                },
-            ).scoringModel(OnnxScoringModel(reRankProperties.pathToModel, reRankProperties.pathToTokenizer))
+            .querySelector(ReRankingQueryExpandingQuerySelector())
+            .scoringModel(OnnxScoringModel(reRankProperties.pathToModel, reRankProperties.pathToTokenizer))
             .maxResults(reRankProperties.maxResult)
             .minScore(reRankProperties.minScore)
             .build()

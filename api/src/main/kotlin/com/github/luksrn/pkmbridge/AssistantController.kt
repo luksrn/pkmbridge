@@ -1,8 +1,13 @@
 package com.github.luksrn.pkmbridge
 
+import dev.langchain4j.guardrail.InputGuardrailException
 import dev.langchain4j.model.ollama.OllamaModels
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Sinks
 import java.util.UUID
@@ -42,28 +47,36 @@ class AssistantController(
     private fun chatStream(generateRequest: GenerateRequestDto): Flux<AssistantResponseDto> {
         val sink = Sinks.many().unicast().onBackpressureBuffer<AssistantResponseDto>()
         val start = System.nanoTime()
-        assistant
-            .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
-            .onPartialResponse { partialResponse ->
-                if (generateRequest.stream) {
-                    val chatResponse = StreamMessageFactory.createPartialResponse(generateRequest, partialResponse)
+        try {
+            assistant
+                .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
+                .onPartialResponse { partialResponse ->
+                    if (generateRequest.stream) {
+                        val chatResponse = StreamMessageFactory.createPartialResponse(generateRequest, partialResponse)
+                        sink.tryEmitNext(chatResponse)
+                    }
+                }.onError {
+                    if (generateRequest.stream) {
+                        // sink.tryEmitNext("""{"model":"gemma3","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.message}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
+                    }
+                    sink.tryEmitComplete()
+                }.onCompleteResponse {
+                    val chatResponse = StreamMessageFactory.createCompleteResponse(generateRequest, it)
+                    chatResponse.totalDuration = System.nanoTime() - start
+                    chatResponse.evalDuration = chatResponse.totalDuration
                     sink.tryEmitNext(chatResponse)
-                }
-            }.onError {
-                if (generateRequest.stream) {
-                    // sink.tryEmitNext("""{"model":"gemma3","created_at":"${Instant.now()}","message":{"role":"assistant","content":""},"done_reason":"${it.message}","done":true,"total_duration":17786754667,"load_duration":94432792,"prompt_eval_count":15,"prompt_eval_duration":1099568333,"eval_count":654,"eval_duration":16592188334}""")
-                }
-                sink.tryEmitComplete()
-            }.onCompleteResponse {
-                val chatResponse = StreamMessageFactory.createCompleteResponse(generateRequest, it)
-                chatResponse.totalDuration = System.nanoTime() - start
-                chatResponse.evalDuration = chatResponse.totalDuration
-                sink.tryEmitNext(chatResponse)
-                sink.tryEmitComplete()
-            }.onToolExecuted {
-                // println(it)
-            }.start()
-        return sink.asFlux()
+                    sink.tryEmitComplete()
+                }.onToolExecuted {
+                    // println(it)
+                }.start()
+
+            return sink.asFlux()
+        } catch (e: InputGuardrailException) {
+            sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
+            sink.tryEmitComplete()
+
+            return sink.asFlux()
+        }
     }
 
     @GetMapping("/api/version")

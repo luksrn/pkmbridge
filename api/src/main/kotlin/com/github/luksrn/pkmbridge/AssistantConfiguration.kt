@@ -27,7 +27,7 @@ class AssistantConfiguration {
             .streamingChatModel(streamChatModel)
             .chatMemoryProvider(chatMemoryProvider())
             .retrievalAugmentor(retrievalAugmentor)
-            .inputGuardrails<InputGuardrail>(SelfCheckInputGuardrail(chatModel))
+            .inputGuardrails(RagOnlyInputGuardrail(), SelfCheckInputGuardrail(chatModel))
             // .tools(LogseqApiTool())
             .build()
 
