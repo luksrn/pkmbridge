@@ -5,6 +5,8 @@ import dev.langchain4j.guardrail.OutputGuardrailRequest
 import dev.langchain4j.guardrail.OutputGuardrailResult
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.input.PromptTemplate
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.stereotype.Component
 
 /**
  * An output guardrail that performs a self-check to verify if the generated response is
@@ -15,6 +17,8 @@ import dev.langchain4j.model.input.PromptTemplate
  *
  * ref: https://docs.nvidia.com/nemo/guardrails/latest/user-guides/guardrails-library.html#fact-checking
  */
+@Component
+@ConditionalOnProperty(name = ["guardrails.output.check-facts.enabled"], havingValue = "true", matchIfMissing = false)
 class SelfCheckFactsOutputGuardrail(
     val chatModel: ChatModel,
 ) : OutputGuardrail {

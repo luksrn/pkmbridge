@@ -5,12 +5,16 @@ import dev.langchain4j.guardrail.InputGuardrailRequest
 import dev.langchain4j.guardrail.InputGuardrailResult
 import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.model.input.PromptTemplate
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.stereotype.Component
 
 /**
  * A default guardrail implementation that checks user input against harmful or inappropriate content.
  * It uses a chat model to evaluate the input based on predefined rules.
  * ref: https://docs.nvidia.com/nemo/guardrails/latest/user-guides/guardrails-library.html#self-check-input
  */
+@Component
+@ConditionalOnProperty(name = ["guardrails.input.check-input.enabled"], havingValue = "true", matchIfMissing = true)
 class SelfCheckInputGuardrail(
     val chatModel: ChatModel,
 ) : InputGuardrail {
