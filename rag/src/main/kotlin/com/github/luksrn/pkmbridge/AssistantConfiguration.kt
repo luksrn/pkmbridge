@@ -15,13 +15,13 @@ import org.springframework.context.annotation.Primary
 class AssistantConfiguration {
     @Bean
     @Primary
-    fun assistant(
+    fun personalKnowledgeAssistant(
         chatModel: ChatModel,
         streamChatModel: StreamingChatModel,
         retrievalAugmentor: RetrievalAugmentor,
-    ): Assistant =
+    ): PersonalKnowledgeAssistant =
         AiServices
-            .builder<Assistant>(Assistant::class.java)
+            .builder<PersonalKnowledgeAssistant>(PersonalKnowledgeAssistant::class.java)
             .chatModel(chatModel)
             .streamingChatModel(streamChatModel)
             .chatMemoryProvider(chatMemoryProvider())

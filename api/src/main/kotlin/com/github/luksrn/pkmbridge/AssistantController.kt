@@ -2,7 +2,6 @@ package com.github.luksrn.pkmbridge
 
 import dev.langchain4j.guardrail.GuardrailException
 import dev.langchain4j.guardrail.InputGuardrailException
-import dev.langchain4j.guardrail.OutputGuardrail
 import dev.langchain4j.guardrail.OutputGuardrailException
 import dev.langchain4j.model.ollama.OllamaModels
 import org.slf4j.LoggerFactory
@@ -20,7 +19,7 @@ import java.util.UUID
 @CrossOrigin(origins = ["*"])
 class AssistantController(
     val ollamaModel: OllamaModels,
-    val assistant: Assistant,
+    val PersonalKnowledgeAssistant: PersonalKnowledgeAssistant,
 ) {
     @PostMapping(
         "/api/chat",
@@ -52,7 +51,7 @@ class AssistantController(
         val sink = Sinks.many().unicast().onBackpressureBuffer<AssistantResponseDto>()
         val start = System.nanoTime()
         try {
-            assistant
+            PersonalKnowledgeAssistant
                 .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
                 .onPartialResponse { partialResponse ->
                     if (generateRequest.stream) {

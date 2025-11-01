@@ -5,7 +5,7 @@ import dev.langchain4j.service.SystemMessage
 import dev.langchain4j.service.TokenStream
 import dev.langchain4j.service.UserMessage
 
-interface Assistant {
+interface PersonalKnowledgeAssistant {
     @SystemMessage(
         """
     IDENTITY and PURPOSE    
