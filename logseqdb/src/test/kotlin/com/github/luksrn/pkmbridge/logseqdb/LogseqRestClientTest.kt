@@ -55,7 +55,7 @@ class LogseqRestClientTest(
 
         val pages = client.fetchPages()
 
-        assertThat(pages).hasSize(44)
+        assertThat(pages).hasSize(42)
         // TODO improve
         server.verify()
     }
@@ -96,6 +96,25 @@ class LogseqRestClientTest(
 
         assertThat(page.title).isEqualTo("Best Practices for Dependencies")
         assertThat(page.content).isEqualTo("Best Practices for Dependencies")
+        // TODO improve
+        server.verify()
+    }
+
+    @Test
+    fun `When call the method fetch page reference is a assert`() {
+        server
+            .expect(requestTo(properties.serverUrl))
+            .andExpect(header("Authorization", properties.authorizationToken))
+            .andRespond(
+                withSuccess(
+                    ClassPathResource("mock-responses-http/getPageImage.json"),
+                    MediaType.APPLICATION_JSON,
+                ),
+            )
+
+        val page = client.fetchPage("68ea7c77-7e14-489f-88ae-8ea9a40b0a77")
+
+        assertThat(page.title).isEqualTo("image")
         // TODO improve
         server.verify()
     }

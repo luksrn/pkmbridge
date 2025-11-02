@@ -1,1122 +1,422 @@
 [
   {
-    "ident": "alias",
-    "updatedAt": 1760197592597,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592597,
-    ":logseq.property/type": "page",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 20,
+    "createdAt": 1762042307910,
     "name": "alias",
-    "uuid": "00000002-2112-6446-9900-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Alias",
-    "content": "Alias",
-    "order": "bZy",
     "title": "Alias",
-    "cardinality": ":db.cardinality/many",
-    "valueType": ":db.type/ref",
-    ":logseq.property/view-context": "page"
+    "updatedAt": 1762042307910,
+    "uuid": "00000002-2112-6446-9900-000000000000",
+    "id": 20,
+    "content": "Alias",
+    "fullTitle": "Alias"
   },
   {
-    "ident": ":logseq.property/template-applied-to",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/type": "class",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 134,
+    "createdAt": 1762042307920,
     "name": "apply template to tags",
-    "uuid": "00000002-4291-2432-2000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Apply template to tags",
-    "content": "Apply template to tags",
-    "order": "bbo",
     "title": "Apply template to tags",
-    "cardinality": ":db.cardinality/many",
-    "valueType": ":db.type/ref"
+    "updatedAt": 1762042307920,
+    "uuid": "00000002-4291-2432-2000-000000000000",
+    "id": 134,
+    "content": "Apply template to tags",
+    "fullTitle": "Apply template to tags"
   },
   {
-    "ident": ":logseq.class/Asset",
-    "updatedAt": 1760197592604,
-    ":logseq.property.view/type": {
-      "id": 103
-    },
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 143,
+    "createdAt": 1762042307921,
     "name": "asset",
-    "uuid": "00000002-7975-0297-0000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Asset",
-    "content": "Asset",
     "title": "Asset",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/hide-from-node": true,
-    ":logseq.property.class/properties": [
-      {
-        "id": 115
-      },
-      {
-        "id": 116
-      },
-      {
-        "id": 117
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-7975-0297-0000-000000000000",
+    "id": 143,
+    "content": "Asset",
+    "fullTitle": "Asset"
   },
   {
-    "updatedAt": 1760197751845,
-    "createdAt": 1760197751845,
-    "txId": 536871068,
-    "tags": [
-      {
-        "id": 136
-      }
-    ],
-    "id": 176,
-    "name": "best practices for dependencies",
-    "uuid": "68ea7c77-7e14-489f-88ae-8ea9a40b0a77",
-    "fullTitle": "Best Practices for Dependencies",
-    "content": "Best Practices for Dependencies",
-    "title": "Best Practices for Dependencies",
-    "refs": [
-      {
-        "id": 21
-      },
-      {
-        "id": 136
-      }
-    ]
-  },
-  {
-    "updatedAt": 1760197709350,
-    "createdAt": 1760197630941,
-    "txId": 536871019,
-    "tags": [
-      {
-        "id": 136
-      }
-    ],
-    "id": 160,
-    "name": "best practices for structuring builds",
-    "uuid": "68ea7bfe-da63-4fc1-975c-a0bf25ade887",
-    "fullTitle": "Best Practices for Structuring Builds",
-    "content": "Best Practices for Structuring Builds",
-    "title": "Best Practices for Structuring Builds",
-    "refs": [
-      {
-        "id": 21
-      },
-      {
-        "id": 136
-      }
-    ]
-  },
-  {
-    "ident": ":logseq.class/Card",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 141,
+    "createdAt": 1762042307921,
     "name": "card",
-    "uuid": "00000002-1358-2811-0900-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Card",
-    "content": "Card",
     "title": "Card",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/properties": [
-      {
-        "id": 121
-      },
-      {
-        "id": 122
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1358-2811-0900-000000000000",
+    "id": 141,
+    "content": "Card",
+    "fullTitle": "Card"
   },
   {
-    "ident": ":logseq.class/Cards",
-    "updatedAt": 1760197592604,
-    ":logseq.property/icon": {
-      "type": "tablerIcon",
-      "id": "search"
-    },
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 142,
+    "createdAt": 1762042307921,
     "name": "cards",
-    "uuid": "00000002-1284-2651-6700-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Cards",
-    "content": "Cards",
     "title": "Cards",
-    ":logseq.property.class/extends": [
-      {
-        "id": 140
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1284-2651-6700-000000000000",
+    "id": 142,
+    "content": "Cards",
+    "fullTitle": "Cards"
   },
   {
-    "ident": ":logseq.class/Code-block",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 144,
+    "createdAt": 1762042307921,
     "name": "code",
-    "uuid": "00000002-1454-9866-4100-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Code",
-    "content": "Code",
     "title": "Code",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/hide-from-node": true,
-    ":logseq.property.class/properties": [
-      {
-        "id": 33
-      },
-      {
-        "id": 35
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1454-9866-4100-000000000000",
+    "id": 144,
+    "content": "Code",
+    "fullTitle": "Code"
   },
   {
-    "updatedAt": 1760197592605,
-    "createdAt": 1760197592605,
-    "tags": [
-      {
-        "id": 136
-      }
-    ],
-    "id": 152,
+    "createdAt": 1762042307922,
     "name": "contents",
+    "title": "Contents",
+    "updatedAt": 1762042307922,
     "uuid": "00000004-1690-2597-3200-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Contents",
+    "id": 152,
     "content": "Contents",
-    "title": "Contents"
+    "fullTitle": "Contents"
   },
   {
-    "ident": ":logseq.property/deadline",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/hide-empty-value": true,
-    ":logseq.property/type": "datetime",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 81,
-    ":logseq.property/description": {
-      "id": 82
-    },
+    "createdAt": 1762042307916,
     "name": "deadline",
-    "uuid": "00000002-1685-9016-0400-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Deadline",
-    "content": "Deadline",
-    "order": "bax",
     "title": "Deadline",
-    ":logseq.property/ui-position": "blockBelow",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307916,
+    "uuid": "00000002-1685-9016-0400-000000000000",
+    "id": 81,
+    "content": "Deadline",
+    "fullTitle": "Deadline"
   },
   {
-    "ident": ":logseq.property/description",
-    "updatedAt": 1760197592598,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592598,
-    ":logseq.property/type": "default",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 34,
+    "createdAt": 1762042307912,
     "name": "description",
-    "uuid": "00000002-3362-3620-0000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Description",
-    "content": "Description",
-    "order": "baC",
     "title": "Description",
-    "cardinality": ":db.cardinality/one",
-    "valueType": ":db.type/ref"
+    "updatedAt": 1762042307912,
+    "uuid": "00000002-3362-3620-0000-000000000000",
+    "id": 34,
+    "content": "Description",
+    "fullTitle": "Description"
   },
   {
-    "ident": ":logseq.property.fsrs/due",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": false,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/hide?": false,
-    ":logseq.property/type": "datetime",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 121,
+    "createdAt": 1762042307919,
     "name": "due",
-    "uuid": "00000002-1089-0805-4900-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Due",
-    "content": "Due",
-    "order": "bbb",
     "title": "Due",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307919,
+    "uuid": "00000002-1089-0805-4900-000000000000",
+    "id": 121,
+    "content": "Due",
+    "fullTitle": "Due"
   },
   {
-    "ident": ":logseq.property/enable-history?",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/type": "checkbox",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 126,
-    ":logseq.property/description": {
-      "id": 127
-    },
+    "createdAt": 1762042307919,
     "name": "enable property history",
-    "uuid": "00000002-8058-5960-2000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Enable property history",
-    "content": "Enable property history",
-    "order": "bbg",
     "title": "Enable property history",
-    "cardinality": ":db.cardinality/one",
-    ":logseq.property/view-context": "property"
+    "updatedAt": 1762042307919,
+    "uuid": "00000002-8058-5960-2000-000000000000",
+    "id": 126,
+    "content": "Enable property history",
+    "fullTitle": "Enable property history"
   },
   {
-    "ident": ":logseq.property.class/extends",
-    "updatedAt": 1760197592598,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592598,
-    ":logseq.property/type": "class",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 38,
-    ":logseq.property/description": {
-      "id": 39
-    },
+    "createdAt": 1762042307912,
     "name": "extends",
-    "uuid": "00000002-7475-9380-3000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Extends",
-    "content": "Extends",
-    "order": "baG",
     "title": "Extends",
-    "cardinality": ":db.cardinality/many",
-    "valueType": ":db.type/ref",
-    ":logseq.property/view-context": "class"
+    "updatedAt": 1762042307912,
+    "uuid": "00000002-7475-9380-3000-000000000000",
+    "id": 38,
+    "content": "Extends",
+    "fullTitle": "Extends"
   },
   {
-    "ident": ":logseq.property/hide-empty-value",
-    "updatedAt": 1760197592599,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592599,
-    ":logseq.property/type": "checkbox",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 41,
-    ":logseq.property/description": {
-      "id": 42
-    },
+    "createdAt": 1762042307913,
     "name": "hide empty value",
-    "uuid": "00000002-2062-3258-9900-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Hide empty value",
-    "content": "Hide empty value",
-    "order": "baJ",
     "title": "Hide empty value",
-    "cardinality": ":db.cardinality/one",
-    ":logseq.property/view-context": "property"
+    "updatedAt": 1762042307913,
+    "uuid": "00000002-2062-3258-9900-000000000000",
+    "id": 41,
+    "content": "Hide empty value",
+    "fullTitle": "Hide empty value"
   },
   {
-    "ident": ":logseq.property.class/hide-from-node",
-    "updatedAt": 1760197592599,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592599,
-    ":logseq.property/type": "checkbox",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 43,
+    "createdAt": 1762042307913,
     "name": "hide from node",
-    "uuid": "00000002-2610-3727-0000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Hide from Node",
-    "content": "Hide from Node",
-    "order": "baL",
     "title": "Hide from Node",
-    "cardinality": ":db.cardinality/one",
-    ":logseq.property/view-context": "class"
+    "updatedAt": 1762042307913,
+    "uuid": "00000002-2610-3727-0000-000000000000",
+    "id": 43,
+    "content": "Hide from Node",
+    "fullTitle": "Hide from Node"
   },
   {
-    "ident": ":logseq.property/icon",
-    "updatedAt": 1760197592601,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/type": "map",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 97,
+    "createdAt": 1762042307917,
     "name": "icon",
-    "uuid": "00000002-5891-2328-5000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Icon",
-    "content": "Icon",
-    "order": "bbD",
     "title": "Icon",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307917,
+    "uuid": "00000002-5891-2328-5000-000000000000",
+    "id": 97,
+    "content": "Icon",
+    "fullTitle": "Icon"
   },
   {
-    "ident": ":logseq.class/Journal",
-    "updatedAt": 1760197592604,
-    ":logseq.property.journal/title-format": "MMM do, yyyy",
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 137,
+    "createdAt": 1762042307921,
     "name": "journal",
-    "uuid": "00000002-1979-7410-8100-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Journal",
-    "content": "Journal",
     "title": "Journal",
-    ":logseq.property.class/extends": [
-      {
-        "id": 136
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1979-7410-8100-000000000000",
+    "id": 137,
+    "content": "Journal",
+    "fullTitle": "Journal"
   },
   {
-    "updatedAt": 1760197592605,
-    "createdAt": 1760197592605,
-    "tags": [
-      {
-        "id": 136
-      }
-    ],
-    "id": 151,
+    "createdAt": 1762042307922,
     "name": "library",
+    "title": "Library",
+    "updatedAt": 1762042307922,
     "uuid": "00000004-1294-7765-6000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Library",
+    "id": 151,
     "content": "Library",
-    "title": "Library"
+    "fullTitle": "Library"
   },
   {
-    "ident": ":logseq.class/Math-block",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 146,
+    "createdAt": 1762042307922,
     "name": "math",
-    "uuid": "00000002-2038-9631-2100-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Math",
-    "content": "Math",
     "title": "Math",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/hide-from-node": true,
-    ":logseq.property.class/properties": [
-      {
-        "id": 33
-      }
-    ]
+    "updatedAt": 1762042307922,
+    "uuid": "00000002-2038-9631-2100-000000000000",
+    "id": 146,
+    "content": "Math",
+    "fullTitle": "Math"
   },
   {
-    "updatedAt": 1760197751848,
-    "journalDay": 20251011,
-    "createdAt": 1760197593065,
-    "txId": 536871047,
-    "tags": [
-      {
-        "id": 137
-      }
-    ],
+    "createdAt": 1762042308242,
+    "name": "nov 2nd, 2025",
+    "title": "Nov 2nd, 2025",
+    "updatedAt": 1762042308242,
+    "uuid": "00000001-2025-1102-0000-000000000000",
     "id": 157,
-    "name": "oct 11th, 2025",
-    "uuid": "00000001-2025-1011-0000-000000000000",
-    "fullTitle": "Oct 11th, 2025",
-    "content": "Oct 11th, 2025",
-    "title": "Oct 11th, 2025",
-    "refs": [
-      {
-        "id": 21
-      },
-      {
-        "id": 137
-      }
-    ]
+    "content": "Nov 2nd, 2025",
+    "fullTitle": "Nov 2nd, 2025"
   },
   {
-    "ident": ":logseq.class/Page",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 136,
-    "name": "page",
-    "uuid": "00000002-1484-3403-2900-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Page",
-    "content": "Page",
-    "title": "Page",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ]
-  },
-  {
-    "ident": ":logseq.property/page-tags",
-    "updatedAt": 1760197592599,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592599,
-    ":logseq.property/type": "page",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 45,
-    ":logseq.property/description": {
-      "id": 46
-    },
-    "name": "page tags",
-    "uuid": "00000002-2133-5311-8500-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Page Tags",
-    "content": "Page Tags",
-    "order": "baN",
-    "title": "Page Tags",
-    "cardinality": ":db.cardinality/many",
-    "valueType": ":db.type/ref",
-    ":logseq.property/view-context": "page"
-  },
-  {
-    "ident": ":logseq.class/Pdf-annotation",
-    "updatedAt": 1760197592605,
-    "createdAt": 1760197592605,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 147,
+    "createdAt": 1762042307922,
     "name": "pdf annotation",
-    "uuid": "00000002-5049-5962-0000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "PDF Annotation",
-    "content": "PDF Annotation",
     "title": "PDF Annotation",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/hide-from-node": true,
-    ":logseq.property.class/properties": [
-      {
-        "id": 49
-      },
-      {
-        "id": 50
-      },
-      {
-        "id": 51
-      },
-      {
-        "id": 52
-      },
-      {
-        "id": 58
-      },
-      {
-        "id": 59
-      },
-      {
-        "id": 60
-      }
-    ]
+    "updatedAt": 1762042307922,
+    "uuid": "00000002-5049-5962-0000-000000000000",
+    "id": 147,
+    "content": "PDF Annotation",
+    "fullTitle": "PDF Annotation"
   },
   {
-    "ident": ":logseq.property/priority",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/hide-empty-value": true,
-    ":logseq.property/type": "default",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 76,
+    "createdAt": 1762042307921,
+    "name": "page",
+    "title": "Page",
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1484-3403-2900-000000000000",
+    "id": 136,
+    "content": "Page",
+    "fullTitle": "Page"
+  },
+  {
+    "createdAt": 1762042307913,
+    "name": "page tags",
+    "title": "Page Tags",
+    "updatedAt": 1762042307913,
+    "uuid": "00000002-2133-5311-8500-000000000000",
+    "id": 45,
+    "content": "Page Tags",
+    "fullTitle": "Page Tags"
+  },
+  {
+    "createdAt": 1762042307916,
     "name": "priority",
-    "uuid": "00000002-2392-2841-1000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Priority",
-    "content": "Priority",
-    "order": "bas",
     "title": "Priority",
-    ":logseq.property/ui-position": "blockLeft",
-    "cardinality": ":db.cardinality/one",
-    "valueType": ":db.type/ref",
-    ":logseq.property/enable-history?": true
+    "updatedAt": 1762042307916,
+    "uuid": "00000002-2392-2841-1000-000000000000",
+    "id": 76,
+    "content": "Priority",
+    "fullTitle": "Priority"
   },
   {
-    "ident": ":logseq.class/Property",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 3,
+    "createdAt": 1762042307921,
     "name": "property",
-    "uuid": "00000002-1038-7670-4800-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Property",
-    "content": "Property",
     "title": "Property",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1038-7670-4800-000000000000",
+    "id": 3,
+    "content": "Property",
+    "fullTitle": "Property"
   },
   {
-    "ident": ":logseq.class/Query",
-    "updatedAt": 1760197592604,
-    ":logseq.property/icon": {
-      "type": "tablerIcon",
-      "id": "search"
-    },
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 140,
+    "createdAt": 1762042307921,
     "name": "query",
-    "uuid": "00000002-2324-8016-6000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Query",
-    "content": "Query",
     "title": "Query",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/properties": [
-      {
-        "id": 44
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-2324-8016-6000-000000000000",
+    "id": 140,
+    "content": "Query",
+    "fullTitle": "Query"
   },
   {
-    "ident": ":logseq.class/Quote-block",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 145,
+    "createdAt": 1762042307921,
     "name": "quote",
-    "uuid": "00000002-1176-1666-1700-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Quote",
-    "content": "Quote",
     "title": "Quote",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/hide-from-node": true,
-    ":logseq.property.class/properties": [
-      {
-        "id": 33
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1176-1666-1700-000000000000",
+    "id": 145,
+    "content": "Quote",
+    "fullTitle": "Quote"
   },
   {
-    "ident": ":logseq.property.repeat/recur-frequency",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": false,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/hide-empty-value": true,
-    ":logseq.property/type": "number",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 85,
+    "createdAt": 1762042307916,
     "name": "repeating recur frequency",
-    "uuid": "00000002-8716-1592-2000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Repeating recur frequency",
-    "content": "Repeating recur frequency",
-    "order": "bb1",
     "title": "Repeating recur frequency",
-    ":logseq.property/default-value": {
-      "id": 86
-    },
-    "cardinality": ":db.cardinality/one",
-    "valueType": ":db.type/ref"
+    "updatedAt": 1762042307916,
+    "uuid": "00000002-8716-1592-2000-000000000000",
+    "id": 85,
+    "content": "Repeating recur frequency",
+    "fullTitle": "Repeating recur frequency"
   },
   {
-    "ident": ":logseq.property.repeat/recur-unit",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": false,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/hide-empty-value": true,
-    ":logseq.property/type": "default",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 87,
+    "createdAt": 1762042307917,
     "name": "repeating recur unit",
-    "uuid": "00000002-6903-0624-7000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Repeating recur unit",
-    "content": "Repeating recur unit",
-    "order": "bb3",
     "title": "Repeating recur unit",
-    ":logseq.property/default-value": {
-      "id": 90
-    },
-    "cardinality": ":db.cardinality/one",
-    "valueType": ":db.type/ref"
+    "updatedAt": 1762042307917,
+    "uuid": "00000002-6903-0624-7000-000000000000",
+    "id": 87,
+    "content": "Repeating recur unit",
+    "fullTitle": "Repeating recur unit"
   },
   {
-    "ident": ":logseq.class/Root",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 1,
+    "createdAt": 1762042307921,
     "name": "root tag",
+    "title": "Root Tag",
+    "updatedAt": 1762042307921,
     "uuid": "00000002-2737-8382-7000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Root Tag",
+    "id": 1,
     "content": "Root Tag",
-    "title": "Root Tag"
+    "fullTitle": "Root Tag"
   },
   {
-    "ident": ":logseq.property/scheduled",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/hide-empty-value": true,
-    ":logseq.property/type": "datetime",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 83,
-    ":logseq.property/description": {
-      "id": 84
-    },
+    "createdAt": 1762042307916,
     "name": "scheduled",
-    "uuid": "00000002-1644-5209-4300-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Scheduled",
-    "content": "Scheduled",
-    "order": "baz",
     "title": "Scheduled",
-    ":logseq.property/ui-position": "blockBelow",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307916,
+    "uuid": "00000002-1644-5209-4300-000000000000",
+    "id": 83,
+    "content": "Scheduled",
+    "fullTitle": "Scheduled"
   },
   {
-    "ident": ":logseq.property.fsrs/state",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": false,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/hide?": false,
-    ":logseq.property/type": "map",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 122,
+    "createdAt": 1762042307919,
     "name": "state",
-    "uuid": "00000002-1165-1650-8700-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "State",
-    "content": "State",
-    "order": "bbc",
     "title": "State",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307919,
+    "uuid": "00000002-1165-1650-8700-000000000000",
+    "id": 122,
+    "content": "State",
+    "fullTitle": "State"
   },
   {
-    "ident": ":logseq.property/status",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/hide-empty-value": true,
-    ":logseq.property/type": "default",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 69,
+    "createdAt": 1762042307915,
     "name": "status",
-    "uuid": "00000002-9072-1685-3000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Status",
-    "content": "Status",
-    "order": "bal",
     "title": "Status",
-    ":logseq.property/ui-position": "blockLeft",
-    ":logseq.property/default-value": {
-      "id": 71
-    },
-    "cardinality": ":db.cardinality/one",
-    "valueType": ":db.type/ref",
-    ":logseq.property/enable-history?": true
+    "updatedAt": 1762042307915,
+    "uuid": "00000002-9072-1685-3000-000000000000",
+    "id": 69,
+    "content": "Status",
+    "fullTitle": "Status"
   },
   {
-    "ident": ":logseq.class/Tag",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 2,
+    "createdAt": 1762042307921,
     "name": "tag",
-    "uuid": "00000002-5389-0208-3000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Tag",
-    "content": "Tag",
     "title": "Tag",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-5389-0208-3000-000000000000",
+    "id": 2,
+    "content": "Tag",
+    "fullTitle": "Tag"
   },
   {
-    "ident": ":logseq.property.class/properties",
-    "updatedAt": 1760197592599,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592599,
-    ":logseq.property/type": "property",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 40,
+    "createdAt": 1762042307913,
     "name": "tag properties",
-    "uuid": "00000002-2123-7120-5000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Tag Properties",
-    "content": "Tag Properties",
-    "order": "baI",
     "title": "Tag Properties",
-    "cardinality": ":db.cardinality/many",
-    "valueType": ":db.type/ref",
-    ":logseq.property/view-context": "never"
+    "updatedAt": 1762042307913,
+    "uuid": "00000002-2123-7120-5000-000000000000",
+    "id": 40,
+    "content": "Tag Properties",
+    "fullTitle": "Tag Properties"
   },
   {
-    "ident": "tags",
-    "updatedAt": 1760197592597,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592597,
-    ":logseq.property/type": "class",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 21,
+    "createdAt": 1762042307910,
     "name": "tags",
-    "uuid": "00000002-1814-9483-4000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Tags",
-    "content": "Tags",
-    "order": "bZz",
     "title": "Tags",
-    "cardinality": ":db.cardinality/many",
-    "valueType": ":db.type/ref"
+    "updatedAt": 1762042307910,
+    "uuid": "00000002-1814-9483-4000-000000000000",
+    "id": 21,
+    "content": "Tags",
+    "fullTitle": "Tags"
   },
   {
-    "ident": ":logseq.class/Task",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 139,
+    "createdAt": 1762042307921,
     "name": "task",
-    "uuid": "00000002-1282-1814-5700-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Task",
-    "content": "Task",
     "title": "Task",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/properties": [
-      {
-        "id": 69
-      },
-      {
-        "id": 76
-      },
-      {
-        "id": 81
-      },
-      {
-        "id": 83
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1282-1814-5700-000000000000",
+    "id": 139,
+    "content": "Task",
+    "fullTitle": "Task"
   },
   {
-    "ident": ":logseq.class/Template",
-    "updatedAt": 1760197592605,
-    "createdAt": 1760197592605,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 4,
+    "createdAt": 1762042307922,
     "name": "template",
-    "uuid": "00000002-1720-8548-4600-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Template",
-    "content": "Template",
     "title": "Template",
-    ":logseq.property.class/extends": [
-      {
-        "id": 1
-      }
-    ],
-    ":logseq.property.class/properties": [
-      {
-        "id": 134
-      }
-    ]
+    "updatedAt": 1762042307922,
+    "uuid": "00000002-1720-8548-4600-000000000000",
+    "id": 4,
+    "content": "Template",
+    "fullTitle": "Template"
   },
   {
-    "ident": ":logseq.property.journal/title-format",
-    "updatedAt": 1760197592601,
-    ":logseq.property/public?": false,
-    "index": true,
-    "createdAt": 1760197592601,
-    ":logseq.property/type": "string",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 66,
+    "createdAt": 1762042307915,
     "name": "title format",
-    "uuid": "00000002-1536-4979-5400-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Title Format",
-    "content": "Title Format",
-    "order": "bai",
     "title": "Title Format",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307915,
+    "uuid": "00000002-1536-4979-5400-000000000000",
+    "id": 66,
+    "content": "Title Format",
+    "fullTitle": "Title Format"
   },
   {
-    "ident": ":logseq.property.user/avatar",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/hide?": false,
-    ":logseq.property/type": "string",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 125,
+    "createdAt": 1762042307919,
     "name": "user avatar",
-    "uuid": "00000002-4165-4885-8000-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "User Avatar",
-    "content": "User Avatar",
-    "order": "bbf",
     "title": "User Avatar",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307919,
+    "uuid": "00000002-4165-4885-8000-000000000000",
+    "id": 125,
+    "content": "User Avatar",
+    "fullTitle": "User Avatar"
   },
   {
-    "ident": ":logseq.property.user/email",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/hide?": false,
-    ":logseq.property/type": "string",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 124,
+    "createdAt": 1762042307919,
     "name": "user email",
-    "uuid": "00000002-1655-2060-6300-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "User Email",
-    "content": "User Email",
-    "order": "bbe",
     "title": "User Email",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307919,
+    "uuid": "00000002-1655-2060-6300-000000000000",
+    "id": 124,
+    "content": "User Email",
+    "fullTitle": "User Email"
   },
   {
-    "ident": ":logseq.property.user/name",
-    "updatedAt": 1760197592603,
-    ":logseq.property/public?": true,
-    "index": true,
-    "createdAt": 1760197592603,
-    ":logseq.property/hide?": false,
-    ":logseq.property/type": "string",
-    "tags": [
-      {
-        "id": 3
-      }
-    ],
-    "id": 123,
+    "createdAt": 1762042307919,
     "name": "user name",
-    "uuid": "00000002-1360-0260-1600-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "User Name",
-    "content": "User Name",
-    "order": "bbd",
     "title": "User Name",
-    "cardinality": ":db.cardinality/one"
+    "updatedAt": 1762042307919,
+    "uuid": "00000002-1360-0260-1600-000000000000",
+    "id": 123,
+    "content": "User Name",
+    "fullTitle": "User Name"
   },
   {
-    "ident": ":logseq.class/Whiteboard",
-    "updatedAt": 1760197592604,
-    "createdAt": 1760197592604,
-    "tags": [
-      {
-        "id": 2
-      }
-    ],
-    "id": 138,
+    "createdAt": 1762042307921,
     "name": "whiteboard",
-    "uuid": "00000002-1013-6984-5200-000000000000",
-    ":logseq.property/built-in?": true,
-    "fullTitle": "Whiteboard",
-    "content": "Whiteboard",
     "title": "Whiteboard",
-    ":logseq.property.class/extends": [
-      {
-        "id": 136
-      }
-    ]
+    "updatedAt": 1762042307921,
+    "uuid": "00000002-1013-6984-5200-000000000000",
+    "id": 138,
+    "content": "Whiteboard",
+    "fullTitle": "Whiteboard"
   }
 ]

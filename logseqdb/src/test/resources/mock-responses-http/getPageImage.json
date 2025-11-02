@@ -1,0 +1,22 @@
+{
+  "updatedAt": 1751849505863,
+  "createdAt": 1751849505834,
+  "parent": 141,
+  "tags": [
+    141
+  ],
+  "id": 961,
+  "uuid": "686b1a21-b6bb-4440-abca-1493b8ea9a9d",
+  "fullTitle": "image",
+  "content": "image",
+  ":logseq.property.asset/checksum": "d7f6f86bd8bf9c4839d6ecf0cb84c82629efbafea575d1f1850141ccb729bedb",
+  ":logseq.property.asset/size": 119786,
+  "order": "a0",
+  "title": "image",
+  ":logseq.property.asset/type": "png",
+  "page": 141,
+  "refs": [
+    21,
+    141
+  ]
+}

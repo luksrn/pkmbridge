@@ -16,10 +16,10 @@ data class Page(
     val journalDay: Long? = null,
     val updatedAt: Long,
     val createdAt: Long,
-    val tags: List<Tag>? = null,
-    val refs: List<Tag>? = null,
+    val tags: List<Int>? = null,
+    val refs: List<Int>? = null,
     val id: Int,
-    val name: String,
+    val name: String? = null,
     val uuid: String,
     var content: String? = null,
     val title: String,
@@ -28,7 +28,7 @@ data class Page(
         when {
             this.journalDay != null -> Identity.JOURNAL
             this.ident != Identity.OTHER -> this.ident
-            this.tags?.any { it.isContent() } == true -> Identity.PAGE
+            this.tags?.any { Tag(it).isContent() } == true -> Identity.PAGE
             else -> Identity.PAGE
         }
 }

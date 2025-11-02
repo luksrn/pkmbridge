@@ -8,9 +8,7 @@
   "createdAt": 1760197751845,
   "txId": 536871068,
   "tags": [
-    {
-      "id": 136
-    }
+    136
   ],
   "id": 176,
   "name": "best practices for dependencies",
@@ -19,11 +17,7 @@
   "content": "Best Practices for Dependencies",
   "title": "Best Practices for Dependencies",
   "refs": [
-    {
-      "id": 21
-    },
-    {
-      "id": 136
-    }
+    21,
+    136
   ]
 }
