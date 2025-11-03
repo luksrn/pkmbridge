@@ -1,8 +1,5 @@
-package com.github.luksrn.pkmbridge
+package com.github.luksrn.pkmbridge.obsidian
 
-import com.github.luksrn.pkmbridge.obsidian.ObsidianDocumentTransformer
-import com.github.luksrn.pkmbridge.obsidian.ObsidianMarkdownDocumentLoader
-import com.github.luksrn.pkmbridge.obsidian.ObsidianProperties
 import dev.langchain4j.data.document.splitter.DocumentSplitters
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.model.embedding.EmbeddingModel

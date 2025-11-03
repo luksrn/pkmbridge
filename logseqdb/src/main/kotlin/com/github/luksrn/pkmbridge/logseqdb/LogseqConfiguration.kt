@@ -1,10 +1,5 @@
-package com.github.luksrn.pkmbridge
+package com.github.luksrn.pkmbridge.logseqdb
 
-import com.github.luksrn.pkmbridge.logseqdb.LogseqAPIDocumentLoader
-import com.github.luksrn.pkmbridge.logseqdb.LogseqAvailabilityCheckException
-import com.github.luksrn.pkmbridge.logseqdb.LogseqDocumentByRootBlockSplitter
-import com.github.luksrn.pkmbridge.logseqdb.LogseqDocumentTransformer
-import com.github.luksrn.pkmbridge.logseqdb.LogseqRestClient
 import dev.langchain4j.data.segment.TextSegment
 import dev.langchain4j.model.embedding.EmbeddingModel
 import dev.langchain4j.rag.content.retriever.ContentRetriever
@@ -18,6 +13,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
+import java.lang.Exception
 
 @Configuration
 @ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true", matchIfMissing = true)
@@ -52,7 +48,7 @@ class LogseqConfiguration {
     ): ContentRetriever =
         EmbeddingStoreContentRetriever
             .builder()
-            .displayName("Logseq Content Retriever")
+            .displayName("LogseqDB Content Retriever")
             .embeddingModel(embeddingModel)
             .embeddingStore(embeddingStore)
             .maxResults(50)
@@ -66,7 +62,7 @@ class LogseqConfiguration {
         ApplicationRunner { args ->
             try {
                 logRestClient.getCurrentGraph()
-            } catch (ex: java.lang.Exception) {
+            } catch (ex: Exception) {
                 throw LogseqAvailabilityCheckException(ex)
             }
         }
