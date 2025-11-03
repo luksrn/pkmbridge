@@ -10,8 +10,7 @@ class ContentRetrieversFailureAnalyzer : AbstractFailureAnalyzer<IllegalArgument
         rootFailure: Throwable,
         cause: IllegalArgumentException,
     ): FailureAnalysis? {
-
-        if(rootFailure is UnsatisfiedDependencyException) {
+        if (rootFailure is UnsatisfiedDependencyException) {
             val beanCreationException = rootFailure.cause as? BeanCreationException
             if (beanCreationException?.message!!.contains("contentRetrievers cannot be null or empty")) {
                 return FailureAnalysis(
