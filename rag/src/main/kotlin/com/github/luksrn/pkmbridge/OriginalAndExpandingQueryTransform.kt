@@ -11,8 +11,8 @@ class OriginalAndExpandingQueryTransform(
     val expandingQueryTransformer = ExpandingQueryTransformer(chatModel)
 
     override fun transform(query: Query): Collection<Query> {
-        val expandedQueries = expandingQueryTransformer.transform(query)
-        expandedQueries.add(query)
-        return expandedQueries
+        val transformedQueries = mutableListOf(query)
+        transformedQueries.addAll(expandingQueryTransformer.transform(query))
+        return transformedQueries
     }
 }

@@ -40,9 +40,9 @@ re-rank:
 
 pkm:
   obsidian:
-    enabled: true
+    enabled: false
     file-system-path: /Users/lucas.farias/obsidian
   logseq:
-    enabled: false
+    enabled: true
     server-url: http://127.0.0.1:12315/api
     authorization-token: 0432483b-469a-4ca6-b16d-35106294b36e

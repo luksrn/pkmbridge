@@ -42,7 +42,7 @@ class LogseqConfiguration {
             .embeddingStore(embeddingStore)
             .embeddingModel(embeddingModel)
             .documentTransformer(LogseqDocumentTransformer(client))
-            .documentSplitter(LogseqDocumentByRootBlockSplitter()) // LogseqDocumentByBlockSplitter())
+            .documentSplitter(LogseqDocumentByRootBlockSplitter())
             .build()
 
     @Bean

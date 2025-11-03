@@ -2,7 +2,6 @@ package com.github.luksrn.pkmbridge.logseqdb
 
 import dev.langchain4j.data.document.Document
 import dev.langchain4j.data.document.DocumentTransformer
-import java.lang.RuntimeException
 
 class LogseqDocumentTransformer(
     val client: LogseqRestClient,

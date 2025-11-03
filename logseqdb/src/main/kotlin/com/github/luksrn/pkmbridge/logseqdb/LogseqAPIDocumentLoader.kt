@@ -1,7 +1,6 @@
 package com.github.luksrn.pkmbridge.logseqdb
 
 import dev.langchain4j.data.document.Document
-import dev.langchain4j.data.document.Metadata
 import org.slf4j.LoggerFactory
 
 class LogseqAPIDocumentLoader(
@@ -9,9 +8,9 @@ class LogseqAPIDocumentLoader(
 ) {
     fun loadDocuments(): List<Document> {
         val graph = logseqRestClient.getCurrentGraph()
-        logger.info("Loading documents from LogSeq API on graph: ${graph.path}")
+        logger.info("Loading documents from LogseqDB API on graph: ${graph.path}")
         val pages = logseqRestClient.fetchPages()
-        logger.info("${pages.size} pages found in Logseq graph")
+        logger.info("${pages.size} pages found in LogseqDB graph")
 
         val documents =
             pages
