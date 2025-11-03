@@ -59,7 +59,7 @@ class AssistantController(
                         sink.tryEmitNext(chatResponse)
                     }
                 }.onError { e ->
-                    if (e is InputGuardrailException || e is OutputGuardrailException) {
+                    if (e is OutputGuardrailException) {
                         logger.warn(e.message)
                         sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
                     }
@@ -75,7 +75,7 @@ class AssistantController(
                 }.start()
 
             return sink.asFlux()
-        } catch (e: GuardrailException) {
+        } catch (e: InputGuardrailException) {
             logger.warn(e.message)
             sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
             sink.tryEmitComplete()
