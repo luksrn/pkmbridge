@@ -1,6 +1,5 @@
 package com.github.luksrn.pkmbridge
 
-import dev.langchain4j.guardrail.GuardrailException
 import dev.langchain4j.guardrail.InputGuardrailException
 import dev.langchain4j.guardrail.OutputGuardrailException
 import dev.langchain4j.model.ollama.OllamaModels

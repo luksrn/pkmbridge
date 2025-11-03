@@ -33,7 +33,6 @@ class PersonalKnowledgeAssistantConfiguration {
             .retrievalAugmentor(retrievalAugmentor)
             .inputGuardrails(inputGuardrailsProvider.orderedStream().toList())
             .outputGuardrails(outputGuardrailsProvider.orderedStream().toList())
-            // .tools(LogseqApiTool())
             .build()
 
     @Bean
