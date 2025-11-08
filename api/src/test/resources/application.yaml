@@ -24,13 +24,6 @@ ollama:
   logRequests: true
   logResponses: true
 
-guardrails:
-  input:
-    rag-only.enabled: true
-    check-input.enabled: true
-  output:
-    check-facts.enabled: false
-
 re-rank:
   enabled: true
   path-to-model: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"

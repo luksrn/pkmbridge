@@ -1,5 +1,7 @@
 package com.github.luksrn.pkmbridge
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 data class GenerateRequestDto(
     val model: String,
     val prompt: String,
@@ -9,8 +11,10 @@ data class GenerateRequestDto(
 
 data class Options(
     val temperature: Double,
-    val top_k: Int,
-    val top_p: Double,
+    @field:JsonProperty("top_k")
+    val topK: Int,
+    @field:JsonProperty("top_p")
+    val topP: Double,
     val stop: List<String> = emptyList(),
 )
 
@@ -19,7 +23,6 @@ data class ChatRequestDto(
     val messages: List<Message>,
     val options: Options? = null,
     val stream: Boolean = false,
-    // val tools: List<String> = emptyList()
     val format: String? = null,
 )
 
@@ -27,4 +30,3 @@ data class Message(
     val role: String,
     val content: String,
 )
-// https://ollama.com/blog/structured-outputs

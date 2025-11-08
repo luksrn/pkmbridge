@@ -1,17 +1,17 @@
 [versions]
 kotlin = "2.2.10"
 kotlin-serialization = "2.2.0"
-spring-boot = "4.0.0-RC1"
+spring-boot = "4.0.0-RC2"
 spring-dependency-management = "1.1.7"
 langchain4j = "1.8.0"
 langchain4j-beta = "1.8.0-beta15"
 kotlinx-serialization-json = "1.6.0"
 okhttp = "5.2.1"
-testcontainers-ollama = "1.20.4"
+testcontainers-ollama = "2.0.1"
 
 [libraries]
 # Spring Boot
-testcontainers-ollama = { module = "org.testcontainers:ollama", version.ref = "testcontainers-ollama" }
+testcontainers-ollama = { module = "org.testcontainers:testcontainers-ollama", version.ref = "testcontainers-ollama" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-starter-jackson = { module = "org.springframework.boot:spring-boot-starter-jackson" }
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
@@ -33,6 +33,7 @@ reactor-test = { module = "io.projectreactor:reactor-test" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+assertj-core = { module = "org.assertj:assertj-core", version = "3.27.3" }
 
 # LangChain4j
 langchain4j-ollama = { module = "dev.langchain4j:langchain4j-ollama", version.ref = "langchain4j" }

@@ -36,8 +36,7 @@ class RagConfiguration {
             .builder()
             .queryTransformer(OriginalAndExpandingQueryTransform(chatModel))
             .queryRouter(DefaultQueryRouter(contentRetrievers))
-            // when re-rank is enabled, the contentAggregatorProvider will provide the ReRankingContentAggregator bean
             .contentAggregator(contentAggregatorProvider.ifAvailable)
-            .contentInjector(DefaultContentInjector(listOf<String>("link", Document.FILE_NAME)))
+            .contentInjector(DefaultContentInjector(listOf<String>("pkm", Document.FILE_NAME, "link")))
             .build()
 }

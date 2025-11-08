@@ -15,6 +15,8 @@ class LogseqDocument(
 
     init {
         metadata.put(Document.FILE_NAME, page.name)
+        metadata.put(Document.URL, graph.linkForPage(page))
+        metadata.put(Document.ABSOLUTE_DIRECTORY_PATH, graph.path)
         metadata.put(DOCUMENT_TYPE, page.inferIdentity().name)
         metadata.put("pkm", "logseq")
         metadata.put("link", graph.linkForPage(page))
