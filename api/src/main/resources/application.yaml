@@ -15,8 +15,8 @@ management:
     port: 53411
 
 ollama:
-  modelName: ${OLLAMA_MODEL_NAME:}
-  baseUrl: ${OLLAMA_BASE_URL:}
+  modelName: ${OLLAMA_MODEL_NAME:qwen3:8b}
+  baseUrl: ${OLLAMA_BASE_URL:http://localhost:11434}
   timeout: 120000
   temperature: 0.7
   topP: 0.95
@@ -44,5 +44,5 @@ pkm:
     file-system-path: ${PKM_OBSIDIAN_FILE_SYSTEM_PATH:}
   logseq:
     enabled: ${PKM_LOGSEQ_ENABLED:false}
-    server-url: ${PKM_LOGSEQ_SERVER_URL:}
+    server-url: ${PKM_LOGSEQ_SERVER_URL:http://127.0.0.1:12315/api}
     authorization-token: ${PKM_LOGSEQ_AUTHORIZATION_TOKEN:}
