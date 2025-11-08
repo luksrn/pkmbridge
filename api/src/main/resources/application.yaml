@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dev.ai
+    name: PKMBridge
   output:
     ansi:
       enabled: always
@@ -15,8 +15,8 @@ management:
     port: 53411
 
 ollama:
-  modelName: qwen3:8b
-  baseUrl: http://localhost:11434
+  modelName: ${OLLAMA_MODEL_NAME:}
+  baseUrl: ${OLLAMA_BASE_URL:}
   timeout: 120000
   temperature: 0.7
   topP: 0.95
@@ -32,17 +32,17 @@ guardrails:
     check-facts.enabled: false
 
 re-rank:
-  enabled: true
-  path-to-model: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/onnx/model.onnx"
-  path-to-tokenizer: "/Users/lucas.farias/workspace/pocs/ms-marco-MiniLM-L6-v2/tokenizer.json"
-  max-result: 25
-  min-score: 0.25
+  enabled: ${RERANK_ENABLED:true}
+  path-to-model: ${RERANK_PATH_TO_MODEL:}
+  path-to-tokenizer: ${RERANK_PATH_TO_TOKENIZER:}
+  max-result: ${RERANK_MAX_RESULTS:25}
+  min-score: ${RERANK_MIN_SCORE:0.25}
 
 pkm:
   obsidian:
-    enabled: true
-    file-system-path: /Users/lucas.farias/obsidian
+    enabled: ${PKM_OBSIDIAN_ENABLED:false}
+    file-system-path: ${PKM_OBSIDIAN_FILE_SYSTEM_PATH:}
   logseq:
-    enabled: true
-    server-url: http://127.0.0.1:12315/api
-    authorization-token: 0432483b-469a-4ca6-b16d-35106294b36e
+    enabled: ${PKM_LOGSEQ_ENABLED:false}
+    server-url: ${PKM_LOGSEQ_SERVER_URL:}
+    authorization-token: ${PKM_LOGSEQ_AUTHORIZATION_TOKEN:}
