@@ -1,5 +1,8 @@
 package com.github.luksrn.pkmbridge
 
+import com.github.luksrn.pkmbridge.StreamMessageFactory.createCompleteResponse
+import com.github.luksrn.pkmbridge.StreamMessageFactory.createGuardrailResponse
+import com.github.luksrn.pkmbridge.StreamMessageFactory.createPartialResponse
 import dev.langchain4j.guardrail.InputGuardrailException
 import dev.langchain4j.guardrail.OutputGuardrailException
 import dev.langchain4j.model.ollama.OllamaModels
@@ -54,17 +57,17 @@ class AssistantController(
                 .chatStream(UUID.randomUUID().toString(), generateRequest.prompt)
                 .onPartialResponse { partialResponse ->
                     if (generateRequest.stream) {
-                        val chatResponse = StreamMessageFactory.createPartialResponse(generateRequest, partialResponse)
+                        val chatResponse = createPartialResponse(generateRequest, partialResponse)
                         sink.tryEmitNext(chatResponse)
                     }
                 }.onError { e ->
                     if (e is OutputGuardrailException) {
                         logger.warn(e.message)
-                        sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
+                        sink.tryEmitNext(createGuardrailResponse(generateRequest, e))
                     }
                     sink.tryEmitComplete()
                 }.onCompleteResponse {
-                    val chatResponse = StreamMessageFactory.createCompleteResponse(generateRequest, it)
+                    val chatResponse = createCompleteResponse(generateRequest, it)
                     chatResponse.totalDuration = System.nanoTime() - start
                     chatResponse.evalDuration = chatResponse.totalDuration
                     sink.tryEmitNext(chatResponse)
@@ -76,7 +79,7 @@ class AssistantController(
             return sink.asFlux()
         } catch (e: InputGuardrailException) {
             logger.warn(e.message)
-            sink.tryEmitNext(StreamMessageFactory.createGuardrailResponse(generateRequest, e))
+            sink.tryEmitNext(createGuardrailResponse(generateRequest, e))
             sink.tryEmitComplete()
 
             return sink.asFlux()
