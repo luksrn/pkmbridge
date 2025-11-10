@@ -16,7 +16,8 @@ import org.springframework.core.annotation.Order
 import java.lang.Exception
 
 @Configuration
-@ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = ["pkm.logseq.enabled"], havingValue = "true")
+@ConditionalOnProperty(name = ["pkm.logseq.server-url", "pkm.logseq.authorization-token"])
 class LogseqConfiguration {
     @Bean
     fun initializer(

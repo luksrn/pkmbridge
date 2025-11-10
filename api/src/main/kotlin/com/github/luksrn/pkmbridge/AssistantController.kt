@@ -72,8 +72,6 @@ class AssistantController(
                     chatResponse.evalDuration = chatResponse.totalDuration
                     sink.tryEmitNext(chatResponse)
                     sink.tryEmitComplete()
-                }.onToolExecuted {
-                    // println(it)
                 }.start()
 
             return sink.asFlux()

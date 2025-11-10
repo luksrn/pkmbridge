@@ -17,7 +17,8 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableConfigurationProperties(ObsidianProperties::class)
-@ConditionalOnProperty(name = ["pkm.obsidian.enabled"], havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = ["pkm.obsidian.enabled"], havingValue = "true")
+@ConditionalOnProperty(name = ["pkm.obsidian.file-system-path"])
 class ObsidianConfiguration {
     @Bean
     fun obsidianRAGApplicationRunner(

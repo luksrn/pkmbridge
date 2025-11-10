@@ -31,7 +31,6 @@ export OLLAMA_BASE_URL=http://localhost:11434
 ##### 2.1 LogseqDB
 
 ```
-export PKM_LOGSEQ_ENABLED=true
 export PKM_LOGSEQ_SERVER_URL=http://127.0.0.1:12315/api
 export PKM_LOGSEQ_AUTHORIZATION_TOKEN=0432483b-469a-4ca6-b16d-35106294b36e
 ```
@@ -39,7 +38,6 @@ export PKM_LOGSEQ_AUTHORIZATION_TOKEN=0432483b-469a-4ca6-b16d-35106294b36e
 
 ##### 2.2 Obsidian
 ```
-export PKM_OBSIDIAN_ENABLED=true
 export PKM_OBSIDIAN_FILE_SYSTEM_PATH=/Path/To/obsidian
 ```
 
@@ -73,7 +71,8 @@ This will start the application on `http://localhost:11435`.
 
 ### API 
 
-#### Query Embedding
+#### Generate Endpoint
+
 ```shell
 http POST "http://localhost:11435/api/generate" model="qwen3:8b" prompt="How can I evaluate AI responses?" stream:=false
 
@@ -106,7 +105,37 @@ Vary: Access-Control-Request-Headers
 }
 ```
 
-You can also use the Stream Mode.
+You can also use the Stream Mode:
+
+
+```shell
+http POST "http://localhost:11435/api/generate" model="qwen3:8b" prompt="How can I evaluate AI responses?" stream:=true 
+HTTP/1.1 200 
+Connection: keep-alive
+Content-Type: application/x-ndjson
+Date: Sun, 09 Nov 2025 11:49:14 GMT
+Keep-Alive: timeout=60
+Transfer-Encoding: chunked
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.675414Z","message":{"role":"assistant","content":"To"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.715418Z","message":{"role":"assistant","content":" evaluate"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.758676Z","message":{"role":"assistant","content":" AI"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.804370Z","message":{"role":"assistant","content":" responses"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.847418Z","message":{"role":"assistant","content":" effectively"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.890372Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.933820Z","message":{"role":"assistant","content":" consider"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:14.976259Z","message":{"role":"assistant","content":" the"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:15.018584Z","message":{"role":"assistant","content":" following"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:15.061195Z","message":{"role":"assistant","content":" methods"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:15.103442Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:15.145865Z","message":{"role":"assistant","content":" tools"},"done":false}
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:15.189178Z","message":{"role":"assistant","content":" based"},"done":false}
+...
+{"model":"qwen3:8b","created_at":"2025-11-09T11:49:40.561800Z","message":{"role":"assistant","content":""},"done":true,"done_reason":"STOP","total_duration":71571574333,"load_duration":0,"prompt_eval_count":1052,"prompt_eval_duration":0,"eval_count":1899,"eval_duration":71571574333}
+```
 
 ### Open Web UI
 

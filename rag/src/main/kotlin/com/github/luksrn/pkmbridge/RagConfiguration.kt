@@ -11,6 +11,7 @@ import dev.langchain4j.rag.content.aggregator.ContentAggregator
 import dev.langchain4j.rag.content.injector.DefaultContentInjector
 import dev.langchain4j.rag.content.retriever.ContentRetriever
 import dev.langchain4j.rag.query.router.DefaultQueryRouter
+import dev.langchain4j.store.embedding.EmbeddingStore
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.context.annotation.Bean
@@ -24,7 +25,7 @@ class RagConfiguration {
 
     @Bean
     @Primary
-    fun embeddingStore(): InMemoryEmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
+    fun embeddingStore(): EmbeddingStore<TextSegment?> = InMemoryEmbeddingStore<TextSegment?>()
 
     @Bean
     fun retrievalAugmentor(

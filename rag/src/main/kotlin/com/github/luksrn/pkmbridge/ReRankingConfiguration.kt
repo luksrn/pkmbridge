@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Configuration
 @ConditionalOnProperty(prefix = "re-rank", name = ["path-to-model", "path-to-tokenizer"])
 class ReRankingConfiguration {
     @Bean
-    @ConditionalOnProperty(prefix = "re-rank", name = ["enabled"], havingValue = "true", matchIfMissing = false)
-    @ConditionalOnProperty(prefix = "re-rank", name = ["path-to-model", "path-to-tokenizer"])
     fun contentAggregator(reRankProperties: ReRankProperties): ContentAggregator =
         ReRankingContentAggregator
             .builder()

@@ -17,22 +17,22 @@ management:
 ollama:
   modelName: ${OLLAMA_MODEL_NAME:qwen3:8b}
   baseUrl: ${OLLAMA_BASE_URL:http://localhost:11434}
-  timeout: 120000
-  temperature: 0.7
-  topP: 0.95
-  topK: 25
-  logRequests: true
-  logResponses: true
+  timeout: ${OLLAMA_TIMEOUT:120000}
+  temperature: ${OLLAMA_TEMPERATURE:0.7}
+  topP: ${OLLAMA_TOP_P:0.95}
+  topK: ${OLLAMA_TOP_K:25}
+  logRequests: ${OLLAMA_LOG_REQUEST:true}
+  logResponses: ${OLLAMA_LOG_RESPONSE:true}
 
 guardrails:
   input:
-    rag-only.enabled: true
-    check-input.enabled: true
+    rag-only.enabled: ${GUARDRAILS_INPUT_RAG_ONLY_ENABLED:true}
+    check-input.enabled: ${GUARDRAILS_INPUT_CHECK_INPUT_ENABLED:true}
   output:
-    check-facts.enabled: false
+    check-facts.enabled: ${GUARDRAILS_OUTPUT_CHECK_FACTS_ENABLED:false}
 
 re-rank:
-  enabled: ${RERANK_ENABLED:true}
+  enabled: ${RERANK_ENABLED:false}
   path-to-model: ${RERANK_PATH_TO_MODEL:}
   path-to-tokenizer: ${RERANK_PATH_TO_TOKENIZER:}
   max-result: ${RERANK_MAX_RESULTS:25}
@@ -40,9 +40,9 @@ re-rank:
 
 pkm:
   obsidian:
-    enabled: ${PKM_OBSIDIAN_ENABLED:false}
+    enabled: ${PKM_OBSIDIAN_ENABLED:true}
     file-system-path: ${PKM_OBSIDIAN_FILE_SYSTEM_PATH:}
   logseq:
-    enabled: ${PKM_LOGSEQ_ENABLED:false}
+    enabled: ${PKM_LOGSEQ_ENABLED:true}
     server-url: ${PKM_LOGSEQ_SERVER_URL:http://127.0.0.1:12315/api}
     authorization-token: ${PKM_LOGSEQ_AUTHORIZATION_TOKEN:}
