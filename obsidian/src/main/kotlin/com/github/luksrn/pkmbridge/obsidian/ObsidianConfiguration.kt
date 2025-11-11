@@ -34,9 +34,10 @@ class ObsidianConfiguration {
     fun obsidianEmbeddingStoreIngestor(
         embeddingModel: EmbeddingModel,
         embeddingStore: EmbeddingStore<TextSegment>,
+        obsidianProperties: ObsidianProperties,
     ) = EmbeddingStoreIngestor
         .builder()
-        .documentTransformer(ObsidianDocumentTransformer())
+        .documentTransformer(ObsidianDocumentTransformer(obsidianProperties))
         .documentSplitter(DocumentSplitters.recursive(1000, 100))
         .embeddingModel(embeddingModel)
         .embeddingStore(embeddingStore)
